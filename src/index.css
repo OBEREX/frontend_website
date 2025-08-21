@@ -1,0 +1,302 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900 transition-colors duration-200;
+  }
+
+  /* Enhanced Dark mode styles */
+  .dark body {
+    @apply bg-gray-950 text-gray-100;
+  }
+
+  .dark {
+    @apply bg-gray-950 text-gray-100;
+  }
+
+  /* Dark mode for all text elements */
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    @apply text-gray-100;
+  }
+
+  .dark p, .dark span, .dark div {
+    @apply text-gray-200;
+  }
+
+  .dark label {
+    @apply text-gray-300;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6 transition-colors duration-200;
+  }
+
+  .dark .card {
+    @apply bg-gray-900 border-gray-700 shadow-lg;
+  }
+  
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+
+  .dark .btn-secondary {
+    @apply bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-600;
+  }
+
+  /* Enhanced Dark mode input styles */
+  .dark input, .dark select, .dark textarea {
+    @apply bg-gray-800 border-gray-600 text-gray-100 placeholder-gray-400;
+  }
+
+  .dark input:focus, .dark select:focus, .dark textarea:focus {
+    @apply border-primary-500 ring-primary-500 bg-gray-800;
+  }
+
+  /* Enhanced Dark mode table styles */
+  .dark table {
+    @apply bg-gray-900;
+  }
+
+  .dark thead {
+    @apply bg-gray-800;
+  }
+
+  .dark tbody tr {
+    @apply border-gray-700;
+  }
+
+  .dark tbody tr:hover {
+    @apply bg-gray-800;
+  }
+
+  /* Dark mode navigation styles */
+  .dark nav a {
+    @apply text-gray-300 hover:text-gray-100 hover:bg-gray-800;
+  }
+
+  .dark nav a.active {
+    @apply bg-gray-800 text-gray-100;
+  }
+
+  /* Dark mode sidebar styles */
+  .dark .sidebar {
+    @apply bg-gray-900 border-gray-700;
+  }
+
+  /* Enhanced sidebar dark mode styles */
+  .dark .fixed.inset-y-0.left-0 {
+    @apply bg-gray-900 border-gray-700;
+  }
+
+  .dark .fixed.inset-y-0.left-0 .border-b {
+    @apply border-gray-700;
+  }
+
+  .dark .fixed.inset-y-0.left-0 .border-r {
+    @apply border-gray-700;
+  }
+
+  .dark .fixed.inset-y-0.left-0 .border-t {
+    @apply border-gray-700;
+  }
+
+  /* Enhanced Dark mode chart backgrounds and tooltips */
+  .dark .recharts-wrapper {
+    @apply bg-gray-900;
+  }
+
+  .dark .recharts-cartesian-grid-horizontal line,
+  .dark .recharts-cartesian-grid-vertical line {
+    @apply stroke-gray-700;
+  }
+
+  /* Enhanced hover states for chart elements */
+  .dark .recharts-bar-rectangle:hover {
+    @apply opacity-80;
+  }
+
+  .dark .recharts-line-dot:hover {
+    @apply opacity-80;
+  }
+
+  .dark .recharts-area:hover {
+    @apply opacity-80;
+  }
+
+  /* Dark mode for chart axes */
+  .dark .recharts-xAxis .recharts-cartesian-axis-tick-value,
+  .dark .recharts-yAxis .recharts-cartesian-axis-tick-value {
+    @apply fill-gray-300;
+  }
+
+  .dark .recharts-xAxis .recharts-cartesian-axis-line,
+  .dark .recharts-yAxis .recharts-cartesian-axis-line {
+    @apply stroke-gray-600;
+  }
+
+  /* Dark mode legend styles */
+  .dark .recharts-legend-item-text {
+    @apply text-gray-200;
+  }
+
+  /* Dark mode for status badges */
+  .dark .bg-green-100 {
+    @apply bg-green-900/30;
+  }
+
+  .dark .bg-blue-100 {
+    @apply bg-blue-900/30;
+  }
+
+  .dark .bg-yellow-100 {
+    @apply bg-yellow-900/30;
+  }
+
+  .dark .bg-red-100 {
+    @apply bg-red-900/30;
+  }
+
+  .dark .bg-purple-100 {
+    @apply bg-purple-900/30;
+  }
+
+  /* Dark mode for toggle switches */
+  .dark .peer-checked\:bg-primary-600 {
+    @apply bg-primary-500;
+  }
+
+  /* Dark mode for icons */
+  .dark .text-gray-600 {
+    @apply text-gray-400;
+  }
+
+  .dark .text-gray-500 {
+    @apply text-gray-400;
+  }
+
+  /* Dark mode for borders */
+  .dark .border-gray-200 {
+    @apply border-gray-700;
+  }
+
+  .dark .border-gray-300 {
+    @apply border-gray-600;
+  }
+
+  /* Dark mode for backgrounds */
+  .dark .bg-gray-50 {
+    @apply bg-gray-900;
+  }
+
+  .dark .bg-gray-100 {
+    @apply bg-gray-800;
+  }
+
+  .dark .bg-gray-200 {
+    @apply bg-gray-700;
+  }
+
+  /* Dark mode for hover states */
+  .dark .hover\:bg-gray-50:hover {
+    @apply hover:bg-gray-800;
+  }
+
+  .dark .hover\:bg-gray-100:hover {
+    @apply hover:bg-gray-700;
+  }
+
+  /* Enhanced table dark mode styles */
+  .dark table thead th {
+    @apply text-gray-300 bg-gray-800 border-gray-700;
+  }
+
+  .dark table tbody td {
+    @apply text-gray-200 border-gray-700;
+  }
+
+  .dark table tbody tr:hover {
+    @apply bg-gray-800;
+  }
+
+  /* Dark mode for progress bars */
+  .dark .bg-gray-200 {
+    @apply bg-gray-700;
+  }
+
+  /* Dark mode for seasonal trend cards */
+  .dark .bg-blue-50 {
+    @apply bg-blue-900/20;
+  }
+
+  .dark .bg-green-50 {
+    @apply bg-green-900/20;
+  }
+
+  .dark .bg-purple-50 {
+    @apply bg-purple-900/20;
+  }
+
+  .dark .text-blue-900 {
+    @apply text-blue-100;
+  }
+
+  .dark .text-green-900 {
+    @apply text-green-100;
+  }
+
+  .dark .text-purple-900 {
+    @apply text-purple-100;
+  }
+
+  .dark .text-blue-600 {
+    @apply text-blue-400;
+  }
+
+  .dark .text-green-600 {
+    @apply text-green-400;
+  }
+
+  .dark .text-purple-600 {
+    @apply text-purple-400;
+  }
+
+  .dark .text-blue-700 {
+    @apply text-blue-300;
+  }
+
+  .dark .text-green-700 {
+    @apply text-green-300;
+  }
+
+  .dark .text-purple-700 {
+    @apply text-purple-300;
+  }
+
+  /* Dark mode for scatter plot and other chart elements */
+  .dark .recharts-scatter-symbol {
+    @apply fill-gray-400;
+  }
+
+  /* Dark mode for pie chart labels */
+  .dark .recharts-pie-label-text {
+    @apply fill-gray-200;
+  }
+
+  /* Dark mode for area chart fills */
+  .dark .recharts-area {
+    fill-opacity: 0.2;
+  }
+}
+
