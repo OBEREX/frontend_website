@@ -1,23 +1,20 @@
-import { ReactNode } from 'react'
+import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { 
+  Home, 
   BarChart3, 
   TrendingUp, 
   Settings, 
-  Home,
-  Smartphone,
-  DollarSign,
-  Clock,
-  Target,
-  Package,
-  Camera,
-  CreditCard
+  Camera, 
+  CreditCard,
+  User,
+  Smartphone
 } from 'lucide-react'
-import { cn } from '../utils/cn'
 import { useTheme } from '../contexts/ThemeContext'
+import { cn } from '../utils/cn'
 
 interface LayoutProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 const navigation = [
@@ -26,6 +23,7 @@ const navigation = [
   { name: 'Business Intelligence', href: '/business-intelligence', icon: TrendingUp },
   { name: 'Inventory Management', href: '/inventory', icon: Camera },
   { name: 'Integration Management', href: '/integration', icon: CreditCard },
+  { name: 'User Management', href: '/user-management', icon: User },
   { name: 'Settings', href: '/settings', icon: Settings },
 ]
 
