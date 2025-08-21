@@ -1,11 +1,10 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { 
-  Home, 
-  BarChart3, 
-  TrendingUp, 
-  Settings, 
-  Camera, 
+import {
+  Home,
+  BarChart3,
+  TrendingUp,
+  Settings,
   CreditCard,
   User,
   Smartphone
@@ -21,7 +20,6 @@ const navigation = [
   { name: 'Dashboard', href: '/', icon: Home },
   { name: 'Analytics & Reporting', href: '/analytics', icon: BarChart3 },
   { name: 'Business Intelligence', href: '/business-intelligence', icon: TrendingUp },
-  { name: 'Inventory Management', href: '/inventory', icon: Camera },
   { name: 'Integration Management', href: '/integration', icon: CreditCard },
   { name: 'User Management', href: '/user-management', icon: User },
   { name: 'Settings', href: '/settings', icon: Settings },
@@ -43,7 +41,7 @@ export default function Layout({ children }: LayoutProps) {
             <span className="text-xl font-bold text-gray-900 dark:text-gray-100">Pefoma</span>
           </div>
         </div>
-        
+
         <nav className="mt-8 px-4">
           <div className="space-y-1">
             {navigation.map((item) => {

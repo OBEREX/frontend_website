@@ -276,6 +276,22 @@ export default function UserManagement() {
   const [activeTab, setActiveTab] = useState<'profile' | 'payments' | 'subscription' | 'usage' | 'sessions' | 'preferences'>('profile')
   const [showAddPayment, setShowAddPayment] = useState(false)
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false)
+  
+  // State for preferences toggles
+  const [preferences, setPreferences] = useState({
+    notifications: {
+      email: true,
+      sms: false,
+      push: true,
+      billing: true,
+      usage: true
+    },
+    privacy: {
+      dataSharing: true,
+      analytics: true,
+      marketing: false
+    }
+  })
 
   const getTierIcon = (tier: string) => {
     switch (tier) {
@@ -314,6 +330,29 @@ export default function UserManagement() {
 
   const handleSubscriptionPause = () => {
     setShowSubscriptionModal(true)
+  }
+
+  // Toggle handlers for preferences
+  const handleNotificationToggle = (key: string) => {
+    setPreferences(prev => ({
+      ...prev,
+      notifications: {
+        ...prev.notifications,
+        [key]: !prev.notifications[key as keyof typeof prev.notifications]
+      }
+    }))
+    console.log(`${key} notifications toggled`)
+  }
+
+  const handlePrivacyToggle = (key: string) => {
+    setPreferences(prev => ({
+      ...prev,
+      privacy: {
+        ...prev.privacy,
+        [key]: !prev.privacy[key as keyof typeof prev.privacy]
+      }
+    }))
+    console.log(`${key} privacy setting toggled`)
   }
 
   return (
@@ -883,7 +922,7 @@ export default function UserManagement() {
           <div className="card">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Notification Preferences</h3>
             <div className="space-y-4">
-              {Object.entries(userProfile.preferences.notifications).map(([key, value]) => (
+              {Object.entries(preferences.notifications).map(([key, value]) => (
                 <div key={key} className="flex items-center justify-between">
                   <div>
                     <h4 className="font-medium text-gray-900 dark:text-gray-100">
@@ -893,17 +932,20 @@ export default function UserManagement() {
                       Receive notifications via {key}
                     </p>
                   </div>
-                  <button
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      value ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        value ? 'translate-x-6' : 'translate-x-1'
+                  <Tooltip content={value ? `Disable ${key} notifications` : `Enable ${key} notifications`}>
+                    <button
+                      onClick={() => handleNotificationToggle(key)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+                        value ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'
                       }`}
-                    />
-                  </button>
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          value ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </Tooltip>
                 </div>
               ))}
             </div>
@@ -913,7 +955,7 @@ export default function UserManagement() {
           <div className="card">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Privacy Settings</h3>
             <div className="space-y-4">
-              {Object.entries(userProfile.preferences.privacy).map(([key, value]) => (
+              {Object.entries(preferences.privacy).map(([key, value]) => (
                 <div key={key} className="flex items-center justify-between">
                   <div>
                     <h4 className="font-medium text-gray-900 dark:text-gray-100">
@@ -923,17 +965,20 @@ export default function UserManagement() {
                       Allow {key.replace(/([A-Z])/g, ' $1').toLowerCase()}
                     </p>
                   </div>
-                  <button
-                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                      value ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'
-                    }`}
-                  >
-                    <span
-                      className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                        value ? 'translate-x-6' : 'translate-x-1'
+                  <Tooltip content={value ? `Disable ${key.replace(/([A-Z])/g, ' $1').toLowerCase()}` : `Enable ${key.replace(/([A-Z])/g, ' $1').toLowerCase()}`}>
+                    <button
+                      onClick={() => handlePrivacyToggle(key)}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors cursor-pointer ${
+                        value ? 'bg-primary-600' : 'bg-gray-200 dark:bg-gray-700'
                       }`}
-                    />
-                  </button>
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          value ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </Tooltip>
                 </div>
               ))}
             </div>
