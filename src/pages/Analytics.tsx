@@ -24,9 +24,11 @@ import {
   Area,
   PieChart as RechartsPieChart,
   Pie,
-  Cell
+  Cell,
+  ComposedChart
 } from 'recharts'
 import { useTheme } from '../contexts/ThemeContext'
+import { useState } from 'react'
 
 const monthlyData = [
   { month: 'Jan', scans: 45000, cost: 2250, savings: 6750, accuracy: 97.2 },
@@ -35,6 +37,37 @@ const monthlyData = [
   { month: 'Apr', scans: 61000, cost: 3050, savings: 9150, accuracy: 98.3 },
   { month: 'May', scans: 58000, cost: 2900, savings: 8700, accuracy: 98.5 },
   { month: 'Jun', scans: 67000, cost: 3350, savings: 10050, accuracy: 98.7 },
+]
+
+const timeData = [
+  // Daily data
+  { period: 'Monday', scans: 8500, accuracy: 98.2, type: 'day' },
+  { period: 'Tuesday', scans: 9200, accuracy: 98.5, type: 'day' },
+  { period: 'Wednesday', scans: 9800, accuracy: 98.7, type: 'day' },
+  { period: 'Thursday', scans: 9500, accuracy: 98.4, type: 'day' },
+  { period: 'Friday', scans: 10200, accuracy: 98.9, type: 'day' },
+  { period: 'Saturday', scans: 7800, accuracy: 97.8, type: 'day' },
+  { period: 'Sunday', scans: 6200, accuracy: 97.5, type: 'day' },
+  // Hourly data
+  { period: '6AM', scans: 120, accuracy: 97.5, type: 'hour' },
+  { period: '8AM', scans: 450, accuracy: 98.1, type: 'hour' },
+  { period: '10AM', scans: 890, accuracy: 98.3, type: 'hour' },
+  { period: '12PM', scans: 1200, accuracy: 98.7, type: 'hour' },
+  { period: '2PM', scans: 1100, accuracy: 98.5, type: 'hour' },
+  { period: '4PM', scans: 950, accuracy: 98.2, type: 'hour' },
+  { period: '6PM', scans: 680, accuracy: 97.9, type: 'hour' },
+  { period: '8PM', scans: 320, accuracy: 97.6, type: 'hour' },
+]
+
+// Separate data for better visualization
+const dailyData = [
+  { day: 'Monday', scans: 8500, accuracy: 98.2 },
+  { day: 'Tuesday', scans: 9200, accuracy: 98.5 },
+  { day: 'Wednesday', scans: 9800, accuracy: 98.7 },
+  { day: 'Thursday', scans: 9500, accuracy: 98.4 },
+  { day: 'Friday', scans: 10200, accuracy: 98.9 },
+  { day: 'Saturday', scans: 7800, accuracy: 97.8 },
+  { day: 'Sunday', scans: 6200, accuracy: 97.5 },
 ]
 
 const hourlyData = [
@@ -72,8 +105,55 @@ const roiData = [
   { month: 'Jun', laborCost: 16800, appCost: 3350, savings: 13450 },
 ]
 
+// Cost breakdown and savings opportunities data
+const costSavingsData = [
+  { month: 'Jan', timeSaved: 120, cost: 2250, savings: 9750, efficiency: 85.2 },
+  { month: 'Feb', timeSaved: 135, cost: 2600, savings: 10900, efficiency: 87.1 },
+  { month: 'Mar', timeSaved: 128, cost: 2400, savings: 10400, efficiency: 88.3 },
+  { month: 'Apr', timeSaved: 152, cost: 3050, savings: 12150, efficiency: 89.7 },
+  { month: 'May', timeSaved: 145, cost: 2900, savings: 11600, efficiency: 91.2 },
+  { month: 'Jun', timeSaved: 168, cost: 3350, savings: 13450, efficiency: 92.8 },
+]
+
+// Inventory forecasting data - actual inventory items/goods (Full year)
+const forecastingDataFull = [
+  // First half of the year
+  { month: 'Jan', currentStock: 8500, forecastedDemand: 9200, reorderPoint: 6000, confidence: 88 },
+  { month: 'Feb', currentStock: 9200, forecastedDemand: 10500, reorderPoint: 6500, confidence: 87 },
+  { month: 'Mar', currentStock: 9800, forecastedDemand: 11800, reorderPoint: 7000, confidence: 86 },
+  { month: 'Apr', currentStock: 10500, forecastedDemand: 12800, reorderPoint: 7200, confidence: 85 },
+  { month: 'May', currentStock: 11200, forecastedDemand: 13500, reorderPoint: 7500, confidence: 84 },
+  { month: 'Jun', currentStock: 11800, forecastedDemand: 14200, reorderPoint: 7800, confidence: 83 },
+  // Second half of the year
+  { month: 'Jul', currentStock: 12500, forecastedDemand: 14200, reorderPoint: 8000, confidence: 85 },
+  { month: 'Aug', currentStock: 11800, forecastedDemand: 15600, reorderPoint: 8500, confidence: 82 },
+  { month: 'Sep', currentStock: 13200, forecastedDemand: 16800, reorderPoint: 9000, confidence: 79 },
+  { month: 'Oct', currentStock: 14500, forecastedDemand: 18200, reorderPoint: 9500, confidence: 76 },
+  { month: 'Nov', currentStock: 15800, forecastedDemand: 19500, reorderPoint: 10000, confidence: 73 },
+  { month: 'Dec', currentStock: 17200, forecastedDemand: 20800, reorderPoint: 10500, confidence: 70 },
+]
+
+// Seasonal inventory patterns by category
+const seasonalInventoryData = [
+  { category: 'Electronics', q1: 8500, q2: 9200, q3: 10500, q4: 7800, trend: 'up' },
+  { category: 'Clothing', q1: 6200, q2: 6800, q3: 7200, q4: 9500, trend: 'up' },
+  { category: 'Food & Beverage', q1: 4500, q2: 5200, q3: 5800, q4: 6500, trend: 'up' },
+  { category: 'Home & Garden', q1: 3800, q2: 4200, q3: 4800, q4: 5200, trend: 'up' },
+  { category: 'Automotive', q1: 2800, q2: 3200, q3: 3500, q4: 3800, trend: 'up' },
+]
+
+// Seasonal trend data with all 4 quarters
+const seasonalData = [
+  { quarter: 'Q1 (Jan-Mar)', scans: 145000, growth: 8.5, trend: 'up' },
+  { quarter: 'Q2 (Apr-Jun)', scans: 186000, growth: 28.3, trend: 'up' },
+  { quarter: 'Q3 (Jul-Sep)', scans: 210000, growth: 12.9, trend: 'up' },
+  { quarter: 'Q4 (Oct-Dec)', scans: 195000, growth: -7.1, trend: 'down' },
+]
+
 export default function Analytics() {
   const { isDark } = useTheme()
+  const [timeView, setTimeView] = useState<'daily' | 'hourly'>('daily')
+  const [forecastPeriod, setForecastPeriod] = useState<'firstHalf' | 'secondHalf'>('secondHalf')
 
   const tooltipStyle = {
     backgroundColor: isDark ? 'rgb(31, 41, 55)' : 'rgb(255, 255, 255)',
@@ -173,11 +253,41 @@ export default function Analytics() {
         </div>
 
         <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Busiest Hours</h3>
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Busiest Times</h3>
+            <div className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+              <button
+                onClick={() => setTimeView('daily')}
+                className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+                  timeView === 'daily'
+                    ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                }`}
+              >
+                Daily
+              </button>
+              <button
+                onClick={() => setTimeView('hourly')}
+                className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+                  timeView === 'hourly'
+                    ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+                }`}
+              >
+                Hourly
+              </button>
+            </div>
+          </div>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={hourlyData}>
+            <BarChart data={timeView === 'daily' ? dailyData : hourlyData}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
-              <XAxis dataKey="hour" stroke={axisStroke} />
+              <XAxis 
+                dataKey={timeView === 'daily' ? 'day' : 'hour'} 
+                stroke={axisStroke}
+                angle={-45}
+                textAnchor="end"
+                height={80}
+              />
               <YAxis stroke={axisStroke} />
               <Tooltip 
                 contentStyle={tooltipStyle}
@@ -188,9 +298,37 @@ export default function Analytics() {
                   return [value, name];
                 }}
               />
-              <Bar dataKey="scans" fill="#3b82f6" />
+              <Bar 
+                dataKey="scans" 
+                fill={timeView === 'daily' ? '#3b82f6' : '#10b981'}
+                radius={[4, 4, 0, 0]}
+              />
             </BarChart>
           </ResponsiveContainer>
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                {timeView === 'daily' ? 'Peak Day' : 'Peak Hour'}
+              </h4>
+              <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+                {timeView === 'daily' ? 'Friday' : '12PM'}
+              </p>
+              <p className="text-xs text-blue-700 dark:text-blue-300">
+                {timeView === 'daily' ? '10,200 scans' : '1,200 scans'}
+              </p>
+            </div>
+            <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+              <h4 className="text-sm font-medium text-green-900 dark:text-green-100">
+                {timeView === 'daily' ? 'Lowest Day' : 'Lowest Hour'}
+              </h4>
+              <p className="text-lg font-bold text-green-600 dark:text-green-400">
+                {timeView === 'daily' ? 'Sunday' : '6AM'}
+              </p>
+              <p className="text-xs text-green-700 dark:text-green-300">
+                {timeView === 'daily' ? '6,200 scans' : '120 scans'}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -209,6 +347,45 @@ export default function Analytics() {
               <Line type="monotone" dataKey="savings" stroke="#10b981" strokeWidth={2} name="Savings" />
             </LineChart>
           </ResponsiveContainer>
+        </div>
+
+        <div className="card">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Cost Breakdown & Savings</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <ComposedChart data={costSavingsData}>
+              <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+              <XAxis dataKey="month" stroke={axisStroke} />
+              <YAxis yAxisId="left" stroke={axisStroke} />
+              <YAxis yAxisId="right" orientation="right" stroke={axisStroke} />
+              <Tooltip 
+                contentStyle={tooltipStyle}
+                formatter={(value, name) => {
+                  if (name === 'timeSaved') {
+                    return [`${value} hrs`, 'Time Saved'];
+                  }
+                  if (name === 'efficiency') {
+                    return [`${value}%`, 'Efficiency'];
+                  }
+                  return [`$${value.toLocaleString()}`, name];
+                }}
+              />
+              <Bar yAxisId="left" dataKey="cost" fill="#ef4444" name="Cost" radius={[4, 4, 0, 0]} />
+              <Bar yAxisId="left" dataKey="savings" fill="#10b981" name="Savings" radius={[4, 4, 0, 0]} />
+              <Line yAxisId="right" type="monotone" dataKey="efficiency" stroke="#8b5cf6" strokeWidth={2} name="Efficiency" />
+            </ComposedChart>
+          </ResponsiveContainer>
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+              <h4 className="text-sm font-medium text-green-900 dark:text-green-100">Total Savings</h4>
+              <p className="text-lg font-bold text-green-600 dark:text-green-400">$68,250</p>
+              <p className="text-xs text-green-700 dark:text-green-300">vs Manual Process</p>
+            </div>
+            <div className="text-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+              <h4 className="text-sm font-medium text-purple-900 dark:text-purple-100">Efficiency Rate</h4>
+              <p className="text-lg font-bold text-purple-600 dark:text-purple-400">92.8%</p>
+              <p className="text-xs text-purple-700 dark:text-purple-300">Current Month</p>
+            </div>
+          </div>
         </div>
 
         <div className="card">
@@ -307,24 +484,161 @@ export default function Analytics() {
       {/* Seasonal Trends */}
       <div className="card">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Seasonal Trend Analysis</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-            <h4 className="font-medium text-blue-900 dark:text-blue-100">Q1 (Jan-Mar)</h4>
-            <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-2">145K</p>
-            <p className="text-sm text-blue-700 dark:text-blue-300">Total Scans</p>
-            <p className="text-xs text-blue-600 dark:text-blue-400 mt-1">+8.5% vs previous Q1</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {seasonalData.map((quarter, index) => (
+            <div key={quarter.quarter} className={`text-center p-4 rounded-lg border ${
+              index === 0 ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' :
+              index === 1 ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800' :
+              index === 2 ? 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800' :
+              'bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800'
+            }`}>
+              <h4 className={`font-medium ${
+                index === 0 ? 'text-blue-900 dark:text-blue-100' :
+                index === 1 ? 'text-green-900 dark:text-green-100' :
+                index === 2 ? 'text-purple-900 dark:text-purple-100' :
+                'text-orange-900 dark:text-orange-100'
+              }`}>{quarter.quarter}</h4>
+              <p className={`text-2xl font-bold mt-2 ${
+                index === 0 ? 'text-blue-600 dark:text-blue-400' :
+                index === 1 ? 'text-green-600 dark:text-green-400' :
+                index === 2 ? 'text-purple-600 dark:text-purple-400' :
+                'text-orange-600 dark:text-orange-400'
+              }`}>{(quarter.scans / 1000).toFixed(0)}K</p>
+              <p className={`text-sm ${
+                index === 0 ? 'text-blue-700 dark:text-blue-300' :
+                index === 1 ? 'text-green-700 dark:text-green-300' :
+                index === 2 ? 'text-purple-700 dark:text-purple-300' :
+                'text-orange-700 dark:text-orange-300'
+              }`}>Total Scans</p>
+              <p className={`text-xs mt-1 ${
+                index === 0 ? 'text-blue-600 dark:text-blue-400' :
+                index === 1 ? 'text-green-600 dark:text-green-400' :
+                index === 2 ? 'text-purple-600 dark:text-purple-400' :
+                'text-orange-600 dark:text-orange-400'
+              }`}>
+                {quarter.growth > 0 ? '+' : ''}{quarter.growth}% vs previous
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Inventory Forecasting */}
+      <div className="card">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Inventory Forecasting & Demand Planning</h3>
+          <div className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+            <button
+              onClick={() => setForecastPeriod('firstHalf')}
+              className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+                forecastPeriod === 'firstHalf'
+                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+              }`}
+            >
+              Jan-Jun
+            </button>
+            <button
+              onClick={() => setForecastPeriod('secondHalf')}
+              className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+                forecastPeriod === 'secondHalf'
+                  ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
+                  : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
+              }`}
+            >
+              Jul-Dec
+            </button>
           </div>
-          <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
-            <h4 className="font-medium text-green-900 dark:text-green-100">Q2 (Apr-Jun)</h4>
-            <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-2">186K</p>
-            <p className="text-sm text-green-700 dark:text-green-300">Total Scans</p>
-            <p className="text-xs text-green-600 dark:text-green-400 mt-1">+28.3% vs Q1</p>
+        </div>
+        <ResponsiveContainer width="100%" height={300}>
+          <ComposedChart data={forecastPeriod === 'firstHalf' ? forecastingDataFull.slice(0, 6) : forecastingDataFull.slice(6, 12)}>
+            <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+            <XAxis dataKey="month" stroke={axisStroke} />
+            <YAxis stroke={axisStroke} />
+            <Tooltip 
+              contentStyle={tooltipStyle}
+              formatter={(value, name) => {
+                if (name === 'forecastedDemand') {
+                  return [`${value.toLocaleString()} units`, 'Forecasted Demand'];
+                }
+                if (name === 'currentStock') {
+                  return [`${value.toLocaleString()} units`, 'Current Stock'];
+                }
+                if (name === 'reorderPoint') {
+                  return [`${value.toLocaleString()} units`, 'Reorder Point'];
+                }
+                if (name === 'confidence') {
+                  return [`${value}%`, 'Confidence'];
+                }
+                return [value, name];
+              }}
+            />
+            <Bar dataKey="forecastedDemand" fill="#3b82f6" name="Forecasted Demand" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="currentStock" fill="#10b981" name="Current Stock" radius={[4, 4, 0, 0]} />
+            <Line type="monotone" dataKey="reorderPoint" stroke="#ef4444" strokeWidth={2} name="Reorder Point" />
+            <Line type="monotone" dataKey="confidence" stroke="#f59e0b" strokeWidth={2} name="Confidence" />
+          </ComposedChart>
+        </ResponsiveContainer>
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100">
+              {forecastPeriod === 'firstHalf' ? 'Next Month Demand' : 'Next Month Demand'}
+            </h4>
+            <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+              {forecastPeriod === 'firstHalf' ? '9,200 units' : '14,200 units'}
+            </p>
+            <p className="text-xs text-blue-700 dark:text-blue-300">
+              {forecastPeriod === 'firstHalf' ? '88% confidence' : '85% confidence'}
+            </p>
           </div>
-          <div className="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
-            <h4 className="font-medium text-purple-900 dark:text-purple-100">Forecast Q3</h4>
-            <p className="text-2xl font-bold text-purple-600 dark:text-purple-400 mt-2">210K</p>
-            <p className="text-sm text-purple-700 dark:text-purple-300">Expected Scans</p>
-            <p className="text-xs text-purple-600 dark:text-purple-400 mt-1">+12.9% vs Q2</p>
+          <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
+            <h4 className="text-sm font-medium text-green-900 dark:text-green-100">Current Stock Level</h4>
+            <p className="text-lg font-bold text-green-600 dark:text-green-400">
+              {forecastPeriod === 'firstHalf' ? '8,500 units' : '12,500 units'}
+            </p>
+            <p className="text-xs text-green-700 dark:text-green-300">Available inventory</p>
+          </div>
+          <div className="text-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
+            <h4 className="text-sm font-medium text-red-900 dark:text-red-100">Reorder Alert</h4>
+            <p className="text-lg font-bold text-red-600 dark:text-red-400">
+              {forecastPeriod === 'firstHalf' ? '6,000 units' : '8,000 units'}
+            </p>
+            <p className="text-xs text-red-700 dark:text-red-300">Trigger point</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Seasonal Inventory Patterns */}
+      <div className="card">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Seasonal Inventory Patterns by Category</h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={seasonalInventoryData}>
+            <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
+            <XAxis dataKey="category" stroke={axisStroke} />
+            <YAxis stroke={axisStroke} />
+            <Tooltip 
+              contentStyle={tooltipStyle}
+              formatter={(value, name) => {
+                return [`${value.toLocaleString()} units`, name];
+              }}
+            />
+            <Bar dataKey="q1" fill="#3b82f6" name="Q1" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="q2" fill="#10b981" name="Q2" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="q3" fill="#f59e0b" name="Q3" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="q4" fill="#ef4444" name="Q4" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+        <div className="mt-4">
+          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-3">Key Insights:</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+              <h5 className="text-sm font-medium text-yellow-900 dark:text-yellow-100">Peak Season</h5>
+              <p className="text-sm text-yellow-700 dark:text-yellow-300">Electronics peak in Q3, Clothing in Q4</p>
+            </div>
+            <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+              <h5 className="text-sm font-medium text-blue-900 dark:text-blue-100">Stock Planning</h5>
+              <p className="text-sm text-blue-700 dark:text-blue-300">Increase inventory 15-20% for peak quarters</p>
+            </div>
           </div>
         </div>
       </div>
