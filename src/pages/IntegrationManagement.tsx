@@ -607,7 +607,7 @@ export default function IntegrationManagement() {
               </button>
             </div>
             <div className="space-y-6">
-              {subscriptions.map((subscription) => (
+              {subscriptions.filter(s => s.status === 'active').map((subscription) => (
                 <div key={subscription.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
                   <div className="flex items-center justify-between mb-4">
                     <div>
@@ -617,14 +617,8 @@ export default function IntegrationManagement() {
                       </p>
                     </div>
                     <div className="flex items-center space-x-3">
-                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
-                        subscription.status === 'active' 
-                          ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
-                          : subscription.status === 'expired'
-                          ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
-                          : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300'
-                      }`}>
-                        {subscription.status.charAt(0).toUpperCase() + subscription.status.slice(1)}
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
+                        Active
                       </span>
                       <button className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                         <Edit className="h-4 w-4" />
@@ -700,41 +694,120 @@ export default function IntegrationManagement() {
                       Manage Settings
                     </button>
                     <button className="flex-1 px-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                      <Calendar className="h-4 w-4 mr-2" />
-                      Billing History
-                    </button>
-                    <button className="flex-1 px-4 py-2 text-sm border border-red-300 dark:border-red-600 rounded-lg text-red-700 dark:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/20">
-                      <Trash2 className="h-4 w-4 mr-2" />
-                      Cancel
+                      <BarChart3 className="h-4 w-4 mr-2" />
+                      View Analytics
                     </button>
                   </div>
                 </div>
               ))}
+              
+              {subscriptions.filter(s => s.status === 'active').length === 0 && (
+                <div className="text-center py-8">
+                  <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-2">No Active Subscriptions</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-4">You don't have any active subscriptions at the moment.</p>
+                  <button className="btn-primary">Get Started</button>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Auto-Renewal Settings */}
+          {/* Auto Renewal Settings */}
           <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Auto-Renewal Settings</h3>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Auto Renewal Settings</h3>
             <div className="space-y-4">
-              {subscriptions.filter(s => s.status === 'active').map((subscription) => (
-                <div key={subscription.id} className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100">{subscription.name}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Next renewal: {subscription.endDate.toLocaleDateString()}
-                    </p>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <span className={`text-sm ${subscription.autoRenewal ? 'text-green-600 dark:text-green-400' : 'text-gray-600 dark:text-gray-400'}`}>
-                      {subscription.autoRenewal ? 'Auto-renewal enabled' : 'Auto-renewal disabled'}
-                    </span>
-                    <button className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                      {subscription.autoRenewal ? 'Disable' : 'Enable'}
-                    </button>
-                  </div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100">Auto Renewal</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Automatically renew subscriptions when they expire</p>
                 </div>
-              ))}
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" className="sr-only peer" defaultChecked />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600 dark:bg-gray-700"></div>
+                </label>
+              </div>
+              
+              <div className="flex items-center justify-between">
+                <div>
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100">Low Balance Alerts</h4>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Get notified when balance is low for auto-renewal</p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" className="sr-only peer" defaultChecked />
+                  <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600 dark:bg-gray-700"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* Subscription History */}
+          <div className="card">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Subscription History</h3>
+              <button className="btn-secondary flex items-center">
+                <Download className="h-4 w-4 mr-2" />
+                Download History
+              </button>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                <thead className="bg-gray-50 dark:bg-gray-800">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Plan Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Start Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      End Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Cost
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                      Scans Used
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
+                  {subscriptions.map((subscription) => (
+                    <tr key={subscription.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                        {subscription.name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          subscription.status === 'active' 
+                            ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
+                            : subscription.status === 'expired'
+                            ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300'
+                            : subscription.status === 'cancelled'
+                            ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300'
+                            : 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300'
+                        }`}>
+                          {subscription.status.charAt(0).toUpperCase() + subscription.status.slice(1)}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        {subscription.startDate.toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        {subscription.endDate.toLocaleDateString()}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        ${subscription.cost}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                        {subscription.scansUsed.toLocaleString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

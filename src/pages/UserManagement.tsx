@@ -276,18 +276,17 @@ export default function UserManagement() {
   const [activeTab, setActiveTab] = useState<'profile' | 'payments' | 'subscription' | 'usage' | 'sessions' | 'preferences'>('profile')
   const [showAddPayment, setShowAddPayment] = useState(false)
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false)
-  
-  // State for preferences toggles
+  const [isSubscriptionPaused, setIsSubscriptionPaused] = useState(false)
   const [preferences, setPreferences] = useState({
     notifications: {
       email: true,
-      sms: false,
+      sms: true,
       push: true,
       billing: true,
       usage: true
     },
     privacy: {
-      dataSharing: true,
+      dataSharing: false,
       analytics: true,
       marketing: false
     }
@@ -329,7 +328,20 @@ export default function UserManagement() {
   }
 
   const handleSubscriptionPause = () => {
-    setShowSubscriptionModal(true)
+    if (isSubscriptionPaused) {
+      // Resume subscription
+      setIsSubscriptionPaused(false)
+      console.log('Subscription resumed')
+    } else {
+      // Show pause confirmation modal
+      setShowSubscriptionModal(true)
+    }
+  }
+
+  const handlePauseConfirm = () => {
+    setIsSubscriptionPaused(true)
+    setShowSubscriptionModal(false)
+    console.log('Subscription paused')
   }
 
   // Toggle handlers for preferences
@@ -643,12 +655,26 @@ export default function UserManagement() {
               <div className="flex space-x-3">
                 <button 
                   onClick={handleSubscriptionPause}
-                  className="px-4 py-2 text-sm border border-yellow-300 dark:border-yellow-600 rounded-lg text-yellow-700 dark:text-yellow-300 hover:bg-yellow-50 dark:hover:bg-yellow-900/20"
+                  className={`px-4 py-2 text-sm border rounded-lg flex items-center ${
+                    isSubscriptionPaused
+                      ? 'border-green-300 dark:border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-900/20'
+                      : 'border-yellow-300 dark:border-yellow-600 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-50 dark:hover:bg-yellow-900/20'
+                  }`}
                 >
-                  <Pause className="h-4 w-4 mr-2" />
-                  Pause
+                  {isSubscriptionPaused ? (
+                    <Play className="h-4 w-4 mr-2" />
+                  ) : (
+                    <Pause className="h-4 w-4 mr-2" />
+                  )}
+                  {isSubscriptionPaused ? 'Continue' : 'Pause'}
                 </button>
-                <button className="btn-primary flex items-center">
+                <button 
+                  className="btn-primary flex items-center"
+                  onClick={() => {
+                    // Navigate to Integration Management subscriptions tab
+                    window.location.href = '/integration-management?tab=subscriptions'
+                  }}
+                >
                   <Edit className="h-4 w-4 mr-2" />
                   Manage
                 </button>
@@ -807,14 +833,14 @@ export default function UserManagement() {
               {usageStats.favoriteCategories.map((category, index) => (
                 <Tooltip key={index} content={`${category.count.toLocaleString()} scans in ${category.name} category`}>
                   <div className="flex items-center justify-between cursor-help">
-                    <div className="flex items-center space-x-3">
+                    <div className="flex items-center space-x-3 mr-2.5">
                       <div className="w-3 h-3 rounded-full" style={{ 
                         backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'][index % 4] 
                       }} />
                       <span className="font-medium text-gray-900 dark:text-gray-100">{category.name}</span>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                    <div className="flex items-center space-x-2.5">
+                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2 mr-2.5">
                         <div
                           className="h-2 rounded-full transition-all duration-300"
                           style={{ 
@@ -1002,7 +1028,7 @@ export default function UserManagement() {
                 Cancel
               </button>
               <button
-                onClick={() => setShowSubscriptionModal(false)}
+                onClick={handlePauseConfirm}
                 className="flex-1 px-4 py-2 text-sm bg-yellow-600 text-white rounded-lg hover:bg-yellow-700"
               >
                 Pause Subscription

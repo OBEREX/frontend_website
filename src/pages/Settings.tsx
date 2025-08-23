@@ -286,10 +286,7 @@ export default function Settings() {
               <CreditCard className="mr-3 h-5 w-5" />
               Billing & Subscription
             </a>
-            <a href="#integrations" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-800">
-              <Smartphone className="mr-3 h-5 w-5" />
-              Integrations
-            </a>
+
             <a href="#appearance" className="flex items-center px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-800">
               <Palette className="mr-3 h-5 w-5" />
               Appearance
@@ -455,7 +452,15 @@ export default function Settings() {
                   <h4 className="font-medium text-gray-900 dark:text-gray-100">Payment Method</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">M-Pesa •••• 1234</p>
                 </div>
-                <button className="btn-secondary">Update</button>
+                <button 
+                  className="btn-secondary"
+                  onClick={() => {
+                    // Navigate to User Management payment methods tab
+                    window.location.href = '/user-management?tab=payment-methods'
+                  }}
+                >
+                  Update
+                </button>
               </div>
               
               <div className="flex items-center justify-between">
@@ -482,52 +487,7 @@ export default function Settings() {
             </div>
           </div>
 
-          {/* Integrations */}
-          <div id="integrations" className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Integrations</h3>
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                <div className="flex items-center">
-                  <div className="h-10 w-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
-                    <Smartphone className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-                  </div>
-                  <div className="ml-4">
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100">Mobile App</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Connect your mobile scanning device</p>
-                  </div>
-                </div>
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300">
-                  Connected
-                </span>
-              </div>
-              
-              <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                <div className="flex items-center">
-                  <div className="h-10 w-10 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                    <Upload className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-                  </div>
-                  <div className="ml-4">
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100">Inventory System</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Sync with your existing inventory software</p>
-                  </div>
-                </div>
-                <button className="btn-secondary">Connect</button>
-              </div>
-              
-              <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
-                <div className="flex items-center">
-                  <div className="h-10 w-10 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                    <CreditCard className="h-5 w-5 text-gray-600 dark:text-gray-400" />
-                  </div>
-                  <div className="ml-4">
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100">Payment Gateway</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Connect additional payment methods</p>
-                  </div>
-                </div>
-                <button className="btn-secondary">Connect</button>
-              </div>
-            </div>
-          </div>
+
 
           {/* Appearance */}
           <div id="appearance" className="card">
