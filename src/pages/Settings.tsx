@@ -9,6 +9,7 @@ import {
   Save
 } from 'lucide-react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
 
 // Theme options
@@ -235,6 +236,7 @@ const timezones = [
 ]
 
 export default function Settings() {
+  const navigate = useNavigate()
   const { theme, setTheme } = useTheme()
   const [selectedLanguage, setSelectedLanguage] = useState('en')
   const [selectedTimezone, setSelectedTimezone] = useState('Africa/Nairobi')
@@ -454,7 +456,7 @@ export default function Settings() {
                   className="btn-secondary"
                   onClick={() => {
                     // Navigate to User Management payment methods tab
-                    window.location.href = '/user-management?tab=payment-methods'
+                    navigate('/user-management?tab=payment-methods')
                   }}
                 >
                   Update
