@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import {
-  CreditCard, Smartphone, Wifi, WifiOff, Download, Upload, 
+  CreditCard, WifiOff, Download, 
   Settings, RefreshCw, AlertCircle, CheckCircle, Clock, 
-  DollarSign, Calendar, BarChart3, FileText, Receipt,
-  Plus, Edit, Trash2, Eye, Zap, Shield, Globe,
-  TrendingUp, TrendingDown, Activity, Database, Cloud,
+  DollarSign, Calendar, BarChart3, Receipt,
+  Plus, Edit, Trash2, Eye, Activity,
   Smartphone as MobileMoney, CreditCard as CardIcon,
   Wifi as OnlineIcon, WifiOff as OfflineIcon
 } from 'lucide-react'
-import { useTheme } from '../contexts/ThemeContext'
+
 
 // Types
 interface PaymentMethod {
@@ -208,9 +207,7 @@ const offlinePayments: OfflinePayment[] = [
 ]
 
 export default function IntegrationManagement() {
-  const { isDark } = useTheme()
   const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'subscriptions' | 'usage' | 'offline'>('overview')
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState<string>('')
   const [showSyncModal, setShowSyncModal] = useState(false)
   const [showExportDropdown, setShowExportDropdown] = useState(false)
   const exportDropdownRef = React.useRef<HTMLDivElement>(null)

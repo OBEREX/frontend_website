@@ -1,12 +1,8 @@
 import { 
-  Calendar, 
   Clock, 
   DollarSign, 
   TrendingUp, 
-  BarChart3,
-  PieChart,
-  Target,
-  Users,
+
   Smartphone,
   Download
 } from 'lucide-react'
@@ -39,25 +35,7 @@ const monthlyData = [
   { month: 'Jun', scans: 67000, cost: 3350, savings: 10050, accuracy: 98.7 },
 ]
 
-const timeData = [
-  // Daily data
-  { period: 'Monday', scans: 8500, accuracy: 98.2, type: 'day' },
-  { period: 'Tuesday', scans: 9200, accuracy: 98.5, type: 'day' },
-  { period: 'Wednesday', scans: 9800, accuracy: 98.7, type: 'day' },
-  { period: 'Thursday', scans: 9500, accuracy: 98.4, type: 'day' },
-  { period: 'Friday', scans: 10200, accuracy: 98.9, type: 'day' },
-  { period: 'Saturday', scans: 7800, accuracy: 97.8, type: 'day' },
-  { period: 'Sunday', scans: 6200, accuracy: 97.5, type: 'day' },
-  // Hourly data
-  { period: '6AM', scans: 120, accuracy: 97.5, type: 'hour' },
-  { period: '8AM', scans: 450, accuracy: 98.1, type: 'hour' },
-  { period: '10AM', scans: 890, accuracy: 98.3, type: 'hour' },
-  { period: '12PM', scans: 1200, accuracy: 98.7, type: 'hour' },
-  { period: '2PM', scans: 1100, accuracy: 98.5, type: 'hour' },
-  { period: '4PM', scans: 950, accuracy: 98.2, type: 'hour' },
-  { period: '6PM', scans: 680, accuracy: 97.9, type: 'hour' },
-  { period: '8PM', scans: 320, accuracy: 97.6, type: 'hour' },
-]
+
 
 // Separate data for better visualization
 const dailyData = [
@@ -401,7 +379,7 @@ export default function Analytics() {
                 paddingAngle={5}
                 dataKey="usage"
               >
-                {paymentData.map((entry, index) => (
+                {paymentData.map((_, index) => (
                   <Cell key={`cell-${index}`} fill={['#3b82f6', '#10b981', '#f59e0b', '#8b5cf6'][index]} />
                 ))}
               </Pie>
