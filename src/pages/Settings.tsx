@@ -3,11 +3,9 @@ import {
   Bell, 
   Shield, 
   CreditCard, 
-  Smartphone,
   Globe,
   Palette,
   Download,
-  Upload,
   Save
 } from 'lucide-react'
 import { useState } from 'react'
