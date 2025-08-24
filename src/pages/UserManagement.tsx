@@ -672,7 +672,7 @@ export default function UserManagement() {
                   className="btn-primary flex items-center"
                   onClick={() => {
                     // Navigate to Integration Management subscriptions tab
-                    window.location.href = '/integration-management?tab=subscriptions'
+                    window.location.href = '/integration?tab=subscriptions'
                   }}
                 >
                   <Edit className="h-4 w-4 mr-2" />

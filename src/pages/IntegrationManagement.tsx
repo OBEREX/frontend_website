@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   CreditCard, Smartphone, Wifi, WifiOff, Download, Upload, 
   Settings, RefreshCw, AlertCircle, CheckCircle, Clock, 
@@ -228,6 +228,15 @@ export default function IntegrationManagement() {
       document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [])
+
+  // Handle URL query parameters for tab
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialTab = urlParams.get('tab');
+    if (initialTab && ['overview', 'payments', 'subscriptions', 'usage', 'offline'].includes(initialTab)) {
+      setActiveTab(initialTab as any);
+    }
+  }, []);
 
   const getStatusColor = (status: string) => {
     switch (status) {
