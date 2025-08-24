@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
   User, CreditCard, Settings, BarChart3, Calendar,
   DollarSign, Activity, History,
@@ -270,6 +271,7 @@ const usageStats: UsageStats = {
 }
 
 export default function UserManagement() {
+  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<'profile' | 'payments' | 'subscription' | 'usage' | 'sessions' | 'preferences'>('profile')
 
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false)
@@ -288,6 +290,13 @@ export default function UserManagement() {
       marketing: false
     }
   })
+
+  useEffect(() => {
+    const queryTab = new URLSearchParams(window.location.search).get('tab')
+    if (queryTab) {
+      setActiveTab(queryTab as any)
+    }
+  }, [])
 
   const getTierIcon = (tier: string) => {
     switch (tier) {
@@ -661,7 +670,7 @@ export default function UserManagement() {
                   className="btn-primary flex items-center"
                   onClick={() => {
                     // Navigate to Integration Management subscriptions tab
-                    window.location.href = '/integration-management?tab=subscriptions'
+                    navigate('/integration?tab=subscriptions')
                   }}
                 >
                   <Edit className="h-4 w-4 mr-2" />
