@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import {
-  User, CreditCard, Smartphone, Settings, BarChart3, Calendar,
-  DollarSign, Activity, History, Shield, Bell, Zap, Clock,
-  CheckCircle, AlertCircle, Plus, Edit, Trash2, Eye, Download,
-  Pause, Play, RefreshCw, TrendingUp, TrendingDown, Target,
-  Award, Crown, Star, Users, Key, Lock, Unlock, Gift,
-  Smartphone as MobileMoney, CreditCard as CardIcon,
-  Wifi as OnlineIcon, WifiOff as OfflineIcon, HelpCircle
+  User, CreditCard, Settings, BarChart3, Calendar,
+  DollarSign, Activity, History,
+  CheckCircle, Plus, Edit, Trash2, Eye, Download,
+  Pause, Play, Crown, Award, Star, Target, Zap,
+  Smartphone as MobileMoney, CreditCard as CardIcon
 } from 'lucide-react'
-import { useTheme } from '../contexts/ThemeContext'
+
 
 // Tooltip Component
 const Tooltip = ({ children, content, position = 'top' }: { children: React.ReactNode; content: string; position?: 'top' | 'bottom' | 'left' | 'right' }) => {
@@ -272,9 +270,8 @@ const usageStats: UsageStats = {
 }
 
 export default function UserManagement() {
-  const { isDark } = useTheme()
   const [activeTab, setActiveTab] = useState<'profile' | 'payments' | 'subscription' | 'usage' | 'sessions' | 'preferences'>('profile')
-  const [showAddPayment, setShowAddPayment] = useState(false)
+
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false)
   const [isSubscriptionPaused, setIsSubscriptionPaused] = useState(false)
   const [preferences, setPreferences] = useState({
@@ -310,14 +307,7 @@ export default function UserManagement() {
     }
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'active': return 'text-green-600 dark:text-green-400'
-      case 'paused': return 'text-yellow-600 dark:text-yellow-400'
-      case 'cancelled': return 'text-red-600 dark:text-red-400'
-      default: return 'text-gray-600 dark:text-gray-400'
-    }
-  }
+
 
   const handlePaymentModeChange = (mode: 'pay-per-scan' | 'subscription') => {
     console.log(`Payment mode changed to: ${mode}`)
@@ -577,7 +567,6 @@ export default function UserManagement() {
             <div className="flex items-center justify-between mb-6">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Payment Methods</h3>
               <button 
-                onClick={() => setShowAddPayment(true)}
                 className="btn-primary flex items-center"
               >
                 <Plus className="h-4 w-4 mr-2" />

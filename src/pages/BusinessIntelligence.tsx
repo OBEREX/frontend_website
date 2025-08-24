@@ -4,17 +4,9 @@ import {
   DollarSign, 
   Target, 
   BarChart3,
-  PieChart,
-  Users,
   Smartphone,
-  Zap,
-  Lightbulb,
-  AlertCircle,
   CheckCircle,
-  Download,
-  Calendar,
-  TrendingDown,
-  Activity
+  Download
 } from 'lucide-react'
 import { 
   LineChart, 
@@ -26,11 +18,6 @@ import {
   ResponsiveContainer, 
   BarChart, 
   Bar, 
-  AreaChart, 
-  Area,
-  ComposedChart,
-  ScatterChart,
-  Scatter,
   PieChart as RechartsPieChart,
   Pie,
   Cell
@@ -78,14 +65,7 @@ const costOptimization = [
   { month: 'Jun', subscription: 500, payPerScan: 3350, recommended: 'subscription' },
 ]
 
-const timeSavings = [
-  { cycle: 'Cycle 1', hoursSaved: 6.5, accuracy: 97.2, efficiency: 85 },
-  { cycle: 'Cycle 2', hoursSaved: 7.2, accuracy: 97.8, efficiency: 88 },
-  { cycle: 'Cycle 3', hoursSaved: 6.8, accuracy: 98.1, efficiency: 87 },
-  { cycle: 'Cycle 4', hoursSaved: 8.1, accuracy: 98.3, efficiency: 92 },
-  { cycle: 'Cycle 5', hoursSaved: 7.9, accuracy: 98.5, efficiency: 91 },
-  { cycle: 'Cycle 6', hoursSaved: 8.5, accuracy: 98.7, efficiency: 94 },
-]
+
 
 const accuracyTracking = [
   { month: 'Jan', electronics: 97.2, clothing: 96.8, food: 95.5, home: 96.1 },

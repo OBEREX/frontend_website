@@ -9,8 +9,7 @@ import {
   User,
   Smartphone
 } from 'lucide-react'
-import { useTheme } from '../contexts/ThemeContext'
-import { cn } from '../utils/cn'
+
 
 interface LayoutProps {
   children: React.ReactNode
@@ -27,7 +26,6 @@ const navigation = [
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
-  const { isDark } = useTheme()
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
