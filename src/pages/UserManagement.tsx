@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import {
   User, CreditCard, Settings, BarChart3, Calendar,
   DollarSign, Activity, History,
@@ -272,6 +272,7 @@ const usageStats: UsageStats = {
 
 export default function UserManagement() {
   const navigate = useNavigate()
+  const { tab } = useParams<{ tab: string }>()
   const [activeTab, setActiveTab] = useState<'profile' | 'payments' | 'subscription' | 'usage' | 'sessions' | 'preferences'>('profile')
 
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false)
@@ -292,11 +293,10 @@ export default function UserManagement() {
   })
 
   useEffect(() => {
-    const queryTab = new URLSearchParams(window.location.search).get('tab')
-    if (queryTab) {
-      setActiveTab(queryTab as any)
+    if (tab) {
+      setActiveTab(tab as any)
     }
-  }, [])
+  }, [tab])
 
   const getTierIcon = (tier: string) => {
     switch (tier) {
@@ -367,26 +367,28 @@ export default function UserManagement() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">User Management</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">User Management</h1>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2">
             Manage your profile, payments, subscriptions, and usage preferences
           </p>
         </div>
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2 sm:space-x-3">
           <Tooltip content="Export your user data and usage statistics">
-            <button className="btn-primary flex items-center">
+            <button className="btn-primary flex items-center text-sm sm:text-base">
               <Download className="h-4 w-4 mr-2" />
-              Export Data
+              <span className="hidden sm:inline">Export Data</span>
+              <span className="sm:hidden">Export</span>
             </button>
           </Tooltip>
           <Tooltip content="Manage your account settings and preferences">
-            <button className="btn-primary flex items-center">
+            <button className="btn-primary flex items-center text-sm sm:text-base">
               <Settings className="h-4 w-4 mr-2" />
-              Account Settings
+              <span className="hidden sm:inline">Account Settings</span>
+              <span className="sm:hidden">Settings</span>
             </button>
           </Tooltip>
         </div>
@@ -394,7 +396,7 @@ export default function UserManagement() {
 
       {/* Tab Navigation */}
       <div className="border-b border-gray-200 dark:border-gray-700">
-        <nav className="-mb-px flex space-x-8">
+        <nav className="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto">
           {[
             { id: 'profile', name: 'Profile', icon: User },
             { id: 'payments', name: 'Payment Methods', icon: CreditCard },
@@ -402,19 +404,20 @@ export default function UserManagement() {
             { id: 'usage', name: 'Usage Analytics', icon: BarChart3 },
             { id: 'sessions', name: 'Session History', icon: History },
             { id: 'preferences', name: 'Preferences', icon: Settings }
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === tab.id
+          ].map((tabItem) => (
+            <Link
+              key={tabItem.id}
+              to={`/user-management/${tabItem.id}`}
+              className={`flex items-center py-2 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                activeTab === tabItem.id
                   ? 'border-primary-500 text-primary-600 dark:text-primary-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
               }`}
             >
-              <tab.icon className="h-4 w-4 mr-2" />
-              {tab.name}
-            </button>
+              <tabItem.icon className="h-4 w-4 mr-1 sm:mr-2" />
+              <span className="hidden sm:inline">{tabItem.name}</span>
+              <span className="sm:hidden">{tabItem.name.split(' ')[0]}</span>
+            </Link>
           ))}
         </nav>
       </div>
@@ -666,16 +669,12 @@ export default function UserManagement() {
                   )}
                   {isSubscriptionPaused ? 'Continue' : 'Pause'}
                 </button>
-                <button 
-                  className="btn-primary flex items-center"
-                  onClick={() => {
-                    // Navigate to Integration Management subscriptions tab
-                    navigate('/integration?tab=subscriptions')
-                  }}
-                >
-                  <Edit className="h-4 w-4 mr-2" />
-                  Manage
-                </button>
+                <Link to="/integration/subscriptions">
+                  <button className="btn-primary flex items-center">
+                    <Edit className="h-4 w-4 mr-2" />
+                    Manage
+                  </button>
+                </Link>
               </div>
             </div>
 

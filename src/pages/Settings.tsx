@@ -9,7 +9,7 @@ import {
   Save
 } from 'lucide-react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
 
 // Theme options
@@ -452,15 +452,11 @@ export default function Settings() {
                   <h4 className="font-medium text-gray-900 dark:text-gray-100">Payment Method</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">M-Pesa •••• 1234</p>
                 </div>
-                <button 
-                  className="btn-secondary"
-                  onClick={() => {
-                    // Navigate to User Management payment methods tab
-                    navigate('/user-management?tab=payment-methods')
-                  }}
-                >
-                  Update
-                </button>
+                <Link to="/user-management/payments">
+                  <button className="btn-secondary">
+                    Update
+                  </button>
+                </Link>
               </div>
               
               <div className="flex items-center justify-between">

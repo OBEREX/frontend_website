@@ -131,7 +131,7 @@ const seasonalData = [
 export default function Analytics() {
   const { isDark } = useTheme()
   const [timeView, setTimeView] = useState<'daily' | 'hourly'>('daily')
-  const [forecastPeriod, setForecastPeriod] = useState<'firstHalf' | 'secondHalf'>('secondHalf')
+  const [forecastPeriod, setForecastPeriod] = useState<'firstHalf' | 'secondHalf'>('firstHalf')
 
   const tooltipStyle = {
     backgroundColor: isDark ? 'rgb(31, 41, 55)' : 'rgb(255, 255, 255)',
@@ -145,24 +145,22 @@ export default function Analytics() {
   const gridStroke = isDark ? '#374151' : '#E5E7EB'
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Analytics & Reporting</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Comprehensive insights into your inventory management performance
-          </p>
-        </div>
-        <button className="btn-primary flex items-center">
-          <Download className="h-4 w-4 mr-2" />
-          Export Report
-        </button>
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">Analytics & Reporting</h1>
+        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2">
+          Comprehensive insights into inventory management performance and trends
+        </p>
       </div>
+      <button className="btn-primary flex items-center">
+        <Download className="h-4 w-4 mr-2" />
+        Export Report
+      </button>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="card">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="card p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Monthly Scans</p>
@@ -173,7 +171,7 @@ export default function Analytics() {
           </div>
         </div>
         
-        <div className="card">
+        <div className="card p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Cost per Scan</p>
@@ -184,7 +182,7 @@ export default function Analytics() {
           </div>
         </div>
         
-        <div className="card">
+        <div className="card p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Time Saved</p>
@@ -195,7 +193,7 @@ export default function Analytics() {
           </div>
         </div>
         
-        <div className="card">
+        <div className="card p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-gray-600 dark:text-gray-400">ROI</p>
@@ -208,9 +206,9 @@ export default function Analytics() {
       </div>
 
       {/* Monthly Trends */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Monthly Usage Patterns</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+        <div className="card p-4 sm:p-6">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Monthly Usage Patterns</h3>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={monthlyData}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
@@ -230,9 +228,9 @@ export default function Analytics() {
           </ResponsiveContainer>
         </div>
 
-        <div className="card">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Busiest Times</h3>
+        <div className="card p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-4 sm:mb-6">
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">Busiest Times</h3>
             <div className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
               <button
                 onClick={() => setTimeView('daily')}
@@ -311,9 +309,9 @@ export default function Analytics() {
       </div>
 
       {/* Cost Analysis */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">ROI Analysis</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+        <div className="card p-4 sm:p-6">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">ROI Analysis</h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={roiData}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
@@ -327,8 +325,8 @@ export default function Analytics() {
           </ResponsiveContainer>
         </div>
 
-        <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Cost Breakdown & Savings</h3>
+        <div className="card p-4 sm:p-6">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Cost Breakdown & Savings</h3>
           <ResponsiveContainer width="100%" height={300}>
             <ComposedChart data={costSavingsData}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
@@ -366,8 +364,8 @@ export default function Analytics() {
           </div>
         </div>
 
-        <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Payment Method Analysis</h3>
+        <div className="card p-4 sm:p-6">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Payment Method Analysis</h3>
           <ResponsiveContainer width="100%" height={300}>
             <RechartsPieChart>
               <Pie
@@ -409,8 +407,8 @@ export default function Analytics() {
       </div>
 
       {/* Category Performance */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Category Accuracy Improvements</h3>
+      <div className="card p-4 sm:p-6">
+        <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Category Accuracy Improvements</h3>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead className="bg-gray-50 dark:bg-gray-800">
@@ -460,8 +458,8 @@ export default function Analytics() {
       </div>
 
       {/* Seasonal Trends */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Seasonal Trend Analysis</h3>
+      <div className="card p-4 sm:p-6">
+        <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Seasonal Trend Analysis</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {seasonalData.map((quarter, index) => (
             <div key={quarter.quarter} className={`text-center p-4 rounded-lg border ${
@@ -502,8 +500,8 @@ export default function Analytics() {
       </div>
 
       {/* Inventory Forecasting */}
-      <div className="card">
-        <div className="flex items-center justify-between mb-6">
+      <div className="card p-4 sm:p-6">
+        <div className="flex items-center justify-between mb-4 sm:mb-6">
           <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Inventory Forecasting & Demand Planning</h3>
           <div className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
             <button
@@ -587,8 +585,8 @@ export default function Analytics() {
       </div>
 
       {/* Seasonal Inventory Patterns */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Seasonal Inventory Patterns by Category</h3>
+      <div className="card p-4 sm:p-6">
+        <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Seasonal Inventory Patterns by Category</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={seasonalInventoryData}>
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />

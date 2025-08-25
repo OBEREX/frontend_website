@@ -36,7 +36,7 @@
 
 @layer components {
   .card {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6 transition-colors duration-200;
+    @apply bg-white rounded-lg shadow-sm border border-gray-200 transition-colors duration-200;
   }
 
   .dark .card {
@@ -53,6 +53,66 @@
 
   .dark .btn-secondary {
     @apply bg-gray-800 hover:bg-gray-700 text-gray-200 border border-gray-600;
+  }
+
+  /* Responsive text utilities */
+  .text-responsive-sm {
+    @apply text-xs sm:text-sm;
+  }
+
+  .text-responsive-base {
+    @apply text-sm sm:text-base;
+  }
+
+  .text-responsive-lg {
+    @apply text-base sm:text-lg;
+  }
+
+  .text-responsive-xl {
+    @apply text-lg sm:text-xl;
+  }
+
+  .text-responsive-2xl {
+    @apply text-xl sm:text-2xl;
+  }
+
+  .text-responsive-3xl {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  /* Responsive spacing utilities */
+  .space-responsive {
+    @apply space-y-4 sm:space-y-6;
+  }
+
+  .space-responsive-lg {
+    @apply space-y-6 sm:space-y-8;
+  }
+
+  /* Responsive padding utilities */
+  .p-responsive {
+    @apply p-3 sm:p-4 lg:p-6;
+  }
+
+  .px-responsive {
+    @apply px-3 sm:px-4 lg:px-6;
+  }
+
+  .py-responsive {
+    @apply py-3 sm:py-4 lg:py-6;
+  }
+
+  /* Responsive margin utilities */
+  .m-responsive {
+    @apply m-3 sm:m-4 lg:m-6;
+  }
+
+  .mx-responsive {
+    @apply mx-3 sm:mx-4 lg:mx-6;
+  }
+
+  .my-responsive {
+    @apply my-3 sm:my-4 lg:my-6;
   }
 
   /* Enhanced Dark mode input styles */

@@ -21,6 +21,15 @@ export default function App() {
             <Route path="/integration" element={<IntegrationManagement />} />
             <Route path="/user-management" element={<UserManagement />} />
             <Route path="/settings" element={<Settings />} />
+            
+            {/* Redirect routes for better UX */}
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/analytics-reporting" element={<Analytics />} />
+            <Route path="/business-intel" element={<BusinessIntelligence />} />
+            <Route path="/integration-management" element={<IntegrationManagement />} />
+            <Route path="/user" element={<UserManagement />} />
+            <Route path="/user-management/:tab" element={<UserManagement />} />
+            <Route path="/integration/:tab" element={<IntegrationManagement />} />
           </Routes>
         </Layout>
       </Router>
