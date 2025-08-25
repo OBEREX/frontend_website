@@ -272,19 +272,19 @@ export default function IntegrationManagement() {
   }
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-10 sm:space-y-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">Integration Management</h1>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-3">
             Manage payment integrations, subscriptions, and usage tracking
           </p>
         </div>
-        <div className="flex space-x-2 sm:space-x-3">
+        <div className="flex space-x-3 sm:space-x-4">
           <button 
             onClick={() => handleSyncOfflinePayments()}
-            className="btn-primary flex items-center text-sm sm:text-base"
+            className="btn-primary flex items-center text-sm sm:text-base px-6 py-3"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">Sync Offline</span>
@@ -293,7 +293,7 @@ export default function IntegrationManagement() {
           <div className="relative">
             <button 
               onClick={toggleExportDropdown}
-              className="btn-primary flex items-center text-sm sm:text-base"
+              className="btn-primary flex items-center text-sm sm:text-base px-6 py-3"
             >
               <Download className="h-4 w-4 mr-2" />
               Export
@@ -301,23 +301,23 @@ export default function IntegrationManagement() {
             {showExportDropdown && (
               <div 
                 ref={exportDropdownRef}
-                className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-10"
+                className="absolute right-0 mt-3 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-10"
               >
                 <button 
                   onClick={() => handleExport('csv')}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="block w-full text-left px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Export as CSV
                 </button>
                 <button 
                   onClick={() => handleExport('excel')}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="block w-full text-left px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Export as Excel
                 </button>
                 <button 
                   onClick={() => handleExport('pdf')}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="block w-full text-left px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Export as PDF
                 </button>
@@ -329,7 +329,7 @@ export default function IntegrationManagement() {
 
       {/* Tab Navigation */}
       <div className="border-b border-gray-200 dark:border-gray-700">
-        <nav className="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto">
+        <nav className="-mb-px flex space-x-6 sm:space-x-10 overflow-x-auto">
           {[
             { id: 'overview', name: 'Overview', icon: BarChart3 },
             { id: 'payments', name: 'Payment Integrations', icon: CreditCard },
@@ -340,13 +340,13 @@ export default function IntegrationManagement() {
             <Link
               key={tab.id}
               to={`/integration/${tab.id}`}
-              className={`flex items-center py-2 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+              className={`flex items-center py-3 px-2 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'border-primary-500 text-primary-600 dark:text-primary-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
               }`}
             >
-              <tab.icon className="h-4 w-4 mr-1 sm:mr-2" />
+              <tab.icon className="h-4 w-4 mr-2 sm:mr-3" />
               <span className="hidden sm:inline">{tab.name}</span>
               <span className="sm:hidden">{tab.name.split(' ')[0]}</span>
             </Link>
@@ -356,24 +356,24 @@ export default function IntegrationManagement() {
 
       {/* Content based on active tab */}
       {activeTab === 'overview' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Payment Integration Status */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Payment Integration Status</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="card p-8">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Payment Integration Status</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {paymentMethods.map((method) => {
                 const StatusIcon = getStatusIcon(method.status)
                 const MethodIcon = method.icon
                 return (
-                  <div key={method.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center space-x-2">
-                        <MethodIcon className="h-5 w-5" style={{ color: method.color }} />
+                  <div key={method.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center space-x-3">
+                        <MethodIcon className="h-6 w-6" style={{ color: method.color }} />
                         <span className="font-medium text-gray-900 dark:text-gray-100">{method.name}</span>
                       </div>
-                      <StatusIcon className={`h-4 w-4 ${getStatusColor(method.status)}`} />
+                      <StatusIcon className={`h-5 w-5 ${getStatusColor(method.status)}`} />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-gray-600 dark:text-gray-400">Balance</span>
                         <span className="font-medium text-gray-900 dark:text-gray-100">${method.balance.toFixed(2)}</span>
@@ -399,7 +399,7 @@ export default function IntegrationManagement() {
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="card">
               <div className="flex items-center justify-between">
                 <div>

@@ -367,36 +367,24 @@ export default function UserManagement() {
   }
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-10 sm:space-y-12">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">User Management</h1>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2">
-            Manage your profile, payments, subscriptions, and usage preferences
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">User Management</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-3">
+            Manage user profiles, preferences, and account settings
           </p>
         </div>
-        <div className="flex items-center space-x-2 sm:space-x-3">
-          <Tooltip content="Export your user data and usage statistics">
-            <button className="btn-primary flex items-center text-sm sm:text-base">
-              <Download className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Export Data</span>
-              <span className="sm:hidden">Export</span>
-            </button>
-          </Tooltip>
-          <Tooltip content="Manage your account settings and preferences">
-            <button className="btn-primary flex items-center text-sm sm:text-base">
-              <Settings className="h-4 w-4 mr-2" />
-              <span className="hidden sm:inline">Account Settings</span>
-              <span className="sm:hidden">Settings</span>
-            </button>
-          </Tooltip>
-        </div>
+        <button className="btn-primary flex items-center px-6 py-3">
+          <Plus className="h-4 w-4 mr-2" />
+          Add User
+        </button>
       </div>
 
       {/* Tab Navigation */}
       <div className="border-b border-gray-200 dark:border-gray-700">
-        <nav className="-mb-px flex space-x-4 sm:space-x-8 overflow-x-auto">
+        <nav className="-mb-px flex space-x-6 sm:space-x-10 overflow-x-auto">
           {[
             { id: 'profile', name: 'Profile', icon: User },
             { id: 'payments', name: 'Payment Methods', icon: CreditCard },
@@ -408,13 +396,13 @@ export default function UserManagement() {
             <Link
               key={tabItem.id}
               to={`/user-management/${tabItem.id}`}
-              className={`flex items-center py-2 px-1 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+              className={`flex items-center py-3 px-2 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                 activeTab === tabItem.id
                   ? 'border-primary-500 text-primary-600 dark:text-primary-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
               }`}
             >
-              <tabItem.icon className="h-4 w-4 mr-1 sm:mr-2" />
+              <tabItem.icon className="h-4 w-4 mr-2 sm:mr-3" />
               <span className="hidden sm:inline">{tabItem.name}</span>
               <span className="sm:hidden">{tabItem.name.split(' ')[0]}</span>
             </Link>
@@ -424,23 +412,23 @@ export default function UserManagement() {
 
       {/* Content */}
       {activeTab === 'profile' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Profile Overview */}
-          <div className="card">
-            <div className="flex items-start justify-between mb-6">
-              <div className="flex items-center space-x-4">
-                <div className="h-16 w-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
-                  <User className="h-8 w-8 text-white" />
+          <div className="card p-8">
+            <div className="flex items-start justify-between mb-8">
+              <div className="flex items-center space-x-6">
+                <div className="h-20 w-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
+                  <User className="h-10 w-10 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{userProfile.name}</h3>
-                  <p className="text-gray-600 dark:text-gray-400">{userProfile.email}</p>
-                  <div className="flex items-center space-x-2 mt-1">
+                  <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-2">{userProfile.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-3">{userProfile.email}</p>
+                  <div className="flex items-center space-x-3">
                     {(() => {
                       const TierIcon = getTierIcon(userProfile.tier)
                       return (
                         <>
-                          <TierIcon className={`h-4 w-4 ${getTierColor(userProfile.tier)}`} />
+                          <TierIcon className={`h-5 w-5 ${getTierColor(userProfile.tier)}`} />
                           <span className={`text-sm font-medium ${getTierColor(userProfile.tier)}`}>
                             {userProfile.tier.charAt(0).toUpperCase() + userProfile.tier.slice(1)} Tier
                           </span>
@@ -450,13 +438,13 @@ export default function UserManagement() {
                   </div>
                 </div>
               </div>
-              <button className="btn-primary flex items-center">
+              <button className="btn-primary flex items-center px-6 py-3">
                 <Edit className="h-4 w-4 mr-2" />
                 Edit Profile
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <Tooltip content="Total number of scans performed across all sessions">
                 <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg cursor-help">
                   <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
