@@ -9,7 +9,7 @@ import {
   Save
 } from 'lucide-react'
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
 
 // Theme options
@@ -236,7 +236,7 @@ const timezones = [
 ]
 
 export default function Settings() {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const { theme, setTheme } = useTheme()
   const [selectedLanguage, setSelectedLanguage] = useState('en')
   const [selectedTimezone, setSelectedTimezone] = useState('Africa/Nairobi')

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useParams, Link } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import {
   User, CreditCard, Settings, BarChart3, Calendar,
   DollarSign, Activity, History,
@@ -271,7 +271,7 @@ const usageStats: UsageStats = {
 }
 
 export default function UserManagement() {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   const { tab } = useParams<{ tab: string }>()
   const [activeTab, setActiveTab] = useState<'profile' | 'payments' | 'subscription' | 'usage' | 'sessions' | 'preferences'>('profile')
 

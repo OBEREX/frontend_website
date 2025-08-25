@@ -11,7 +11,7 @@ import {
   Menu,
   X
 } from 'lucide-react'
-import { useTheme } from '../contexts/ThemeContext'
+// import { useTheme } from '../contexts/ThemeContext'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -28,7 +28,7 @@ const navigation = [
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
-  const { isDark } = useTheme()
+  // const { theme } = useTheme()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const closeSidebar = () => {

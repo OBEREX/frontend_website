@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Layout from './components/Layout'
 import Dashboard from './pages/Dashboard'
 import Analytics from './pages/Analytics'
@@ -30,6 +30,9 @@ export default function App() {
             <Route path="/user" element={<UserManagement />} />
             <Route path="/user-management/:tab" element={<UserManagement />} />
             <Route path="/integration/:tab" element={<IntegrationManagement />} />
+            
+            {/* Fallback route */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Layout>
       </Router>
