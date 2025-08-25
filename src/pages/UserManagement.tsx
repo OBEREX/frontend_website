@@ -473,9 +473,9 @@ export default function UserManagement() {
           </div>
 
           {/* Payment Mode Selection */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Payment Preference</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="card p-8">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Payment Preference</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <Tooltip content="Pay only for the scans you use - perfect for occasional users">
                 <div 
                   className={`border-2 rounded-lg p-6 cursor-pointer transition-all duration-200 ${
@@ -561,19 +561,19 @@ export default function UserManagement() {
       )}
 
       {activeTab === 'payments' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Payment Methods */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Payment Methods</h3>
+          <div className="card p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Payment Methods</h3>
               <button 
-                className="btn-primary flex items-center"
+                className="btn-primary flex items-center px-6 py-3"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Payment Method
               </button>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {paymentMethods.map((method) => {
                 const MethodIcon = method.icon
                 return (
@@ -636,15 +636,15 @@ export default function UserManagement() {
       )}
 
       {activeTab === 'subscription' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Current Subscription */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Current Subscription</h3>
-              <div className="flex space-x-3">
+          <div className="card p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Current Subscription</h3>
+              <div className="flex space-x-4">
                 <button 
                   onClick={handleSubscriptionPause}
-                  className={`px-4 py-2 text-sm border rounded-lg flex items-center ${
+                  className={`px-6 py-3 text-sm border rounded-lg flex items-center ${
                     isSubscriptionPaused
                       ? 'border-green-300 dark:border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-900/20'
                       : 'border-yellow-300 dark:border-yellow-600 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-50 dark:hover:bg-yellow-900/20'
@@ -658,7 +658,7 @@ export default function UserManagement() {
                   {isSubscriptionPaused ? 'Continue' : 'Pause'}
                 </button>
                 <Link to="/integration/subscriptions">
-                  <button className="btn-primary flex items-center">
+                  <button className="btn-primary flex items-center px-6 py-3">
                     <Edit className="h-4 w-4 mr-2" />
                     Manage
                   </button>
@@ -754,9 +754,9 @@ export default function UserManagement() {
       )}
 
       {activeTab === 'usage' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Usage Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <Tooltip content="Total number of scans performed across all sessions">
               <div className="card cursor-help">
                 <div className="flex items-center justify-between">
@@ -812,22 +812,22 @@ export default function UserManagement() {
           </div>
 
           {/* Favorite Categories */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Favorite Categories</h3>
-            <div className="space-y-4">
+          <div className="card p-8">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Favorite Categories</h3>
+            <div className="space-y-6">
               {usageStats.favoriteCategories.map((category, index) => (
                 <Tooltip key={index} content={`${category.count.toLocaleString()} scans in ${category.name} category`}>
-                  <div className="flex items-center justify-between cursor-help">
-                    <div className="flex items-center space-x-3 mr-2.5">
-                      <div className="w-3 h-3 rounded-full" style={{ 
+                  <div className="flex items-center justify-between cursor-help py-3">
+                    <div className="flex items-center space-x-4 mr-4">
+                      <div className="w-4 h-4 rounded-full" style={{ 
                         backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'][index % 4] 
                       }} />
                       <span className="font-medium text-gray-900 dark:text-gray-100">{category.name}</span>
                     </div>
-                    <div className="flex items-center space-x-2.5">
-                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2 mr-2.5">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-40 bg-gray-200 dark:bg-gray-700 rounded-full h-3 mr-4">
                         <div
-                          className="h-2 rounded-full transition-all duration-300"
+                          className="h-3 rounded-full transition-all duration-300"
                           style={{ 
                             width: `${(category.count / Math.max(...usageStats.favoriteCategories.map(c => c.count))) * 100}%`,
                             backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'][index % 4]
@@ -847,11 +847,11 @@ export default function UserManagement() {
       )}
 
       {activeTab === 'sessions' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Session History */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Session History</h3>
+          <div className="card p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Session History</h3>
               <button className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                 View All
               </button>
@@ -928,15 +928,15 @@ export default function UserManagement() {
       )}
 
       {activeTab === 'preferences' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Notification Preferences */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Notification Preferences</h3>
-            <div className="space-y-4">
+          <div className="card p-8">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Notification Preferences</h3>
+            <div className="space-y-6">
               {Object.entries(preferences.notifications).map(([key, value]) => (
-                <div key={key} className="flex items-center justify-between">
+                <div key={key} className="flex items-center justify-between py-4">
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
                       {key.charAt(0).toUpperCase() + key.slice(1)} Notifications
                     </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -963,13 +963,13 @@ export default function UserManagement() {
           </div>
 
           {/* Privacy Settings */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Privacy Settings</h3>
-            <div className="space-y-4">
+          <div className="card p-8">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Privacy Settings</h3>
+            <div className="space-y-6">
               {Object.entries(preferences.privacy).map(([key, value]) => (
-                <div key={key} className="flex items-center justify-between">
+                <div key={key} className="flex items-center justify-between py-4">
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
                       {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
                     </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">

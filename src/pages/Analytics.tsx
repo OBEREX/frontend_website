@@ -145,71 +145,73 @@ export default function Analytics() {
   const gridStroke = isDark ? '#374151' : '#E5E7EB'
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-10 sm:space-y-12">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">Analytics & Reporting</h1>
-        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2">
-          Comprehensive insights into inventory management performance and trends
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Analytics & Reporting</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-3">
+            Comprehensive insights into inventory management performance and trends
+          </p>
+        </div>
+        <button className="btn-primary flex items-center px-6 py-3">
+          <Download className="h-4 w-4 mr-2" />
+          Export Report
+        </button>
       </div>
-      <button className="btn-primary flex items-center">
-        <Download className="h-4 w-4 mr-2" />
-        Export Report
-      </button>
 
       {/* Key Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-        <div className="card p-4 sm:p-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="card p-8">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Monthly Scans</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">67,000</p>
-              <p className="text-sm text-green-600 dark:text-green-400 mt-1">+15.2% vs last month</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Monthly Scans</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">67,000</p>
+              <p className="text-sm text-green-600 dark:text-green-400">+15.2% vs last month</p>
             </div>
-            <Smartphone className="h-8 w-8 text-primary-600 dark:text-primary-400" />
+            <Smartphone className="h-10 w-10 text-primary-600 dark:text-primary-400" />
           </div>
         </div>
         
-        <div className="card p-4 sm:p-6">
+        <div className="card p-8">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Cost per Scan</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">$0.05</p>
-              <p className="text-sm text-green-600 dark:text-green-400 mt-1">-8.3% vs last month</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Cost per Scan</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">$0.05</p>
+              <p className="text-sm text-green-600 dark:text-green-400">-8.3% vs last month</p>
             </div>
-            <DollarSign className="h-8 w-8 text-green-600 dark:text-green-400" />
+            <DollarSign className="h-10 w-10 text-green-600 dark:text-green-400" />
           </div>
         </div>
         
-        <div className="card p-4 sm:p-6">
+        <div className="card p-8">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Time Saved</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">156 hrs</p>
-              <p className="text-sm text-green-600 dark:text-green-400 mt-1">+23.4% vs last month</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Time Saved</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">156 hrs</p>
+              <p className="text-sm text-green-600 dark:text-green-400">+23.4% vs last month</p>
             </div>
-            <Clock className="h-8 w-8 text-primary-600 dark:text-primary-400" />
+            <Clock className="h-10 w-10 text-primary-600 dark:text-primary-400" />
           </div>
         </div>
         
-        <div className="card p-4 sm:p-6">
+        <div className="card p-8">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">ROI</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">401%</p>
-              <p className="text-sm text-green-600 dark:text-green-400 mt-1">+23.1% vs last month</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">ROI</p>
+              <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">401%</p>
+              <p className="text-sm text-green-600 dark:text-green-400">+23.1% vs last month</p>
             </div>
-            <TrendingUp className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+            <TrendingUp className="h-10 w-10 text-purple-600 dark:text-purple-400" />
           </div>
         </div>
       </div>
 
       {/* Monthly Trends */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-        <div className="card p-4 sm:p-6">
-          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Monthly Usage Patterns</h3>
-          <ResponsiveContainer width="100%" height={300}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="card p-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Monthly Usage Patterns</h3>
+          <ResponsiveContainer width="100%" height={350}>
             <AreaChart data={monthlyData}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
               <XAxis dataKey="month" stroke={axisStroke} />
@@ -228,13 +230,13 @@ export default function Analytics() {
           </ResponsiveContainer>
         </div>
 
-        <div className="card p-4 sm:p-6">
-          <div className="flex items-center justify-between mb-4 sm:mb-6">
-            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100">Busiest Times</h3>
-            <div className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+        <div className="card p-8">
+          <div className="flex items-center justify-between mb-8">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Busiest Times</h3>
+            <div className="flex items-center space-x-3 bg-gray-100 dark:bg-gray-800 rounded-lg p-2">
               <button
                 onClick={() => setTimeView('daily')}
-                className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
                   timeView === 'daily'
                     ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
@@ -244,7 +246,7 @@ export default function Analytics() {
               </button>
               <button
                 onClick={() => setTimeView('hourly')}
-                className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+                className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
                   timeView === 'hourly'
                     ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
@@ -254,7 +256,7 @@ export default function Analytics() {
               </button>
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={350}>
             <BarChart data={timeView === 'daily' ? dailyData : hourlyData}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
               <XAxis 
@@ -281,26 +283,26 @@ export default function Analytics() {
               />
             </BarChart>
           </ResponsiveContainer>
-          <div className="mt-4 grid grid-cols-2 gap-4">
-            <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-              <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100">
+          <div className="mt-8 grid grid-cols-2 gap-6">
+            <div className="text-center p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-3">
                 {timeView === 'daily' ? 'Peak Day' : 'Peak Hour'}
               </h4>
-              <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+              <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
                 {timeView === 'daily' ? 'Friday' : '12PM'}
               </p>
-              <p className="text-xs text-blue-700 dark:text-blue-300">
+              <p className="text-sm text-blue-700 dark:text-blue-300">
                 {timeView === 'daily' ? '10,200 scans' : '1,200 scans'}
               </p>
             </div>
-            <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-              <h4 className="text-sm font-medium text-green-900 dark:text-green-100">
+            <div className="text-center p-6 bg-green-50 dark:bg-green-900/20 rounded-lg">
+              <h4 className="text-sm font-medium text-green-900 dark:text-green-100 mb-3">
                 {timeView === 'daily' ? 'Lowest Day' : 'Lowest Hour'}
               </h4>
-              <p className="text-lg font-bold text-green-600 dark:text-green-400">
+              <p className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">
                 {timeView === 'daily' ? 'Sunday' : '6AM'}
               </p>
-              <p className="text-xs text-green-700 dark:text-green-300">
+              <p className="text-sm text-green-700 dark:text-green-300">
                 {timeView === 'daily' ? '6,200 scans' : '120 scans'}
               </p>
             </div>
@@ -309,10 +311,10 @@ export default function Analytics() {
       </div>
 
       {/* Cost Analysis */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-        <div className="card p-4 sm:p-6">
-          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">ROI Analysis</h3>
-          <ResponsiveContainer width="100%" height={300}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="card p-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">ROI Analysis</h3>
+          <ResponsiveContainer width="100%" height={350}>
             <LineChart data={roiData}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
               <XAxis dataKey="month" stroke={axisStroke} />
@@ -325,9 +327,9 @@ export default function Analytics() {
           </ResponsiveContainer>
         </div>
 
-        <div className="card p-4 sm:p-6">
-          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Cost Breakdown & Savings</h3>
-          <ResponsiveContainer width="100%" height={300}>
+        <div className="card p-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Cost Breakdown & Savings</h3>
+          <ResponsiveContainer width="100%" height={350}>
             <ComposedChart data={costSavingsData}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
               <XAxis dataKey="month" stroke={axisStroke} />
@@ -350,23 +352,23 @@ export default function Analytics() {
               <Line yAxisId="right" type="monotone" dataKey="efficiency" stroke="#8b5cf6" strokeWidth={2} name="Efficiency" />
             </ComposedChart>
           </ResponsiveContainer>
-          <div className="mt-4 grid grid-cols-2 gap-4">
-            <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-              <h4 className="text-sm font-medium text-green-900 dark:text-green-100">Total Savings</h4>
-              <p className="text-lg font-bold text-green-600 dark:text-green-400">$68,250</p>
-              <p className="text-xs text-green-700 dark:text-green-300">vs Manual Process</p>
+          <div className="mt-8 grid grid-cols-2 gap-6">
+            <div className="text-center p-6 bg-green-50 dark:bg-green-900/20 rounded-lg">
+              <h4 className="text-sm font-medium text-green-900 dark:text-green-100 mb-3">Total Savings</h4>
+              <p className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">$68,250</p>
+              <p className="text-sm text-green-700 dark:text-green-300">vs Manual Process</p>
             </div>
-            <div className="text-center p-3 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-              <h4 className="text-sm font-medium text-purple-900 dark:text-purple-100">Efficiency Rate</h4>
-              <p className="text-lg font-bold text-purple-600 dark:text-purple-400">92.8%</p>
-              <p className="text-xs text-purple-700 dark:text-purple-300">Current Month</p>
+            <div className="text-center p-6 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+              <h4 className="text-sm font-medium text-purple-900 dark:text-purple-100 mb-3">Efficiency Rate</h4>
+              <p className="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-2">92.8%</p>
+              <p className="text-sm text-purple-700 dark:text-purple-300">Current Month</p>
             </div>
           </div>
         </div>
 
-        <div className="card p-4 sm:p-6">
-          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Payment Method Analysis</h3>
-          <ResponsiveContainer width="100%" height={300}>
+        <div className="card p-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Payment Method Analysis</h3>
+          <ResponsiveContainer width="100%" height={350}>
             <RechartsPieChart>
               <Pie
                 data={paymentData}
@@ -392,12 +394,12 @@ export default function Analytics() {
               />
             </RechartsPieChart>
           </ResponsiveContainer>
-          <div className="mt-4 space-y-2">
+          <div className="mt-8 space-y-4">
             {paymentData.map((method) => (
-              <div key={method.method} className="flex items-center justify-between text-sm">
+              <div key={method.method} className="flex items-center justify-between text-sm py-3">
                 <span className="text-gray-600 dark:text-gray-400">{method.method}</span>
-                <div className="flex items-center space-x-4">
-                  <span className="text-gray-900 dark:text-gray-100">{method.usage}%</span>
+                <div className="flex items-center space-x-6">
+                  <span className="text-gray-900 dark:text-gray-100 font-medium">{method.usage}%</span>
                   <span className="text-gray-500 dark:text-gray-400">${method.cost}/scan</span>
                 </div>
               </div>
@@ -407,22 +409,22 @@ export default function Analytics() {
       </div>
 
       {/* Category Performance */}
-      <div className="card p-4 sm:p-6">
-        <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Category Accuracy Improvements</h3>
+      <div className="card p-8">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Category Accuracy Improvements</h3>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead className="bg-gray-50 dark:bg-gray-800">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-8 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Category
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-8 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Accuracy Rate
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-8 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Total Scans
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                <th className="px-8 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                   Trend
                 </th>
               </tr>
@@ -430,22 +432,22 @@ export default function Analytics() {
             <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
               {categoryAccuracy.map((category) => (
                 <tr key={category.category} className="hover:bg-gray-50 dark:hover:bg-gray-800">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
+                  <td className="px-8 py-6 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-100">
                     {category.category}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                  <td className="px-8 py-6 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                     <div className="flex items-center">
                       <span className="font-medium">{category.accuracy}%</span>
-                      <TrendingUp className="h-4 w-4 text-green-500 ml-2" />
+                      <TrendingUp className="h-5 w-5 text-green-500 ml-3" />
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                  <td className="px-8 py-6 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                     {category.scans.toLocaleString()}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="w-24 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <td className="px-8 py-6 whitespace-nowrap">
+                    <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                       <div 
-                        className="bg-green-500 h-2 rounded-full" 
+                        className="bg-green-500 h-3 rounded-full" 
                         style={{ width: `${category.accuracy - 95}%` }}
                       ></div>
                     </div>
@@ -458,35 +460,35 @@ export default function Analytics() {
       </div>
 
       {/* Seasonal Trends */}
-      <div className="card p-4 sm:p-6">
-        <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Seasonal Trend Analysis</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="card p-8">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Seasonal Trend Analysis</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {seasonalData.map((quarter, index) => (
-            <div key={quarter.quarter} className={`text-center p-4 rounded-lg border ${
+            <div key={quarter.quarter} className={`text-center p-6 rounded-lg border ${
               index === 0 ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800' :
               index === 1 ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800' :
               index === 2 ? 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800' :
               'bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800'
             }`}>
-              <h4 className={`font-medium ${
+              <h4 className={`font-medium mb-3 ${
                 index === 0 ? 'text-blue-900 dark:text-blue-100' :
                 index === 1 ? 'text-green-900 dark:text-green-100' :
                 index === 2 ? 'text-purple-900 dark:text-purple-100' :
                 'text-orange-900 dark:text-orange-100'
               }`}>{quarter.quarter}</h4>
-              <p className={`text-2xl font-bold mt-2 ${
+              <p className={`text-3xl font-bold mb-3 ${
                 index === 0 ? 'text-blue-600 dark:text-blue-400' :
                 index === 1 ? 'text-green-600 dark:text-green-400' :
                 index === 2 ? 'text-purple-600 dark:text-purple-400' :
                 'text-orange-600 dark:text-orange-400'
               }`}>{(quarter.scans / 1000).toFixed(0)}K</p>
-              <p className={`text-sm ${
+              <p className={`text-sm mb-2 ${
                 index === 0 ? 'text-blue-700 dark:text-blue-300' :
                 index === 1 ? 'text-green-700 dark:text-green-300' :
                 index === 2 ? 'text-purple-700 dark:text-purple-300' :
                 'text-orange-700 dark:text-orange-300'
               }`}>Total Scans</p>
-              <p className={`text-xs mt-1 ${
+              <p className={`text-xs ${
                 index === 0 ? 'text-blue-600 dark:text-blue-400' :
                 index === 1 ? 'text-green-600 dark:text-green-400' :
                 index === 2 ? 'text-purple-600 dark:text-purple-400' :
@@ -500,13 +502,13 @@ export default function Analytics() {
       </div>
 
       {/* Inventory Forecasting */}
-      <div className="card p-4 sm:p-6">
-        <div className="flex items-center justify-between mb-4 sm:mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Inventory Forecasting & Demand Planning</h3>
-          <div className="flex items-center space-x-2 bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+      <div className="card p-8">
+        <div className="flex items-center justify-between mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Inventory Forecasting & Demand Planning</h3>
+          <div className="flex items-center space-x-3 bg-gray-100 dark:bg-gray-800 rounded-lg p-2">
             <button
               onClick={() => setForecastPeriod('firstHalf')}
-              className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
                 forecastPeriod === 'firstHalf'
                   ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
@@ -516,7 +518,7 @@ export default function Analytics() {
             </button>
             <button
               onClick={() => setForecastPeriod('secondHalf')}
-              className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
+              className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
                 forecastPeriod === 'secondHalf'
                   ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
                   : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
@@ -526,7 +528,7 @@ export default function Analytics() {
             </button>
           </div>
         </div>
-        <ResponsiveContainer width="100%" height={300}>
+        <ResponsiveContainer width="100%" height={350}>
           <ComposedChart data={forecastPeriod === 'firstHalf' ? forecastingDataFull.slice(0, 6) : forecastingDataFull.slice(6, 12)}>
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
             <XAxis dataKey="month" stroke={axisStroke} />
@@ -555,39 +557,39 @@ export default function Analytics() {
             <Line type="monotone" dataKey="confidence" stroke="#f59e0b" strokeWidth={2} name="Confidence" />
           </ComposedChart>
         </ResponsiveContainer>
-        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-            <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100">
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="text-center p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-3">
               {forecastPeriod === 'firstHalf' ? 'Next Month Demand' : 'Next Month Demand'}
             </h4>
-            <p className="text-lg font-bold text-blue-600 dark:text-blue-400">
+            <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-2">
               {forecastPeriod === 'firstHalf' ? '9,200 units' : '14,200 units'}
             </p>
-            <p className="text-xs text-blue-700 dark:text-blue-300">
+            <p className="text-sm text-blue-700 dark:text-blue-300">
               {forecastPeriod === 'firstHalf' ? '88% confidence' : '85% confidence'}
             </p>
           </div>
-          <div className="text-center p-3 bg-green-50 dark:bg-green-900/20 rounded-lg">
-            <h4 className="text-sm font-medium text-green-900 dark:text-green-100">Current Stock Level</h4>
-            <p className="text-lg font-bold text-green-600 dark:text-green-400">
+          <div className="text-center p-6 bg-green-50 dark:bg-green-900/20 rounded-lg">
+            <h4 className="text-sm font-medium text-green-900 dark:text-green-100 mb-3">Current Stock Level</h4>
+            <p className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">
               {forecastPeriod === 'firstHalf' ? '8,500 units' : '12,500 units'}
             </p>
-            <p className="text-xs text-green-700 dark:text-green-300">Available inventory</p>
+            <p className="text-sm text-green-700 dark:text-green-300">Available inventory</p>
           </div>
-          <div className="text-center p-3 bg-red-50 dark:bg-red-900/20 rounded-lg">
-            <h4 className="text-sm font-medium text-red-900 dark:text-red-100">Reorder Alert</h4>
-            <p className="text-lg font-bold text-red-600 dark:text-red-400">
+          <div className="text-center p-6 bg-red-50 dark:bg-red-900/20 rounded-lg">
+            <h4 className="text-sm font-medium text-red-900 dark:text-red-100 mb-3">Reorder Alert</h4>
+            <p className="text-2xl font-bold text-red-600 dark:text-red-400 mb-2">
               {forecastPeriod === 'firstHalf' ? '6,000 units' : '8,000 units'}
             </p>
-            <p className="text-xs text-red-700 dark:text-red-300">Trigger point</p>
+            <p className="text-sm text-red-700 dark:text-red-300">Trigger point</p>
           </div>
         </div>
       </div>
 
       {/* Seasonal Inventory Patterns */}
-      <div className="card p-4 sm:p-6">
-        <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Seasonal Inventory Patterns by Category</h3>
-        <ResponsiveContainer width="100%" height={300}>
+      <div className="card p-8">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Seasonal Inventory Patterns by Category</h3>
+        <ResponsiveContainer width="100%" height={350}>
           <BarChart data={seasonalInventoryData}>
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
             <XAxis dataKey="category" stroke={axisStroke} />
@@ -604,15 +606,15 @@ export default function Analytics() {
             <Bar dataKey="q4" fill="#ef4444" name="Q4" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
-        <div className="mt-4">
-          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-3">Key Insights:</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
-              <h5 className="text-sm font-medium text-yellow-900 dark:text-yellow-100">Peak Season</h5>
+        <div className="mt-8">
+          <h4 className="text-sm font-medium text-gray-900 dark:text-gray-100 mb-6">Key Insights:</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="p-6 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+              <h5 className="text-sm font-medium text-yellow-900 dark:text-yellow-100 mb-3">Peak Season</h5>
               <p className="text-sm text-yellow-700 dark:text-yellow-300">Electronics peak in Q3, Clothing in Q4</p>
             </div>
-            <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-              <h5 className="text-sm font-medium text-blue-900 dark:text-blue-100">Stock Planning</h5>
+            <div className="p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+              <h5 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-3">Stock Planning</h5>
               <p className="text-sm text-blue-700 dark:text-blue-300">Increase inventory 15-20% for peak quarters</p>
             </div>
           </div>

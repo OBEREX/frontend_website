@@ -519,9 +519,9 @@ export default function BusinessIntelligence() {
       </div>
 
       {/* Peak Usage Analysis */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Peak Usage Analysis</h3>
-        <ResponsiveContainer width="100%" height={300}>
+      <div className="card p-8">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Peak Usage Analysis</h3>
+        <ResponsiveContainer width="100%" height={350}>
           <LineChart data={peakUsageData}>
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
             <XAxis dataKey="hour" stroke={axisStroke} />
@@ -534,16 +534,16 @@ export default function BusinessIntelligence() {
       </div>
 
       {/* Optimization Suggestions */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Cost Optimization Suggestions Based on Usage Patterns</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="card p-8">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Cost Optimization Suggestions Based on Usage Patterns</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {optimizationSuggestions.map((suggestion) => (
-            <div key={suggestion.title} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-              <div className="flex items-start justify-between mb-3">
-                <div className="h-10 w-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
-                  <suggestion.icon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
+            <div key={suggestion.title} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+              <div className="flex items-start justify-between mb-4">
+                <div className="h-12 w-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <suggestion.icon className="h-6 w-6 text-primary-600 dark:text-primary-400" />
                 </div>
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
                   suggestion.status === 'recommended' 
                     ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
                     : suggestion.status === 'suggestion'
@@ -553,8 +553,8 @@ export default function BusinessIntelligence() {
                   {suggestion.impact} Impact
                 </span>
               </div>
-              <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">{suggestion.title}</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{suggestion.description}</p>
+              <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">{suggestion.title}</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{suggestion.description}</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-green-600 dark:text-green-400">{suggestion.savings}</span>
                 <button className="text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium">
@@ -567,40 +567,40 @@ export default function BusinessIntelligence() {
       </div>
 
       {/* Subscription vs Pay-per-Scan Recommendations */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Subscription vs Pay-per-Scan Recommendations</h3>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="p-4 border border-green-200 dark:border-green-800 rounded-lg bg-green-50 dark:bg-green-900/20">
-            <div className="flex items-center justify-between mb-2">
+      <div className="card p-8">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Subscription vs Pay-per-Scan Recommendations</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="p-6 border border-green-200 dark:border-green-800 rounded-lg bg-green-50 dark:bg-green-900/20">
+            <div className="flex items-center justify-between mb-4">
               <h4 className="font-medium text-green-900 dark:text-green-100">Monthly Subscription</h4>
               <span className="text-sm font-medium text-green-600 dark:text-green-400">$500/month</span>
             </div>
-            <p className="text-sm text-green-700 dark:text-green-300 mb-3">Unlimited scans, predictable costs</p>
-            <div className="text-xs text-green-600 dark:text-green-400 space-y-1">
+            <p className="text-sm text-green-700 dark:text-green-300 mb-4">Unlimited scans, predictable costs</p>
+            <div className="text-xs text-green-600 dark:text-green-400 space-y-2 mb-6">
               <p>• Best for: High volume users (10,000+ scans/month)</p>
               <p>• Savings: $2,850/month at current usage</p>
               <p>• Flexibility: No per-scan limits</p>
               <p>• ROI: 401% return on investment</p>
             </div>
-            <div className="mt-4 p-2 bg-green-100 dark:bg-green-800/30 rounded">
+            <div className="p-3 bg-green-100 dark:bg-green-800/30 rounded">
               <p className="text-xs font-medium text-green-800 dark:text-green-200">
                 🎯 RECOMMENDED for your usage pattern
               </p>
             </div>
           </div>
-          <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900/20">
-            <div className="flex items-center justify-between mb-2">
+          <div className="p-6 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900/20">
+            <div className="flex items-center justify-between mb-4">
               <h4 className="font-medium text-gray-900 dark:text-gray-100">Pay-per-Scan</h4>
               <span className="text-sm font-medium text-gray-600 dark:text-gray-400">$0.05/scan</span>
             </div>
-            <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">Pay only for what you use</p>
-            <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+            <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">Pay only for what you use</p>
+            <div className="text-xs text-gray-600 dark:text-gray-400 space-y-2 mb-6">
               <p>• Best for: Low volume users (&lt;10,000 scans/month)</p>
               <p>• Current cost: $3,350/month</p>
               <p>• Flexibility: No monthly commitment</p>
               <p>• Risk: Costs can vary significantly</p>
             </div>
-            <div className="mt-4 p-2 bg-red-100 dark:bg-red-800/30 rounded">
+            <div className="p-3 bg-red-100 dark:bg-red-800/30 rounded">
               <p className="text-xs font-medium text-red-800 dark:text-red-200">
                 ⚠️ NOT RECOMMENDED - 570% more expensive
               </p>

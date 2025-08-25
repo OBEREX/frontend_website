@@ -400,46 +400,46 @@ export default function IntegrationManagement() {
 
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="card">
+            <div className="card p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Balance</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Total Balance</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                     ${paymentMethods.reduce((sum, m) => sum + m.balance, 0).toFixed(2)}
                   </p>
                 </div>
-                <DollarSign className="h-8 w-8 text-green-600 dark:text-green-400" />
+                <DollarSign className="h-10 w-10 text-green-600 dark:text-green-400" />
               </div>
             </div>
-            <div className="card">
+            <div className="card p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Subscriptions</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Active Subscriptions</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                     {subscriptions.filter(s => s.status === 'active').length}
                   </p>
                 </div>
-                <Calendar className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                <Calendar className="h-10 w-10 text-blue-600 dark:text-blue-400" />
               </div>
             </div>
-            <div className="card">
+            <div className="card p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Scans Remaining</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{usageStats.scansRemaining}</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Scans Remaining</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{usageStats.scansRemaining}</p>
                 </div>
-                <Activity className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                <Activity className="h-10 w-10 text-purple-600 dark:text-purple-400" />
               </div>
             </div>
-            <div className="card">
+            <div className="card p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Offline Payments</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Offline Payments</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                     {offlinePayments.filter(p => p.status === 'pending').length}
                   </p>
                 </div>
-                <WifiOff className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
+                <WifiOff className="h-10 w-10 text-yellow-600 dark:text-yellow-400" />
               </div>
             </div>
           </div>
@@ -447,51 +447,51 @@ export default function IntegrationManagement() {
       )}
 
       {activeTab === 'payments' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Payment Methods Management */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Payment Methods</h3>
-              <button className="btn-primary flex items-center">
+          <div className="card p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Payment Methods</h3>
+              <button className="btn-primary flex items-center px-6 py-3">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Payment Method
               </button>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {paymentMethods.map((method) => {
                 const StatusIcon = getStatusIcon(method.status)
                 const MethodIcon = method.icon
                 return (
-                  <div key={method.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="p-2 rounded-lg" style={{ backgroundColor: `${method.color}20` }}>
-                          <MethodIcon className="h-6 w-6" style={{ color: method.color }} />
+                  <div key={method.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center space-x-4">
+                        <div className="p-3 rounded-lg" style={{ backgroundColor: `${method.color}20` }}>
+                          <MethodIcon className="h-8 w-8" style={{ color: method.color }} />
                         </div>
                         <div>
-                          <h4 className="font-medium text-gray-900 dark:text-gray-100">{method.name}</h4>
+                          <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">{method.name}</h4>
                           <p className="text-sm text-gray-600 dark:text-gray-400">Last sync: {method.lastSync.toLocaleTimeString()}</p>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <StatusIcon className={`h-4 w-4 ${getStatusColor(method.status)}`} />
+                      <div className="flex items-center space-x-3">
+                        <StatusIcon className={`h-5 w-5 ${getStatusColor(method.status)}`} />
                         <span className={`text-sm ${getStatusColor(method.status)}`}>
                           {method.status.charAt(0).toUpperCase() + method.status.slice(1)}
                         </span>
                       </div>
                     </div>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
+                    <div className="space-y-4 mb-6">
+                      <div className="flex items-center justify-between py-3">
                         <span className="text-sm text-gray-600 dark:text-gray-400">Current Balance</span>
                         <span className="font-medium text-gray-900 dark:text-gray-100">${method.balance.toFixed(2)}</span>
                       </div>
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between py-3">
                         <span className="text-sm text-gray-600 dark:text-gray-400">Connection Status</span>
-                        <div className="flex items-center space-x-1">
+                        <div className="flex items-center space-x-2">
                           {method.isOnline ? (
-                            <OnlineIcon className="h-3 w-3 text-green-500" />
+                            <OnlineIcon className="h-4 w-4 text-green-500" />
                           ) : (
-                            <OfflineIcon className="h-3 w-3 text-red-500" />
+                            <OfflineIcon className="h-4 w-4 text-red-500" />
                           )}
                           <span className="text-sm text-gray-600 dark:text-gray-400">
                             {method.isOnline ? 'Connected' : 'Disconnected'}
@@ -499,13 +499,13 @@ export default function IntegrationManagement() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex space-x-2 mt-4">
-                      <button className="flex-1 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <RefreshCw className="h-4 w-4 mr-1" />
+                    <div className="flex space-x-3">
+                      <button className="flex-1 px-4 py-3 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <RefreshCw className="h-4 w-4 mr-2" />
                         Sync
                       </button>
-                      <button className="flex-1 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <Settings className="h-4 w-4 mr-1" />
+                      <button className="flex-1 px-4 py-3 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <Settings className="h-4 w-4 mr-2" />
                         Settings
                       </button>
                     </div>
