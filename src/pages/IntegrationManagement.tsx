@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { useParams, Link } from 'react-router-dom'
 import {
   CreditCard, WifiOff, Download, 
   Settings, RefreshCw, AlertCircle, CheckCircle, Clock, 
@@ -207,6 +208,7 @@ const offlinePayments: OfflinePayment[] = [
 ]
 
 export default function IntegrationManagement() {
+  const { tab } = useParams<{ tab: string }>()
   const [activeTab, setActiveTab] = useState<'overview' | 'payments' | 'subscriptions' | 'usage' | 'offline'>('overview')
   const [showSyncModal, setShowSyncModal] = useState(false)
   const [showExportDropdown, setShowExportDropdown] = useState(false)
@@ -226,14 +228,12 @@ export default function IntegrationManagement() {
     }
   }, [])
 
-  // Handle URL query parameters for tab
+  // Handle URL parameters for tab
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const initialTab = urlParams.get('tab');
-    if (initialTab && ['overview', 'payments', 'subscriptions', 'usage', 'offline'].includes(initialTab)) {
-      setActiveTab(initialTab as any);
+    if (tab && ['overview', 'payments', 'subscriptions', 'usage', 'offline'].includes(tab)) {
+      setActiveTab(tab as any);
     }
-  }, []);
+  }, [tab]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -272,27 +272,28 @@ export default function IntegrationManagement() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10 sm:space-y-12">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Integration Management</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">Integration Management</h1>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-3">
             Manage payment integrations, subscriptions, and usage tracking
           </p>
         </div>
-        <div className="flex space-x-3">
+        <div className="flex space-x-3 sm:space-x-4">
           <button 
             onClick={() => handleSyncOfflinePayments()}
-            className="btn-primary flex items-center"
+            className="btn-primary flex items-center text-sm sm:text-base px-6 py-3"
           >
             <RefreshCw className="h-4 w-4 mr-2" />
-            Sync Offline
+            <span className="hidden sm:inline">Sync Offline</span>
+            <span className="sm:hidden">Sync</span>
           </button>
           <div className="relative">
             <button 
               onClick={toggleExportDropdown}
-              className="btn-primary flex items-center"
+              className="btn-primary flex items-center text-sm sm:text-base px-6 py-3"
             >
               <Download className="h-4 w-4 mr-2" />
               Export
@@ -300,23 +301,23 @@ export default function IntegrationManagement() {
             {showExportDropdown && (
               <div 
                 ref={exportDropdownRef}
-                className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-10"
+                className="absolute right-0 mt-3 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-10"
               >
                 <button 
                   onClick={() => handleExport('csv')}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="block w-full text-left px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Export as CSV
                 </button>
                 <button 
                   onClick={() => handleExport('excel')}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="block w-full text-left px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Export as Excel
                 </button>
                 <button 
                   onClick={() => handleExport('pdf')}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="block w-full text-left px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Export as PDF
                 </button>
@@ -328,7 +329,7 @@ export default function IntegrationManagement() {
 
       {/* Tab Navigation */}
       <div className="border-b border-gray-200 dark:border-gray-700">
-        <nav className="-mb-px flex space-x-8">
+        <nav className="-mb-px flex space-x-6 sm:space-x-10 overflow-x-auto">
           {[
             { id: 'overview', name: 'Overview', icon: BarChart3 },
             { id: 'payments', name: 'Payment Integrations', icon: CreditCard },
@@ -336,42 +337,43 @@ export default function IntegrationManagement() {
             { id: 'usage', name: 'Usage Tracking', icon: Activity },
             { id: 'offline', name: 'Offline Queue', icon: WifiOff }
           ].map((tab) => (
-            <button
+            <Link
               key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center py-2 px-1 border-b-2 font-medium text-sm ${
+              to={`/integration/${tab.id}`}
+              className={`flex items-center py-3 px-2 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'border-primary-500 text-primary-600 dark:text-primary-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
               }`}
             >
-              <tab.icon className="h-4 w-4 mr-2" />
-              {tab.name}
-            </button>
+              <tab.icon className="h-4 w-4 mr-2 sm:mr-3" />
+              <span className="hidden sm:inline">{tab.name}</span>
+              <span className="sm:hidden">{tab.name.split(' ')[0]}</span>
+            </Link>
           ))}
         </nav>
       </div>
 
       {/* Content based on active tab */}
       {activeTab === 'overview' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Payment Integration Status */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Payment Integration Status</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="card p-8">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Payment Integration Status</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {paymentMethods.map((method) => {
                 const StatusIcon = getStatusIcon(method.status)
                 const MethodIcon = method.icon
                 return (
-                  <div key={method.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center space-x-2">
-                        <MethodIcon className="h-5 w-5" style={{ color: method.color }} />
+                  <div key={method.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center space-x-3">
+                        <MethodIcon className="h-6 w-6" style={{ color: method.color }} />
                         <span className="font-medium text-gray-900 dark:text-gray-100">{method.name}</span>
                       </div>
-                      <StatusIcon className={`h-4 w-4 ${getStatusColor(method.status)}`} />
+                      <StatusIcon className={`h-5 w-5 ${getStatusColor(method.status)}`} />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-gray-600 dark:text-gray-400">Balance</span>
                         <span className="font-medium text-gray-900 dark:text-gray-100">${method.balance.toFixed(2)}</span>
@@ -397,47 +399,47 @@ export default function IntegrationManagement() {
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="card">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="card p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Balance</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Total Balance</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                     ${paymentMethods.reduce((sum, m) => sum + m.balance, 0).toFixed(2)}
                   </p>
                 </div>
-                <DollarSign className="h-8 w-8 text-green-600 dark:text-green-400" />
+                <DollarSign className="h-10 w-10 text-green-600 dark:text-green-400" />
               </div>
             </div>
-            <div className="card">
+            <div className="card p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active Subscriptions</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Active Subscriptions</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                     {subscriptions.filter(s => s.status === 'active').length}
                   </p>
                 </div>
-                <Calendar className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                <Calendar className="h-10 w-10 text-blue-600 dark:text-blue-400" />
               </div>
             </div>
-            <div className="card">
+            <div className="card p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Scans Remaining</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">{usageStats.scansRemaining}</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Scans Remaining</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">{usageStats.scansRemaining}</p>
                 </div>
-                <Activity className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                <Activity className="h-10 w-10 text-purple-600 dark:text-purple-400" />
               </div>
             </div>
-            <div className="card">
+            <div className="card p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Offline Payments</p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Offline Payments</p>
+                  <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                     {offlinePayments.filter(p => p.status === 'pending').length}
                   </p>
                 </div>
-                <WifiOff className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
+                <WifiOff className="h-10 w-10 text-yellow-600 dark:text-yellow-400" />
               </div>
             </div>
           </div>
@@ -445,51 +447,51 @@ export default function IntegrationManagement() {
       )}
 
       {activeTab === 'payments' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Payment Methods Management */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Payment Methods</h3>
-              <button className="btn-primary flex items-center">
+          <div className="card p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Payment Methods</h3>
+              <button className="btn-primary flex items-center px-6 py-3">
                 <Plus className="h-4 w-4 mr-2" />
                 Add Payment Method
               </button>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {paymentMethods.map((method) => {
                 const StatusIcon = getStatusIcon(method.status)
                 const MethodIcon = method.icon
                 return (
-                  <div key={method.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="p-2 rounded-lg" style={{ backgroundColor: `${method.color}20` }}>
-                          <MethodIcon className="h-6 w-6" style={{ color: method.color }} />
+                  <div key={method.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center space-x-4">
+                        <div className="p-3 rounded-lg" style={{ backgroundColor: `${method.color}20` }}>
+                          <MethodIcon className="h-8 w-8" style={{ color: method.color }} />
                         </div>
                         <div>
-                          <h4 className="font-medium text-gray-900 dark:text-gray-100">{method.name}</h4>
+                          <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">{method.name}</h4>
                           <p className="text-sm text-gray-600 dark:text-gray-400">Last sync: {method.lastSync.toLocaleTimeString()}</p>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <StatusIcon className={`h-4 w-4 ${getStatusColor(method.status)}`} />
+                      <div className="flex items-center space-x-3">
+                        <StatusIcon className={`h-5 w-5 ${getStatusColor(method.status)}`} />
                         <span className={`text-sm ${getStatusColor(method.status)}`}>
                           {method.status.charAt(0).toUpperCase() + method.status.slice(1)}
                         </span>
                       </div>
                     </div>
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between">
+                    <div className="space-y-4 mb-6">
+                      <div className="flex items-center justify-between py-3">
                         <span className="text-sm text-gray-600 dark:text-gray-400">Current Balance</span>
                         <span className="font-medium text-gray-900 dark:text-gray-100">${method.balance.toFixed(2)}</span>
                       </div>
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between py-3">
                         <span className="text-sm text-gray-600 dark:text-gray-400">Connection Status</span>
-                        <div className="flex items-center space-x-1">
+                        <div className="flex items-center space-x-2">
                           {method.isOnline ? (
-                            <OnlineIcon className="h-3 w-3 text-green-500" />
+                            <OnlineIcon className="h-4 w-4 text-green-500" />
                           ) : (
-                            <OfflineIcon className="h-3 w-3 text-red-500" />
+                            <OfflineIcon className="h-4 w-4 text-red-500" />
                           )}
                           <span className="text-sm text-gray-600 dark:text-gray-400">
                             {method.isOnline ? 'Connected' : 'Disconnected'}
@@ -497,13 +499,13 @@ export default function IntegrationManagement() {
                         </div>
                       </div>
                     </div>
-                    <div className="flex space-x-2 mt-4">
-                      <button className="flex-1 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <RefreshCw className="h-4 w-4 mr-1" />
+                    <div className="flex space-x-3">
+                      <button className="flex-1 px-4 py-3 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <RefreshCw className="h-4 w-4 mr-2" />
                         Sync
                       </button>
-                      <button className="flex-1 px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
-                        <Settings className="h-4 w-4 mr-1" />
+                      <button className="flex-1 px-4 py-3 text-sm border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <Settings className="h-4 w-4 mr-2" />
                         Settings
                       </button>
                     </div>
@@ -514,9 +516,9 @@ export default function IntegrationManagement() {
           </div>
 
           {/* Transaction History */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Transactions</h3>
+          <div className="card p-10">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Recent Transactions</h3>
               <button className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                 View All
               </button>
@@ -602,13 +604,13 @@ export default function IntegrationManagement() {
       )}
 
       {activeTab === 'subscriptions' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Active Subscriptions */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Active Subscriptions</h3>
-              <button className="btn-primary flex items-center">
-                <Plus className="h-4 w-4 mr-2" />
+          <div className="card p-10">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Active Subscriptions</h3>
+              <button className="btn-primary flex items-center px-8 py-4">
+                <Plus className="h-5 w-5 mr-3" />
                 Upgrade Plan
               </button>
             </div>
@@ -719,9 +721,9 @@ export default function IntegrationManagement() {
           </div>
 
           {/* Auto Renewal Settings */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Auto Renewal Settings</h3>
-            <div className="space-y-4">
+          <div className="card p-10">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Auto Renewal Settings</h3>
+            <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="font-medium text-gray-900 dark:text-gray-100">Auto Renewal</h4>
@@ -747,11 +749,11 @@ export default function IntegrationManagement() {
           </div>
 
           {/* Subscription History */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Subscription History</h3>
-              <button className="btn-secondary flex items-center">
-                <Download className="h-4 w-4 mr-2" />
+          <div className="card p-10">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Subscription History</h3>
+              <button className="btn-secondary flex items-center px-8 py-4">
+                <Download className="h-5 w-5 mr-3" />
                 Download History
               </button>
             </div>
@@ -820,11 +822,11 @@ export default function IntegrationManagement() {
       )}
 
       {activeTab === 'usage' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Usage Overview */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Usage Overview</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="card p-10">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Usage Overview</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="card">
                 <div className="flex items-center justify-between">
                   <div>
@@ -895,9 +897,9 @@ export default function IntegrationManagement() {
           </div>
 
           {/* Usage History */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Usage History</h3>
+          <div className="card p-10">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Usage History</h3>
               <button className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                 View All
               </button>
@@ -965,13 +967,13 @@ export default function IntegrationManagement() {
       )}
 
       {activeTab === 'offline' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Offline Payments */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Offline Payments</h3>
-              <button className="btn-primary flex items-center">
-                <Plus className="h-4 w-4 mr-2" />
+          <div className="card p-10">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Offline Payments</h3>
+              <button className="btn-primary flex items-center px-8 py-4">
+                <Plus className="h-5 w-5 mr-3" />
                 Add Payment
               </button>
             </div>

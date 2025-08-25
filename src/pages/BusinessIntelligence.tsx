@@ -169,59 +169,59 @@ export default function BusinessIntelligence() {
   ]
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10 sm:space-y-12">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Business Intelligence</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
+          <p className="text-gray-600 dark:text-gray-400 mt-3">
             Advanced analytics and insights for strategic decision making
           </p>
         </div>
-        <button className="btn-primary flex items-center">
+        <button className="btn-primary flex items-center px-6 py-3">
           <Download className="h-4 w-4 mr-2" />
           Export Insights
         </button>
       </div>
 
       {/* Key Insights */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div className="card">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="card p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Scan Efficiency</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">94.2%</p>
-              <p className="text-sm text-green-600 dark:text-green-400 mt-1">+5.8% vs baseline</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Scan Efficiency</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">94.2%</p>
+              <p className="text-sm text-green-600 dark:text-green-400">+5.8% vs baseline</p>
             </div>
             <TrendingUp className="h-8 w-8 text-primary-600 dark:text-primary-400" />
           </div>
         </div>
-        <div className="card">
+        <div className="card p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Cost Optimization</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">$2,850</p>
-              <p className="text-sm text-green-600 dark:text-green-400 mt-1">Monthly savings</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Cost Optimization</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">$2,850</p>
+              <p className="text-sm text-green-600 dark:text-green-400">Monthly savings</p>
             </div>
             <DollarSign className="h-8 w-8 text-green-600 dark:text-green-400" />
           </div>
         </div>
-        <div className="card">
+        <div className="card p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Accuracy Trend</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">+0.4%</p>
-              <p className="text-sm text-green-600 dark:text-green-400 mt-1">Monthly improvement</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">Accuracy Trend</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">+0.4%</p>
+              <p className="text-sm text-green-600 dark:text-green-400">Monthly improvement</p>
             </div>
             <Target className="h-8 w-8 text-blue-600 dark:text-blue-400" />
           </div>
         </div>
-        <div className="card">
+        <div className="card p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">ROI</p>
-              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">401%</p>
-              <p className="text-sm text-green-600 dark:text-green-400 mt-1">Return on investment</p>
+              <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">ROI</p>
+              <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">401%</p>
+              <p className="text-sm text-green-600 dark:text-green-400">Return on investment</p>
             </div>
             <BarChart3 className="h-8 w-8 text-purple-600 dark:text-purple-400" />
           </div>
@@ -229,13 +229,13 @@ export default function BusinessIntelligence() {
       </div>
 
       {/* Interactive Usage Charts */}
-      <div className="card">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Interactive Usage Charts</h3>
-          <div className="flex space-x-2">
+      <div className="card p-8">
+        <div className="flex items-center justify-between mb-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Interactive Usage Charts</h3>
+          <div className="flex space-x-3">
             <button
               onClick={() => setSelectedTimeframe('daily')}
-              className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 selectedTimeframe === 'daily'
                   ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300'
                   : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
@@ -245,7 +245,7 @@ export default function BusinessIntelligence() {
             </button>
             <button
               onClick={() => setSelectedTimeframe('weekly')}
-              className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 selectedTimeframe === 'weekly'
                   ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300'
                   : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
@@ -255,7 +255,7 @@ export default function BusinessIntelligence() {
             </button>
             <button
               onClick={() => setSelectedTimeframe('monthly')}
-              className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                 selectedTimeframe === 'monthly'
                   ? 'bg-primary-100 text-primary-700 dark:bg-primary-900/30 dark:text-primary-300'
                   : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
@@ -267,9 +267,9 @@ export default function BusinessIntelligence() {
         </div>
         
         {/* Scan Volume Chart */}
-        <div className="mb-8">
-          <h4 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-4">Scan Volume</h4>
-          <ResponsiveContainer width="100%" height={200}>
+        <div className="mb-10">
+          <h4 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-6">Scan Volume</h4>
+          <ResponsiveContainer width="100%" height={250}>
             <BarChart data={getPatternData()}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
               <XAxis dataKey={selectedTimeframe === 'daily' ? 'day' : selectedTimeframe === 'weekly' ? 'week' : 'month'} stroke={axisStroke} />
@@ -282,8 +282,8 @@ export default function BusinessIntelligence() {
 
         {/* Accuracy and Cost Chart */}
         <div>
-          <h4 className="text-md font-medium text-gray-700 dark:text-gray-300 mb-4">Accuracy & Cost Trends</h4>
-          <ResponsiveContainer width="100%" height={200}>
+          <h4 className="text-lg font-medium text-gray-700 dark:text-gray-300 mb-6">Accuracy & Cost Trends</h4>
+          <ResponsiveContainer width="100%" height={250}>
             <LineChart data={getPatternData()}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
               <XAxis dataKey={selectedTimeframe === 'daily' ? 'day' : selectedTimeframe === 'weekly' ? 'week' : 'month'} stroke={axisStroke} />
@@ -308,10 +308,10 @@ export default function BusinessIntelligence() {
       </div>
 
       {/* Cost Optimization and Subscription Analysis */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Cost Optimization Analysis</h3>
-          <ResponsiveContainer width="100%" height={300}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="card p-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Cost Optimization Analysis</h3>
+          <ResponsiveContainer width="100%" height={350}>
             <LineChart data={costOptimization}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
               <XAxis dataKey="month" stroke={axisStroke} />
@@ -321,9 +321,9 @@ export default function BusinessIntelligence() {
               <Line type="monotone" dataKey="payPerScan" stroke="#ef4444" strokeWidth={2} name="Pay-per-Scan Cost" />
             </LineChart>
           </ResponsiveContainer>
-          <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+          <div className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
             <div className="flex items-center">
-              <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 mr-2" />
+              <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 mr-3" />
               <span className="text-sm font-medium text-green-800 dark:text-green-200">
                 Recommendation: Switch to subscription plan to save $2,850/month
               </span>
@@ -331,9 +331,9 @@ export default function BusinessIntelligence() {
           </div>
         </div>
 
-        <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Payment Method Distribution</h3>
-          <ResponsiveContainer width="100%" height={300}>
+        <div className="card p-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Payment Method Distribution</h3>
+          <ResponsiveContainer width="100%" height={350}>
             <RechartsPieChart>
               <Pie
                 data={paymentMethodData}
@@ -351,17 +351,17 @@ export default function BusinessIntelligence() {
               <Tooltip contentStyle={tooltipStyle} />
             </RechartsPieChart>
           </ResponsiveContainer>
-          <div className="mt-4 space-y-2">
+          <div className="mt-6 space-y-3">
             {paymentMethodData.map((method) => (
-              <div key={method.name} className="flex items-center justify-between text-sm">
-                <div className="flex items-center space-x-2">
+              <div key={method.name} className="flex items-center justify-between text-sm py-2">
+                <div className="flex items-center space-x-3">
                   <div
-                    className="w-3 h-3 rounded-full"
+                    className="w-4 h-4 rounded-full"
                     style={{ backgroundColor: method.color }}
                   />
                   <span className="text-gray-600 dark:text-gray-400">{method.name}</span>
                 </div>
-                <span className="text-gray-900 dark:text-gray-100">{method.value}%</span>
+                <span className="text-gray-900 dark:text-gray-100 font-medium">{method.value}%</span>
               </div>
             ))}
           </div>
@@ -369,39 +369,39 @@ export default function BusinessIntelligence() {
       </div>
 
       {/* Time Savings Analytics */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Hours Saved per Inventory Cycle</h3>
-          <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-                <h4 className="font-medium text-blue-900 dark:text-blue-100">Average Time Saved</h4>
-                <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-2">8.5 hrs</p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="card p-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Hours Saved per Inventory Cycle</h3>
+          <div className="space-y-8">
+            <div className="grid grid-cols-2 gap-6">
+              <div className="text-center p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+                <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-3">Average Time Saved</h4>
+                <p className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">8.5 hrs</p>
                 <p className="text-sm text-blue-700 dark:text-blue-300">per cycle</p>
               </div>
-              <div className="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
-                <h4 className="font-medium text-green-900 dark:text-green-100">Total Time Saved</h4>
-                <p className="text-2xl font-bold text-green-600 dark:text-green-400 mt-2">156 hrs</p>
+              <div className="text-center p-6 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                <h4 className="font-medium text-green-900 dark:text-green-100 mb-3">Total Time Saved</h4>
+                <p className="text-3xl font-bold text-green-600 dark:text-green-400 mb-2">156 hrs</p>
                 <p className="text-sm text-green-700 dark:text-green-300">this month</p>
               </div>
             </div>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between py-3">
                 <span className="text-sm text-gray-600 dark:text-gray-400">Manual counting time</span>
                 <span className="text-sm font-medium text-gray-900 dark:text-gray-100">12 hours</span>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between py-3">
                 <span className="text-sm text-gray-600 dark:text-gray-400">Pefoma scan time</span>
                 <span className="text-sm font-medium text-gray-900 dark:text-gray-100">3.5 hours</span>
               </div>
-              <div className="border-t border-gray-200 dark:border-gray-700 pt-3">
+              <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-gray-900 dark:text-gray-100">Time saved per cycle</span>
                   <span className="text-sm font-bold text-green-600 dark:text-green-400">8.5 hours</span>
                 </div>
               </div>
             </div>
-            <div className="p-3 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
+            <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-200 dark:border-yellow-800">
               <p className="text-sm text-yellow-800 dark:text-yellow-200">
                 <strong>Efficiency Gain:</strong> 70.8% reduction in inventory counting time
               </p>
@@ -409,9 +409,9 @@ export default function BusinessIntelligence() {
           </div>
         </div>
 
-        <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Accuracy Improvement Tracking</h3>
-          <ResponsiveContainer width="100%" height={300}>
+        <div className="card p-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Accuracy Improvement Tracking</h3>
+          <ResponsiveContainer width="100%" height={350}>
             <LineChart data={accuracyTracking}>
               <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
               <XAxis dataKey="month" stroke={axisStroke} />
@@ -435,8 +435,8 @@ export default function BusinessIntelligence() {
       </div>
 
       {/* Payment Method Performance */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Payment Method Performance Analysis (M-Pesa vs. Card vs. Other)</h3>
+      <div className="card p-8">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Payment Method Performance Analysis (M-Pesa vs. Card vs. Other)</h3>
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead className="bg-gray-50 dark:bg-gray-800">
@@ -519,9 +519,9 @@ export default function BusinessIntelligence() {
       </div>
 
       {/* Peak Usage Analysis */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Peak Usage Analysis</h3>
-        <ResponsiveContainer width="100%" height={300}>
+      <div className="card p-8">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Peak Usage Analysis</h3>
+        <ResponsiveContainer width="100%" height={350}>
           <LineChart data={peakUsageData}>
             <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
             <XAxis dataKey="hour" stroke={axisStroke} />
@@ -534,16 +534,16 @@ export default function BusinessIntelligence() {
       </div>
 
       {/* Optimization Suggestions */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Cost Optimization Suggestions Based on Usage Patterns</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="card p-8">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Cost Optimization Suggestions Based on Usage Patterns</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {optimizationSuggestions.map((suggestion) => (
-            <div key={suggestion.title} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
-              <div className="flex items-start justify-between mb-3">
-                <div className="h-10 w-10 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
-                  <suggestion.icon className="h-5 w-5 text-primary-600 dark:text-primary-400" />
+            <div key={suggestion.title} className="border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+              <div className="flex items-start justify-between mb-4">
+                <div className="h-12 w-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                  <suggestion.icon className="h-6 w-6 text-primary-600 dark:text-primary-400" />
                 </div>
-                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${
                   suggestion.status === 'recommended' 
                     ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300'
                     : suggestion.status === 'suggestion'
@@ -553,8 +553,8 @@ export default function BusinessIntelligence() {
                   {suggestion.impact} Impact
                 </span>
               </div>
-              <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">{suggestion.title}</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{suggestion.description}</p>
+              <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">{suggestion.title}</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">{suggestion.description}</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-green-600 dark:text-green-400">{suggestion.savings}</span>
                 <button className="text-sm text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium">
@@ -567,40 +567,40 @@ export default function BusinessIntelligence() {
       </div>
 
       {/* Subscription vs Pay-per-Scan Recommendations */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Subscription vs Pay-per-Scan Recommendations</h3>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="p-4 border border-green-200 dark:border-green-800 rounded-lg bg-green-50 dark:bg-green-900/20">
-            <div className="flex items-center justify-between mb-2">
+      <div className="card p-8">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Subscription vs Pay-per-Scan Recommendations</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="p-6 border border-green-200 dark:border-green-800 rounded-lg bg-green-50 dark:bg-green-900/20">
+            <div className="flex items-center justify-between mb-4">
               <h4 className="font-medium text-green-900 dark:text-green-100">Monthly Subscription</h4>
               <span className="text-sm font-medium text-green-600 dark:text-green-400">$500/month</span>
             </div>
-            <p className="text-sm text-green-700 dark:text-green-300 mb-3">Unlimited scans, predictable costs</p>
-            <div className="text-xs text-green-600 dark:text-green-400 space-y-1">
+            <p className="text-sm text-green-700 dark:text-green-300 mb-4">Unlimited scans, predictable costs</p>
+            <div className="text-xs text-green-600 dark:text-green-400 space-y-2 mb-6">
               <p>• Best for: High volume users (10,000+ scans/month)</p>
               <p>• Savings: $2,850/month at current usage</p>
               <p>• Flexibility: No per-scan limits</p>
               <p>• ROI: 401% return on investment</p>
             </div>
-            <div className="mt-4 p-2 bg-green-100 dark:bg-green-800/30 rounded">
+            <div className="p-3 bg-green-100 dark:bg-green-800/30 rounded">
               <p className="text-xs font-medium text-green-800 dark:text-green-200">
                 🎯 RECOMMENDED for your usage pattern
               </p>
             </div>
           </div>
-          <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900/20">
-            <div className="flex items-center justify-between mb-2">
+          <div className="p-6 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900/20">
+            <div className="flex items-center justify-between mb-4">
               <h4 className="font-medium text-gray-900 dark:text-gray-100">Pay-per-Scan</h4>
               <span className="text-sm font-medium text-gray-600 dark:text-gray-400">$0.05/scan</span>
             </div>
-            <p className="text-sm text-gray-700 dark:text-gray-300 mb-3">Pay only for what you use</p>
-            <div className="text-xs text-gray-600 dark:text-gray-400 space-y-1">
+            <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">Pay only for what you use</p>
+            <div className="text-xs text-gray-600 dark:text-gray-400 space-y-2 mb-6">
               <p>• Best for: Low volume users (&lt;10,000 scans/month)</p>
               <p>• Current cost: $3,350/month</p>
               <p>• Flexibility: No monthly commitment</p>
               <p>• Risk: Costs can vary significantly</p>
             </div>
-            <div className="mt-4 p-2 bg-red-100 dark:bg-red-800/30 rounded">
+            <div className="p-3 bg-red-100 dark:bg-red-800/30 rounded">
               <p className="text-xs font-medium text-red-800 dark:text-red-200">
                 ⚠️ NOT RECOMMENDED - 570% more expensive
               </p>

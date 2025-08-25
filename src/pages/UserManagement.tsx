@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import {
   User, CreditCard, Settings, BarChart3, Calendar,
   DollarSign, Activity, History,
@@ -272,6 +272,7 @@ const usageStats: UsageStats = {
 
 export default function UserManagement() {
   const navigate = useNavigate()
+  const { tab } = useParams<{ tab: string }>()
   const [activeTab, setActiveTab] = useState<'profile' | 'payments' | 'subscription' | 'usage' | 'sessions' | 'preferences'>('profile')
 
   const [showSubscriptionModal, setShowSubscriptionModal] = useState(false)
@@ -292,11 +293,10 @@ export default function UserManagement() {
   })
 
   useEffect(() => {
-    const queryTab = new URLSearchParams(window.location.search).get('tab')
-    if (queryTab) {
-      setActiveTab(queryTab as any)
+    if (tab) {
+      setActiveTab(tab as any)
     }
-  }, [])
+  }, [tab])
 
   const getTierIcon = (tier: string) => {
     switch (tier) {
@@ -367,34 +367,24 @@ export default function UserManagement() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10 sm:space-y-12">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">User Management</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-2">
-            Manage your profile, payments, subscriptions, and usage preferences
+          <p className="text-gray-600 dark:text-gray-400 mt-3">
+            Manage user profiles, preferences, and account settings
           </p>
         </div>
-        <div className="flex items-center space-x-3">
-          <Tooltip content="Export your user data and usage statistics">
-            <button className="btn-primary flex items-center">
-              <Download className="h-4 w-4 mr-2" />
-              Export Data
-            </button>
-          </Tooltip>
-          <Tooltip content="Manage your account settings and preferences">
-            <button className="btn-primary flex items-center">
-              <Settings className="h-4 w-4 mr-2" />
-              Account Settings
-            </button>
-          </Tooltip>
-        </div>
+        <button className="btn-primary flex items-center px-6 py-3">
+          <Plus className="h-4 w-4 mr-2" />
+          Add User
+        </button>
       </div>
 
       {/* Tab Navigation */}
       <div className="border-b border-gray-200 dark:border-gray-700">
-        <nav className="-mb-px flex space-x-8">
+        <nav className="-mb-px flex space-x-6 sm:space-x-10 overflow-x-auto">
           {[
             { id: 'profile', name: 'Profile', icon: User },
             { id: 'payments', name: 'Payment Methods', icon: CreditCard },
@@ -402,42 +392,43 @@ export default function UserManagement() {
             { id: 'usage', name: 'Usage Analytics', icon: BarChart3 },
             { id: 'sessions', name: 'Session History', icon: History },
             { id: 'preferences', name: 'Preferences', icon: Settings }
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex items-center py-2 px-1 border-b-2 font-medium text-sm ${
-                activeTab === tab.id
+          ].map((tabItem) => (
+            <Link
+              key={tabItem.id}
+              to={`/user-management/${tabItem.id}`}
+              className={`flex items-center py-3 px-2 border-b-2 font-medium text-xs sm:text-sm whitespace-nowrap ${
+                activeTab === tabItem.id
                   ? 'border-primary-500 text-primary-600 dark:text-primary-400'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-300'
               }`}
             >
-              <tab.icon className="h-4 w-4 mr-2" />
-              {tab.name}
-            </button>
+              <tabItem.icon className="h-4 w-4 mr-2 sm:mr-3" />
+              <span className="hidden sm:inline">{tabItem.name}</span>
+              <span className="sm:hidden">{tabItem.name.split(' ')[0]}</span>
+            </Link>
           ))}
         </nav>
       </div>
 
       {/* Content */}
       {activeTab === 'profile' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Profile Overview */}
-          <div className="card">
-            <div className="flex items-start justify-between mb-6">
-              <div className="flex items-center space-x-4">
-                <div className="h-16 w-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
-                  <User className="h-8 w-8 text-white" />
+          <div className="card p-8">
+            <div className="flex items-start justify-between mb-8">
+              <div className="flex items-center space-x-6">
+                <div className="h-20 w-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
+                  <User className="h-10 w-10 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{userProfile.name}</h3>
-                  <p className="text-gray-600 dark:text-gray-400">{userProfile.email}</p>
-                  <div className="flex items-center space-x-2 mt-1">
+                  <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-2">{userProfile.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-3">{userProfile.email}</p>
+                  <div className="flex items-center space-x-3">
                     {(() => {
                       const TierIcon = getTierIcon(userProfile.tier)
                       return (
                         <>
-                          <TierIcon className={`h-4 w-4 ${getTierColor(userProfile.tier)}`} />
+                          <TierIcon className={`h-5 w-5 ${getTierColor(userProfile.tier)}`} />
                           <span className={`text-sm font-medium ${getTierColor(userProfile.tier)}`}>
                             {userProfile.tier.charAt(0).toUpperCase() + userProfile.tier.slice(1)} Tier
                           </span>
@@ -447,13 +438,13 @@ export default function UserManagement() {
                   </div>
                 </div>
               </div>
-              <button className="btn-primary flex items-center">
+              <button className="btn-primary flex items-center px-6 py-3">
                 <Edit className="h-4 w-4 mr-2" />
                 Edit Profile
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <Tooltip content="Total number of scans performed across all sessions">
                 <div className="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg cursor-help">
                   <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
@@ -482,9 +473,9 @@ export default function UserManagement() {
           </div>
 
           {/* Payment Mode Selection */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Payment Preference</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="card p-8">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Payment Preference</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <Tooltip content="Pay only for the scans you use - perfect for occasional users">
                 <div 
                   className={`border-2 rounded-lg p-6 cursor-pointer transition-all duration-200 ${
@@ -570,19 +561,19 @@ export default function UserManagement() {
       )}
 
       {activeTab === 'payments' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Payment Methods */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Payment Methods</h3>
+          <div className="card p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Payment Methods</h3>
               <button 
-                className="btn-primary flex items-center"
+                className="btn-primary flex items-center px-6 py-3"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Payment Method
               </button>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {paymentMethods.map((method) => {
                 const MethodIcon = method.icon
                 return (
@@ -645,15 +636,15 @@ export default function UserManagement() {
       )}
 
       {activeTab === 'subscription' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Current Subscription */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Current Subscription</h3>
-              <div className="flex space-x-3">
+          <div className="card p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Current Subscription</h3>
+              <div className="flex space-x-4">
                 <button 
                   onClick={handleSubscriptionPause}
-                  className={`px-4 py-2 text-sm border rounded-lg flex items-center ${
+                  className={`px-6 py-3 text-sm border rounded-lg flex items-center ${
                     isSubscriptionPaused
                       ? 'border-green-300 dark:border-green-600 text-green-700 dark:text-green-300 hover:bg-green-50 dark:hover:bg-green-900/20'
                       : 'border-yellow-300 dark:border-yellow-600 text-yellow-700 dark:text-yellow-300 hover:bg-yellow-50 dark:hover:bg-yellow-900/20'
@@ -666,16 +657,12 @@ export default function UserManagement() {
                   )}
                   {isSubscriptionPaused ? 'Continue' : 'Pause'}
                 </button>
-                <button 
-                  className="btn-primary flex items-center"
-                  onClick={() => {
-                    // Navigate to Integration Management subscriptions tab
-                    navigate('/integration?tab=subscriptions')
-                  }}
-                >
-                  <Edit className="h-4 w-4 mr-2" />
-                  Manage
-                </button>
+                <Link to="/integration/subscriptions">
+                  <button className="btn-primary flex items-center px-6 py-3">
+                    <Edit className="h-4 w-4 mr-2" />
+                    Manage
+                  </button>
+                </Link>
               </div>
             </div>
 
@@ -767,87 +754,87 @@ export default function UserManagement() {
       )}
 
       {activeTab === 'usage' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Usage Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <Tooltip content="Total number of scans performed across all sessions">
-              <div className="card cursor-help">
-                <div className="flex items-center justify-between">
+              <div className="card p-8 cursor-help">
+                <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Scans</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Total Scans</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                       {usageStats.totalScans.toLocaleString()}
                     </p>
                   </div>
-                  <Activity className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                  <Activity className="h-10 w-10 text-blue-600 dark:text-blue-400 ml-10" />
                 </div>
               </div>
             </Tooltip>
             <Tooltip content="Total cost incurred for all scan sessions">
-              <div className="card cursor-help">
-                <div className="flex items-center justify-between">
+              <div className="card p-8 cursor-help">
+                <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Cost</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Total Cost</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                       ${usageStats.totalCost.toFixed(2)}
                     </p>
                   </div>
-                  <DollarSign className="h-8 w-8 text-green-600 dark:text-green-400" />
+                  <DollarSign className="h-10 w-10 text-green-600 dark:text-green-400 ml-10" />
                 </div>
               </div>
             </Tooltip>
             <Tooltip content="Average accuracy percentage across all scan sessions">
-              <div className="card cursor-help">
-                <div className="flex items-center justify-between">
+              <div className="card p-8 cursor-help">
+                <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Accuracy</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Accuracy</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                       {usageStats.averageAccuracy}%
                     </p>
                   </div>
-                  <Target className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                  <Target className="h-10 w-10 text-purple-600 dark:text-purple-400 ml-10" />
                 </div>
               </div>
             </Tooltip>
             <Tooltip content="Total time saved compared to manual inventory processes">
-              <div className="card cursor-help">
-                <div className="flex items-center justify-between">
+              <div className="card p-8 cursor-help">
+                <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Time Saved</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Time Saved</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                       {usageStats.timeSaved}h
                     </p>
                   </div>
-                  <Zap className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
+                  <Zap className="h-10 w-10 text-yellow-600 dark:text-yellow-400 ml-10" />
                 </div>
               </div>
             </Tooltip>
           </div>
 
           {/* Favorite Categories */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Favorite Categories</h3>
-            <div className="space-y-4">
+          <div className="card p-10">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Favorite Categories</h3>
+            <div className="space-y-6">
               {usageStats.favoriteCategories.map((category, index) => (
                 <Tooltip key={index} content={`${category.count.toLocaleString()} scans in ${category.name} category`}>
-                  <div className="flex items-center justify-between cursor-help">
-                    <div className="flex items-center space-x-3 mr-2.5">
-                      <div className="w-3 h-3 rounded-full" style={{ 
+                  <div className="flex items-center justify-between cursor-help py-4 px-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ 
                         backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'][index % 4] 
                       }} />
-                      <span className="font-medium text-gray-900 dark:text-gray-100">{category.name}</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100 min-w-[140px] text-sm">{category.name}</span>
                     </div>
-                    <div className="flex items-center space-x-2.5">
-                      <div className="w-32 bg-gray-200 dark:bg-gray-700 rounded-full h-2 mr-2.5">
+                    <div className="flex items-center space-x-6">
+                      <div className="w-56 bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
                         <div
-                          className="h-2 rounded-full transition-all duration-300"
+                          className="h-2.5 rounded-full transition-all duration-300"
                           style={{ 
                             width: `${(category.count / Math.max(...usageStats.favoriteCategories.map(c => c.count))) * 100}%`,
                             backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'][index % 4]
                           }}
                         />
                       </div>
-                      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                      <span className="text-sm font-semibold text-gray-900 dark:text-gray-100 min-w-[70px] text-right">
                         {category.count.toLocaleString()}
                       </span>
                     </div>
@@ -860,11 +847,11 @@ export default function UserManagement() {
       )}
 
       {activeTab === 'sessions' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Session History */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Session History</h3>
+          <div className="card p-8">
+            <div className="flex items-center justify-between mb-8">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Session History</h3>
               <button className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                 View All
               </button>
@@ -941,15 +928,15 @@ export default function UserManagement() {
       )}
 
       {activeTab === 'preferences' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Notification Preferences */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Notification Preferences</h3>
-            <div className="space-y-4">
+          <div className="card p-8">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Notification Preferences</h3>
+            <div className="space-y-6">
               {Object.entries(preferences.notifications).map(([key, value]) => (
-                <div key={key} className="flex items-center justify-between">
+                <div key={key} className="flex items-center justify-between py-4">
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
                       {key.charAt(0).toUpperCase() + key.slice(1)} Notifications
                     </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -976,13 +963,13 @@ export default function UserManagement() {
           </div>
 
           {/* Privacy Settings */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Privacy Settings</h3>
-            <div className="space-y-4">
+          <div className="card p-8">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Privacy Settings</h3>
+            <div className="space-y-6">
               {Object.entries(preferences.privacy).map(([key, value]) => (
-                <div key={key} className="flex items-center justify-between">
+                <div key={key} className="flex items-center justify-between py-4">
                   <div>
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
                       {key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
                     </h4>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
