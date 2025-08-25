@@ -87,34 +87,36 @@ export default function Dashboard() {
   const gridStroke = isDark ? '#374151' : '#E5E7EB'
 
   return (
-    <div className="space-y-6 sm:space-y-8">
+    <div className="space-y-10 sm:space-y-12">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
-        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2">
-          Welcome to Pefoma - AI-powered inventory management at your fingertips
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-3">
+            Welcome to Pefoma - AI-powered inventory management at your fingertips
+          </p>
+        </div>
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {stats.map((stat) => (
-          <div key={stat.name} className="card p-4 sm:p-6">
+          <div key={stat.name} className="card p-8">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm sm:text-base font-medium text-gray-600 dark:text-gray-400">{stat.name}</p>
-                <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mt-1">{stat.value}</p>
-                <div className="flex items-center mt-2">
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">{stat.name}</p>
+                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">{stat.value}</p>
+                <div className="flex items-center">
                   <span className={`text-sm font-medium ${
                     stat.changeType === 'positive' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
                   }`}>
                     {stat.change}
                   </span>
-                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-1">vs last month</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">vs last month</span>
                 </div>
               </div>
-              <div className="h-12 w-12 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
-                <stat.icon className="h-6 w-6 text-primary-600 dark:text-primary-400" />
+              <div className="h-14 w-14 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <stat.icon className="h-7 w-7 text-primary-600 dark:text-primary-400" />
               </div>
             </div>
           </div>
@@ -122,11 +124,11 @@ export default function Dashboard() {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         {/* Weekly Scan Trends */}
-        <div className="card p-4 sm:p-6">
-          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Weekly Scan Trends</h3>
-          <div className="h-64 sm:h-80">
+        <div className="card p-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Weekly Scan Trends</h3>
+          <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={scanData}>
                 <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
@@ -171,9 +173,9 @@ export default function Dashboard() {
         </div>
 
         {/* Category Distribution */}
-        <div className="card p-4 sm:p-6">
-          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Category Distribution</h3>
-          <div className="h-64 sm:h-80">
+        <div className="card p-8">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Category Distribution</h3>
+          <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -196,14 +198,14 @@ export default function Dashboard() {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
+          <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4">
             {categoryData.map((category) => (
-              <div key={category.name} className="flex items-center space-x-2">
+              <div key={category.name} className="flex items-center space-x-3">
                 <div 
-                  className="w-3 h-3 rounded-full" 
+                  className="w-4 h-4 rounded-full" 
                   style={{ backgroundColor: category.color }}
                 />
-                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">
+                <span className="text-sm text-gray-600 dark:text-gray-400 truncate">
                   {category.name}
                 </span>
               </div>
@@ -213,31 +215,31 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="card p-4 sm:p-6">
-        <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6">Quick Actions</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      <div className="card p-8">
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Quick Actions</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <Link to="/analytics">
-            <button className="flex items-center justify-center p-3 sm:p-4 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
-              <BarChart3 className="h-5 w-5 mr-2 sm:mr-3" />
-              <span className="text-sm sm:text-base font-medium">View Analytics</span>
+            <button className="flex items-center justify-center p-6 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
+              <BarChart3 className="h-6 w-6 mr-3" />
+              <span className="text-base font-medium">View Analytics</span>
             </button>
           </Link>
           <Link to="/business-intelligence">
-            <button className="flex items-center justify-center p-3 sm:p-4 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/50 transition-colors">
-              <TrendingUp className="h-5 w-5 mr-2 sm:mr-3" />
-              <span className="text-sm sm:text-base font-medium">Business Intelligence</span>
+            <button className="flex items-center justify-center p-6 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/50 transition-colors">
+              <TrendingUp className="h-6 w-6 mr-3" />
+              <span className="text-base font-medium">Business Intelligence</span>
             </button>
           </Link>
           <Link to="/user-management">
-            <button className="flex items-center justify-center p-3 sm:p-4 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors">
-              <Users className="h-5 w-5 mr-2 sm:mr-3" />
-              <span className="text-sm sm:text-base font-medium">User Management</span>
+            <button className="flex items-center justify-center p-6 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors">
+              <Users className="h-6 w-6 mr-3" />
+              <span className="text-base font-medium">User Management</span>
             </button>
           </Link>
           <Link to="/settings">
-            <button className="flex items-center justify-center p-3 sm:p-4 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors">
-              <Zap className="h-5 w-5 mr-2 sm:mr-3" />
-              <span className="text-sm sm:text-base font-medium">Settings</span>
+            <button className="flex items-center justify-center p-6 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors">
+              <Zap className="h-6 w-6 mr-3" />
+              <span className="text-base font-medium">Settings</span>
             </button>
           </Link>
         </div>

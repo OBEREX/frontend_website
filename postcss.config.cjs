@@ -3,5 +3,5 @@ module.exports = {
     tailwindcss: './tailwind.config.js',
     autoprefixer: {},
   },
-}
+};
 

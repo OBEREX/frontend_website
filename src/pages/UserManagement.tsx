@@ -758,83 +758,83 @@ export default function UserManagement() {
           {/* Usage Overview */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <Tooltip content="Total number of scans performed across all sessions">
-              <div className="card cursor-help">
-                <div className="flex items-center justify-between">
+              <div className="card p-8 cursor-help">
+                <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Scans</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Total Scans</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                       {usageStats.totalScans.toLocaleString()}
                     </p>
                   </div>
-                  <Activity className="h-8 w-8 text-blue-600 dark:text-blue-400" />
+                  <Activity className="h-10 w-10 text-blue-600 dark:text-blue-400 ml-10" />
                 </div>
               </div>
             </Tooltip>
             <Tooltip content="Total cost incurred for all scan sessions">
-              <div className="card cursor-help">
-                <div className="flex items-center justify-between">
+              <div className="card p-8 cursor-help">
+                <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Cost</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Total Cost</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                       ${usageStats.totalCost.toFixed(2)}
                     </p>
                   </div>
-                  <DollarSign className="h-8 w-8 text-green-600 dark:text-green-400" />
+                  <DollarSign className="h-10 w-10 text-green-600 dark:text-green-400 ml-10" />
                 </div>
               </div>
             </Tooltip>
             <Tooltip content="Average accuracy percentage across all scan sessions">
-              <div className="card cursor-help">
-                <div className="flex items-center justify-between">
+              <div className="card p-8 cursor-help">
+                <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Accuracy</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Accuracy</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                       {usageStats.averageAccuracy}%
                     </p>
                   </div>
-                  <Target className="h-8 w-8 text-purple-600 dark:text-purple-400" />
+                  <Target className="h-10 w-10 text-purple-600 dark:text-purple-400 ml-10" />
                 </div>
               </div>
             </Tooltip>
             <Tooltip content="Total time saved compared to manual inventory processes">
-              <div className="card cursor-help">
-                <div className="flex items-center justify-between">
+              <div className="card p-8 cursor-help">
+                <div className="flex items-end justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Time Saved</p>
-                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">Time Saved</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-gray-100">
                       {usageStats.timeSaved}h
                     </p>
                   </div>
-                  <Zap className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
+                  <Zap className="h-10 w-10 text-yellow-600 dark:text-yellow-400 ml-10" />
                 </div>
               </div>
             </Tooltip>
           </div>
 
           {/* Favorite Categories */}
-          <div className="card p-8">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Favorite Categories</h3>
+          <div className="card p-10">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Favorite Categories</h3>
             <div className="space-y-6">
               {usageStats.favoriteCategories.map((category, index) => (
                 <Tooltip key={index} content={`${category.count.toLocaleString()} scans in ${category.name} category`}>
-                  <div className="flex items-center justify-between cursor-help py-3">
-                    <div className="flex items-center space-x-4 mr-4">
-                      <div className="w-4 h-4 rounded-full" style={{ 
+                  <div className="flex items-center justify-between cursor-help py-4 px-2 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ 
                         backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'][index % 4] 
                       }} />
-                      <span className="font-medium text-gray-900 dark:text-gray-100">{category.name}</span>
+                      <span className="font-medium text-gray-900 dark:text-gray-100 min-w-[140px] text-sm">{category.name}</span>
                     </div>
-                    <div className="flex items-center space-x-4">
-                      <div className="w-40 bg-gray-200 dark:bg-gray-700 rounded-full h-3 mr-4">
+                    <div className="flex items-center space-x-6">
+                      <div className="w-56 bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
                         <div
-                          className="h-3 rounded-full transition-all duration-300"
+                          className="h-2.5 rounded-full transition-all duration-300"
                           style={{ 
                             width: `${(category.count / Math.max(...usageStats.favoriteCategories.map(c => c.count))) * 100}%`,
                             backgroundColor: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444'][index % 4]
                           }}
                         />
                       </div>
-                      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                      <span className="text-sm font-semibold text-gray-900 dark:text-gray-100 min-w-[70px] text-right">
                         {category.count.toLocaleString()}
                       </span>
                     </div>

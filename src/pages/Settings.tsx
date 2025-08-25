@@ -295,47 +295,47 @@ export default function Settings() {
         </div>
 
         {/* Content */}
-        <div className="lg:col-span-2 space-y-10">
+        <div className="lg:col-span-2 space-y-12">
           {/* Profile Settings */}
-          <div id="profile" className="card p-8">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Profile Settings</h3>
-            <div className="space-y-8">
-              <div className="flex items-center space-x-8">
-                <div className="h-24 w-24 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
-                  <User className="h-12 w-12 text-primary-600 dark:text-primary-400" />
+          <div id="profile" className="card p-10">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Profile Settings</h3>
+            <div className="space-y-10">
+              <div className="flex items-center space-x-10">
+                <div className="h-28 w-28 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                  <User className="h-14 w-14 text-primary-600 dark:text-primary-400" />
                 </div>
                 <div>
-                  <button className="btn-secondary">Change Photo</button>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">JPG, PNG or GIF. Max size 2MB.</p>
+                  <button className="btn-secondary px-6 py-3">Change Photo</button>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">JPG, PNG or GIF. Max size 2MB.</p>
                 </div>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">First Name</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">First Name</label>
                   <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" defaultValue="John" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Last Name</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Last Name</label>
                   <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" defaultValue="Doe" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Email</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Email</label>
                   <input type="email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" defaultValue="john.doe@company.com" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Phone</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Phone</label>
                   <input type="tel" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" defaultValue="+254 700 000 000" />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Company</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Company</label>
                   <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" defaultValue="Pefoma Retail Solutions" />
                 </div>
               </div>
               
-              <div className="flex justify-end pt-4">
-                <button className="btn-primary flex items-center px-6 py-3">
-                  <Save className="h-4 w-4 mr-2" />
+              <div className="flex justify-end pt-6">
+                <button className="btn-primary flex items-center px-8 py-4">
+                  <Save className="h-5 w-5 mr-3" />
                   Save Changes
                 </button>
               </div>
@@ -343,12 +343,12 @@ export default function Settings() {
           </div>
 
           {/* Notifications */}
-          <div id="notifications" className="card p-8">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Notification Preferences</h3>
-            <div className="space-y-6">
-              <div className="flex items-center justify-between py-4">
-                <div className="flex-1 mr-6">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Email Notifications</h4>
+          <div id="notifications" className="card p-10">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Notification Preferences</h3>
+            <div className="space-y-8">
+              <div className="flex items-center justify-between py-6">
+                <div className="flex-1 mr-8">
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Email Notifications</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">Receive email updates about your account and scans</p>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
@@ -357,9 +357,9 @@ export default function Settings() {
                 </label>
               </div>
               
-              <div className="flex items-center justify-between py-4">
-                <div className="flex-1 mr-6">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Push Notifications</h4>
+              <div className="flex items-center justify-between py-6">
+                <div className="flex-1 mr-8">
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Push Notifications</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">Get instant notifications on your mobile device</p>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
@@ -368,9 +368,9 @@ export default function Settings() {
                 </label>
               </div>
               
-              <div className="flex items-center justify-between py-4">
-                <div className="flex-1 mr-6">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Weekly Reports</h4>
+              <div className="flex items-center justify-between py-6">
+                <div className="flex-1 mr-8">
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Weekly Reports</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">Receive weekly summary reports via email</p>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
@@ -379,9 +379,9 @@ export default function Settings() {
                 </label>
               </div>
               
-              <div className="flex items-center justify-between py-4">
-                <div className="flex-1 mr-6">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Low Balance Alerts</h4>
+              <div className="flex items-center justify-between py-6">
+                <div className="flex-1 mr-8">
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Low Balance Alerts</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">Get notified when your account balance is low</p>
                 </div>
                 <label className="relative inline-flex items-center cursor-pointer">
@@ -393,92 +393,92 @@ export default function Settings() {
           </div>
 
           {/* Security */}
-          <div id="security" className="card p-8">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Security Settings</h3>
-            <div className="space-y-8">
+          <div id="security" className="card p-10">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Security Settings</h3>
+            <div className="space-y-10">
               <div>
-                <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Change Password</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-6">Change Password</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Current Password</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Current Password</label>
                     <input type="password" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">New Password</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">New Password</label>
                     <input type="password" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" />
                   </div>
                 </div>
-                <button className="btn-secondary mt-6 px-6 py-3">Update Password</button>
+                <button className="btn-secondary mt-8 px-8 py-4">Update Password</button>
               </div>
               
-              <div className="flex items-center justify-between py-4">
-                <div className="flex-1 mr-6">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Two-Factor Authentication</h4>
+              <div className="flex items-center justify-between py-6">
+                <div className="flex-1 mr-8">
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Two-Factor Authentication</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">Add an extra layer of security to your account</p>
                 </div>
-                <button className="btn-primary px-6 py-3">Enable 2FA</button>
+                <button className="btn-primary px-8 py-4">Enable 2FA</button>
               </div>
               
-              <div className="flex items-center justify-between py-4">
-                <div className="flex-1 mr-6">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Session Management</h4>
+              <div className="flex items-center justify-between py-6">
+                <div className="flex-1 mr-8">
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Session Management</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">Manage your active sessions and devices</p>
                 </div>
-                <button className="btn-secondary px-6 py-3">View Sessions</button>
+                <button className="btn-secondary px-8 py-4">View Sessions</button>
               </div>
             </div>
           </div>
 
           {/* Billing & Subscription */}
-          <div id="billing" className="card p-8">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Billing & Subscription</h3>
-            <div className="space-y-8">
-              <div className="p-6 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+          <div id="billing" className="card p-10">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Billing & Subscription</h3>
+            <div className="space-y-10">
+              <div className="p-8 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-green-900 dark:text-green-100 mb-2">Current Plan</h4>
-                    <p className="text-sm text-green-700 dark:text-green-300 mb-1">Pay-per-Scan Plan</p>
+                    <h4 className="font-medium text-green-900 dark:text-green-100 mb-3">Current Plan</h4>
+                    <p className="text-sm text-green-700 dark:text-green-300 mb-2">Pay-per-Scan Plan</p>
                     <p className="text-xs text-green-600 dark:text-green-400">$0.05 per scan</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-green-900 dark:text-green-100 mb-1">$3,350</p>
+                    <p className="text-sm font-medium text-green-900 dark:text-green-100 mb-2">$3,350</p>
                     <p className="text-xs text-green-600 dark:text-green-400">This month</p>
                   </div>
                 </div>
               </div>
               
-              <div className="flex items-center justify-between py-4">
-                <div className="flex-1 mr-6">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Payment Method</h4>
+              <div className="flex items-center justify-between py-6">
+                <div className="flex-1 mr-8">
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Payment Method</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">M-Pesa •••• 1234</p>
                 </div>
                 <Link to="/user-management/payments">
-                  <button className="btn-secondary px-6 py-3">
+                  <button className="btn-secondary px-8 py-4">
                     Update
                   </button>
                 </Link>
               </div>
               
-              <div className="flex items-center justify-between py-4">
-                <div className="flex-1 mr-6">
-                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">Billing History</h4>
+              <div className="flex items-center justify-between py-6">
+                <div className="flex-1 mr-8">
+                  <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Billing History</h4>
                   <p className="text-sm text-gray-600 dark:text-gray-400">Download your past invoices and receipts</p>
                 </div>
-                <button className="btn-secondary flex items-center px-6 py-3">
-                  <Download className="h-4 w-4 mr-2" />
+                <button className="btn-secondary flex items-center px-8 py-4">
+                  <Download className="h-5 w-5 mr-3" />
                   Download
                 </button>
               </div>
               
-              <div className="p-6 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                <div className="flex items-center mb-4">
-                  <Globe className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-3" />
+              <div className="p-8 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                <div className="flex items-center mb-6">
+                  <Globe className="h-6 w-6 text-blue-600 dark:text-blue-400 mr-4" />
                   <div>
-                    <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-1">Upgrade to Subscription</h4>
+                    <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Upgrade to Subscription</h4>
                     <p className="text-sm text-blue-700 dark:text-blue-300">Save $2,850/month with our unlimited plan</p>
                   </div>
                 </div>
-                <button className="btn-primary px-6 py-3">Upgrade Now</button>
+                <button className="btn-primary px-8 py-4">Upgrade Now</button>
               </div>
             </div>
           </div>
@@ -486,12 +486,12 @@ export default function Settings() {
 
 
           {/* Appearance */}
-          <div id="appearance" className="card p-8">
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Appearance</h3>
-            <div className="space-y-8">
+          <div id="appearance" className="card p-10">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Appearance</h3>
+            <div className="space-y-10">
               <div>
-                <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Theme</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-6">Theme</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   {themes.map((themeOption) => (
                     <label key={themeOption.id} className="relative cursor-pointer">
                       <input 
@@ -501,7 +501,7 @@ export default function Settings() {
                         checked={theme === themeOption.id}
                         onChange={() => setTheme(themeOption.id as 'light' | 'dark' | 'auto')}
                       />
-                      <div className={`p-6 border-2 rounded-lg transition-all ${
+                      <div className={`p-8 border-2 rounded-lg transition-all ${
                         theme === themeOption.id 
                           ? 'border-primary-500 bg-primary-50 dark:bg-primary-900/20' 
                           : 'border-gray-300 hover:border-gray-400 dark:border-gray-600 dark:hover:border-gray-500'
@@ -510,25 +510,25 @@ export default function Settings() {
                         themeOption.id === 'dark' ? 'bg-gray-900' :
                         'bg-gray-50 dark:bg-gray-800'
                       }`}>
-                        <div className={`h-8 rounded mb-3 ${
+                        <div className={`h-10 rounded mb-4 ${
                           themeOption.id === 'light' ? 'bg-gray-100 dark:bg-gray-700' :
                           themeOption.id === 'dark' ? 'bg-gray-700' :
                           'bg-gray-200 dark:bg-gray-700'
                         }`}></div>
-                        <div className={`h-4 rounded mb-2 ${
+                        <div className={`h-5 rounded mb-3 ${
                           themeOption.id === 'light' ? 'bg-gray-200 dark:bg-gray-600' :
                           themeOption.id === 'dark' ? 'bg-gray-600' :
                           'bg-gray-300 dark:bg-gray-600'
                         }`}></div>
-                        <div className={`h-4 rounded w-3/4 ${
+                        <div className={`h-5 rounded w-3/4 ${
                           themeOption.id === 'light' ? 'bg-gray-200 dark:bg-gray-600' :
                           themeOption.id === 'dark' ? 'bg-gray-600' :
                           'bg-gray-300 dark:bg-gray-600'
                         }`}></div>
-                        <p className={`text-sm font-medium mt-3 ${
+                        <p className={`text-sm font-medium mt-4 ${
                           themeOption.id === 'dark' ? 'text-gray-100' : 'text-gray-900 dark:text-gray-100'
                         }`}>{themeOption.name}</p>
-                        <p className={`text-xs mt-2 ${
+                        <p className={`text-xs mt-3 ${
                           themeOption.id === 'dark' ? 'text-gray-400' : 'text-gray-500 dark:text-gray-400'
                         }`}>{themeOption.description}</p>
                       </div>
@@ -538,7 +538,7 @@ export default function Settings() {
               </div>
               
               <div>
-                <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Language</h4>
+                <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-6">Language</h4>
                 <select 
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                   value={selectedLanguage}
@@ -550,13 +550,13 @@ export default function Settings() {
                     </option>
                   ))}
                 </select>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
                   Changes will be applied immediately
                 </p>
               </div>
               
               <div>
-                <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-4">Time Zone</h4>
+                <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-6">Time Zone</h4>
                 <select 
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                   value={selectedTimezone}
@@ -568,7 +568,7 @@ export default function Settings() {
                     </option>
                   ))}
                 </select>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
                   All times will be displayed in your selected timezone
                 </p>
               </div>

@@ -516,9 +516,9 @@ export default function IntegrationManagement() {
           </div>
 
           {/* Transaction History */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Transactions</h3>
+          <div className="card p-10">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Recent Transactions</h3>
               <button className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                 View All
               </button>
@@ -604,13 +604,13 @@ export default function IntegrationManagement() {
       )}
 
       {activeTab === 'subscriptions' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Active Subscriptions */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Active Subscriptions</h3>
-              <button className="btn-primary flex items-center">
-                <Plus className="h-4 w-4 mr-2" />
+          <div className="card p-10">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Active Subscriptions</h3>
+              <button className="btn-primary flex items-center px-8 py-4">
+                <Plus className="h-5 w-5 mr-3" />
                 Upgrade Plan
               </button>
             </div>
@@ -721,9 +721,9 @@ export default function IntegrationManagement() {
           </div>
 
           {/* Auto Renewal Settings */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Auto Renewal Settings</h3>
-            <div className="space-y-4">
+          <div className="card p-10">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Auto Renewal Settings</h3>
+            <div className="space-y-8">
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="font-medium text-gray-900 dark:text-gray-100">Auto Renewal</h4>
@@ -749,11 +749,11 @@ export default function IntegrationManagement() {
           </div>
 
           {/* Subscription History */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Subscription History</h3>
-              <button className="btn-secondary flex items-center">
-                <Download className="h-4 w-4 mr-2" />
+          <div className="card p-10">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Subscription History</h3>
+              <button className="btn-secondary flex items-center px-8 py-4">
+                <Download className="h-5 w-5 mr-3" />
                 Download History
               </button>
             </div>
@@ -822,11 +822,11 @@ export default function IntegrationManagement() {
       )}
 
       {activeTab === 'usage' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Usage Overview */}
-          <div className="card">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">Usage Overview</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="card p-10">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Usage Overview</h3>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="card">
                 <div className="flex items-center justify-between">
                   <div>
@@ -897,9 +897,9 @@ export default function IntegrationManagement() {
           </div>
 
           {/* Usage History */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Usage History</h3>
+          <div className="card p-10">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Usage History</h3>
               <button className="text-sm text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">
                 View All
               </button>
@@ -967,13 +967,13 @@ export default function IntegrationManagement() {
       )}
 
       {activeTab === 'offline' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           {/* Offline Payments */}
-          <div className="card">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Offline Payments</h3>
-              <button className="btn-primary flex items-center">
-                <Plus className="h-4 w-4 mr-2" />
+          <div className="card p-10">
+            <div className="flex items-center justify-between mb-10">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Offline Payments</h3>
+              <button className="btn-primary flex items-center px-8 py-4">
+                <Plus className="h-5 w-5 mr-3" />
                 Add Payment
               </button>
             </div>
