@@ -87,7 +87,7 @@ export default function Dashboard() {
   const gridStroke = isDark ? '#374151' : '#E5E7EB'
 
   return (
-    <div className="space-y-10 sm:space-y-12">
+    <div className="space-y-6 sm:space-y-8 lg:space-y-10">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
@@ -99,7 +99,7 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
         {stats.map((stat) => (
           <div key={stat.name} className="card p-8">
             <div className="flex items-center justify-between">
@@ -124,7 +124,7 @@ export default function Dashboard() {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
         {/* Weekly Scan Trends */}
         <div className="card p-8">
           <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Weekly Scan Trends</h3>
@@ -217,7 +217,7 @@ export default function Dashboard() {
       {/* Quick Actions */}
       <div className="card p-8">
         <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Quick Actions</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
           <Link to="/analytics">
             <button className="flex items-center justify-center p-6 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
               <BarChart3 className="h-6 w-6 mr-3" />

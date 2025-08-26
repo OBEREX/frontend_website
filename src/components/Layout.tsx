@@ -128,7 +128,7 @@ export default function Layout({ children }: LayoutProps) {
         </div>
 
         {/* Main content area */}
-        <main className="py-4 px-4 sm:py-6 sm:px-6 lg:py-8 lg:px-8">
+        <main className="p-3 sm:p-4 lg:p-6 xl:p-8">
           {children}
         </main>
       </div>
