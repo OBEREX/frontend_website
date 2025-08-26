@@ -11,8 +11,8 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('light')
-  const [isDark, setIsDark] = useState(false)
+  const [theme, setThemeState] = useState<Theme>('dark')
+  const [isDark, setIsDark] = useState(true)
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme)
@@ -32,7 +32,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     // Load theme from localStorage
-    const savedTheme = localStorage.getItem('theme') as Theme || 'light'
+    const savedTheme = localStorage.getItem('theme') as Theme || 'dark'
     setTheme(savedTheme)
 
     // Listen for system theme changes if auto mode is enabled
