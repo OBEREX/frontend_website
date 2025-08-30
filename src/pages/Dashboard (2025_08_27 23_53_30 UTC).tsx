@@ -22,7 +22,6 @@ import {
   Cell 
 } from 'recharts'
 import { useTheme } from '../contexts/ThemeContext'
-import AIChatbot from '../components/AIChatbot'
 
 const scanData = [
   { day: 'Mon', scans: 1200, accuracy: 98.5 },
@@ -96,66 +95,6 @@ export default function Dashboard() {
           <p className="text-gray-600 dark:text-gray-400 mt-3">
             Welcome to Pefoma - AI-powered inventory management at your fingertips
           </p>
-        </div>
-      </div>
-
-      {/* AI Chatbot Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-        <div className="lg:col-span-2">
-          <AIChatbot />
-        </div>
-        <div className="space-y-6">
-          {/* Welcome Card */}
-          <div className="card p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">P</span>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Good morning, Ken
-                </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Your AI assistant is ready to help
-                </p>
-              </div>
-            </div>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span>System status: Online</span>
-              </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span>AI model: GPT-4 powered</span>
-              </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-                <span>Last sync: 2 minutes ago</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Stats */}
-          <div className="card p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-              Today's Overview
-            </h3>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">AI Interactions</span>
-                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">24</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Queries Resolved</span>
-                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">22</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Accuracy Rate</span>
-                <span className="text-sm font-medium text-green-600">98.5%</span>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
