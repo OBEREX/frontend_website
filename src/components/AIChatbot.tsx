@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Send, Bot, User, Sparkles } from 'lucide-react'
-import { useTheme } from '../contexts/ThemeContext'
 
 interface Message {
   id: string
@@ -21,7 +20,6 @@ export default function AIChatbot() {
   const [inputValue, setInputValue] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const { isDark } = useTheme()
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
