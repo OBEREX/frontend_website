@@ -88,71 +88,71 @@ export default function Dashboard() {
   const gridStroke = isDark ? '#374151' : '#E5E7EB'
 
   return (
-    <div className="space-y-6 sm:space-y-8 lg:space-y-10">
+    <div className="space-y-4 sm:space-y-6 lg:space-y-8 xl:space-y-10">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
-          <p className="text-gray-600 dark:text-gray-400 mt-3">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h1>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2 sm:mt-3">
             Welcome to Pefoma - AI-powered inventory management at your fingertips
           </p>
         </div>
       </div>
 
       {/* AI Chatbot Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 xl:gap-10">
+        <div className="xl:col-span-2">
           <AIChatbot />
         </div>
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
           {/* Welcome Card */}
-          <div className="card p-6">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
-                <span className="text-white font-bold text-lg">P</span>
+          <div className="card p-4 sm:p-6">
+            <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg sm:rounded-xl flex items-center justify-center">
+                <span className="text-white font-bold text-sm sm:text-lg">P</span>
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">
                   Good morning, Ken
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                   Your AI assistant is ready to help
                 </p>
               </div>
             </div>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
                 <span>System status: Online</span>
               </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+              <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></div>
                 <span>AI model: GPT-4 powered</span>
               </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+              <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></div>
                 <span>Last sync: 2 minutes ago</span>
               </div>
             </div>
           </div>
 
           {/* Quick Stats */}
-          <div className="card p-6">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+          <div className="card p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
               Today's Overview
             </h3>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">AI Interactions</span>
-                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">24</span>
+                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">AI Interactions</span>
+                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">24</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Queries Resolved</span>
-                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">22</span>
+                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Queries Resolved</span>
+                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">22</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600 dark:text-gray-400">Accuracy Rate</span>
-                <span className="text-sm font-medium text-green-600">98.5%</span>
+                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Accuracy Rate</span>
+                <span className="text-xs sm:text-sm font-medium text-green-600">98.5%</span>
               </div>
             </div>
           </div>
@@ -160,24 +160,24 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 xl:gap-8">
         {stats.map((stat) => (
-          <div key={stat.name} className="card p-8">
+          <div key={stat.name} className="card p-4 sm:p-6 lg:p-8">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600 dark:text-gray-400 mb-3">{stat.name}</p>
-                <p className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">{stat.value}</p>
+                <p className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2 sm:mb-3">{stat.name}</p>
+                <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2">{stat.value}</p>
                 <div className="flex items-center">
-                  <span className={`text-sm font-medium ${
+                  <span className={`text-xs sm:text-sm font-medium ${
                     stat.changeType === 'positive' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
                   }`}>
                     {stat.change}
                   </span>
-                  <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">vs last month</span>
+                  <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 ml-1 sm:ml-2">vs last month</span>
                 </div>
               </div>
-              <div className="h-14 w-14 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
-                <stat.icon className="h-7 w-7 text-primary-600 dark:text-primary-400" />
+              <div className="h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
+                <stat.icon className="h-5 w-5 sm:h-6 sm:w-6 lg:h-7 lg:w-7 text-primary-600 dark:text-primary-400" />
               </div>
             </div>
           </div>
@@ -185,23 +185,23 @@ export default function Dashboard() {
       </div>
 
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-8 xl:gap-10">
         {/* Weekly Scan Trends */}
-        <div className="card p-8">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Weekly Scan Trends</h3>
-          <div className="h-80">
+        <div className="card p-4 sm:p-6 lg:p-8">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 lg:mb-8">Weekly Scan Trends</h3>
+          <div className="h-60 sm:h-72 lg:h-80">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={scanData}>
                 <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
                 <XAxis 
                   dataKey="day" 
                   stroke={axisStroke}
-                  fontSize={12}
+                  fontSize={10}
                   tickLine={false}
                 />
                 <YAxis 
                   stroke={axisStroke}
-                  fontSize={12}
+                  fontSize={10}
                   tickLine={false}
                   axisLine={false}
                 />
@@ -217,16 +217,16 @@ export default function Dashboard() {
                   dataKey="scans" 
                   stroke="#3b82f6" 
                   strokeWidth={2}
-                  dot={{ fill: '#3b82f6', strokeWidth: 2, r: 4 }}
-                  activeDot={{ r: 6, stroke: '#3b82f6', strokeWidth: 2 }}
+                  dot={{ fill: '#3b82f6', strokeWidth: 2, r: 3 }}
+                  activeDot={{ r: 5, stroke: '#3b82f6', strokeWidth: 2 }}
                 />
                 <Line 
                   type="monotone" 
                   dataKey="accuracy" 
                   stroke="#10b981" 
                   strokeWidth={2}
-                  dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
-                  activeDot={{ r: 6, stroke: '#10b981', strokeWidth: 2 }}
+                  dot={{ fill: '#10b981', strokeWidth: 2, r: 3 }}
+                  activeDot={{ r: 5, stroke: '#10b981', strokeWidth: 2 }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -234,17 +234,17 @@ export default function Dashboard() {
         </div>
 
         {/* Category Distribution */}
-        <div className="card p-8">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Category Distribution</h3>
-          <div className="h-80">
+        <div className="card p-4 sm:p-6 lg:p-8">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 lg:mb-8">Category Distribution</h3>
+          <div className="h-60 sm:h-72 lg:h-80">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={categoryData}
                   cx="50%"
                   cy="50%"
-                  innerRadius={60}
-                  outerRadius={100}
+                  innerRadius={40}
+                  outerRadius={80}
                   paddingAngle={5}
                   dataKey="value"
                 >
@@ -259,14 +259,14 @@ export default function Dashboard() {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div className="mt-4 sm:mt-6 lg:mt-8 grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
             {categoryData.map((category) => (
-              <div key={category.name} className="flex items-center space-x-3">
+              <div key={category.name} className="flex items-center space-x-2 sm:space-x-3">
                 <div 
-                  className="w-4 h-4 rounded-full" 
+                  className="w-3 h-3 sm:w-4 sm:h-4 rounded-full" 
                   style={{ backgroundColor: category.color }}
                 />
-                <span className="text-sm text-gray-600 dark:text-gray-400 truncate">
+                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">
                   {category.name}
                 </span>
               </div>
@@ -276,31 +276,31 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="card p-8">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-8">Quick Actions</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+      <div className="card p-4 sm:p-6 lg:p-8">
+        <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 lg:mb-8">Quick Actions</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4 xl:gap-6">
           <Link to="/analytics">
-            <button className="flex items-center justify-center p-6 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
-              <BarChart3 className="h-6 w-6 mr-3" />
-              <span className="text-base font-medium">View Analytics</span>
+            <button className="flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
+              <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
+              <span className="text-sm sm:text-base font-medium">View Analytics</span>
             </button>
           </Link>
           <Link to="/business-intelligence">
-            <button className="flex items-center justify-center p-6 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/50 transition-colors">
-              <TrendingUp className="h-6 w-6 mr-3" />
-              <span className="text-base font-medium">Business Intelligence</span>
+            <button className="flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/50 transition-colors">
+              <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
+              <span className="text-sm sm:text-base font-medium">Business Intelligence</span>
             </button>
           </Link>
           <Link to="/user-management">
-            <button className="flex items-center justify-center p-6 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors">
-              <Users className="h-6 w-6 mr-3" />
-              <span className="text-base font-medium">User Management</span>
+            <button className="flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors">
+              <Users className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
+              <span className="text-sm sm:text-base font-medium">User Management</span>
             </button>
           </Link>
           <Link to="/settings">
-            <button className="flex items-center justify-center p-6 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors">
-              <Zap className="h-6 w-6 mr-3" />
-              <span className="text-base font-medium">Settings</span>
+            <button className="flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors">
+              <Zap className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
+              <span className="text-sm sm:text-base font-medium">Settings</span>
             </button>
           </Link>
         </div>
