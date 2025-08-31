@@ -171,14 +171,14 @@ export default function BusinessIntelligence() {
   return (
     <div className="space-y-10 sm:space-y-12">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap space-y-3" >
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Business Intelligence</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-3">
             Advanced analytics and insights for strategic decision making
           </p>
         </div>
-        <button className="btn-primary flex items-center px-6 py-3">
+        <button className="btn-primary flex items-center px-6 py-3 ml-auto">
           <Download className="h-4 w-4 mr-2" />
           Export Insights
         </button>

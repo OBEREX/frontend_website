@@ -369,14 +369,14 @@ export default function UserManagement() {
   return (
     <div className="space-y-10 sm:space-y-12">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap space-y-3">
         <div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">User Management</h1>
           <p className="text-gray-600 dark:text-gray-400 mt-3">
             Manage user profiles, preferences, and account settings
           </p>
         </div>
-        <button className="btn-primary flex items-center px-6 py-3">
+        <button className="btn-primary flex items-center px-6 py-3 ml-auto">
           <Plus className="h-4 w-4 mr-2" />
           Add User
         </button>
@@ -415,7 +415,7 @@ export default function UserManagement() {
         <div className="space-y-10">
           {/* Profile Overview */}
           <div className="card p-8">
-            <div className="flex items-start justify-between mb-8">
+            <div className="flex items-start justify-between mb-8 flex-wrap space-y-3">
               <div className="flex items-center space-x-6">
                 <div className="h-20 w-20 bg-gradient-to-br from-primary-500 to-primary-600 rounded-full flex items-center justify-center">
                   <User className="h-10 w-10 text-white" />
@@ -639,7 +639,7 @@ export default function UserManagement() {
         <div className="space-y-10">
           {/* Current Subscription */}
           <div className="card p-8">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-8 flex-wrap space-y-3">
               <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">Current Subscription</h3>
               <div className="flex space-x-4">
                 <button 
@@ -825,7 +825,7 @@ export default function UserManagement() {
                       <span className="font-medium text-gray-900 dark:text-gray-100 min-w-[140px] text-sm">{category.name}</span>
                     </div>
                     <div className="flex items-center space-x-6">
-                      <div className="w-56 bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                      <div className="w-40 bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
                         <div
                           className="h-2.5 rounded-full transition-all duration-300"
                           style={{ 
@@ -834,9 +834,6 @@ export default function UserManagement() {
                           }}
                         />
                       </div>
-                      <span className="text-sm font-semibold text-gray-900 dark:text-gray-100 min-w-[70px] text-right">
-                        {category.count.toLocaleString()}
-                      </span>
                     </div>
                   </div>
                 </Tooltip>
