@@ -157,7 +157,7 @@ export default function AIChatbot() {
       </div>
 
       {/* Input Section */}
-      <div className="flex items-end space-x-2 sm:space-x-3">
+      <div className="flex items-end space-x-2 sm:space-x-3 flex-wrap">
         <div className="flex-1 relative">
           <textarea
             value={inputValue}
@@ -175,7 +175,7 @@ export default function AIChatbot() {
         <button
           onClick={handleSendMessage}
           disabled={!inputValue.trim() || isTyping}
-          className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 dark:disabled:bg-gray-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white transition-colors duration-200 disabled:cursor-not-allowed"
+          className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 dark:disabled:bg-gray-600 rounded-lg sm:rounded-xl flex items-center justify-center text-white transition-colors duration-200 disabled:cursor-not-allowed "
         >
           <Send className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
