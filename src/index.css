@@ -397,5 +397,225 @@
   .dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     background-color: #6b7280;
   }
+
+  /* Enhanced responsive utilities */
+  .container-responsive {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Responsive text utilities */
+  .text-responsive-xs {
+    @apply text-xs sm:text-sm;
+  }
+
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl;
+  }
+
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl;
+  }
+
+  .text-responsive-2xl {
+    @apply text-2xl sm:text-3xl;
+  }
+
+  .text-responsive-3xl {
+    @apply text-3xl sm:text-4xl;
+  }
+
+  /* Responsive spacing utilities */
+  .space-responsive-xs {
+    @apply space-y-1 sm:space-y-2;
+  }
+
+  .space-responsive-sm {
+    @apply space-y-2 sm:space-y-3;
+  }
+
+  .space-responsive-base {
+    @apply space-y-3 sm:space-y-4;
+  }
+
+  .space-responsive-lg {
+    @apply space-y-4 sm:space-y-6;
+  }
+
+  .space-responsive-xl {
+    @apply space-y-6 sm:space-y-8;
+  }
+
+  /* Responsive padding utilities */
+  .p-responsive-xs {
+    @apply p-2 sm:p-3;
+  }
+
+  .p-responsive-sm {
+    @apply p-3 sm:p-4;
+  }
+
+  .p-responsive-base {
+    @apply p-4 sm:p-6;
+  }
+
+  .p-responsive-lg {
+    @apply p-6 sm:p-8;
+  }
+
+  .p-responsive-xl {
+    @apply p-8 sm:p-10;
+  }
+
+  /* Responsive margin utilities */
+  .m-responsive-xs {
+    @apply m-2 sm:m-3;
+  }
+
+  .m-responsive-sm {
+    @apply m-3 sm:m-4;
+  }
+
+  .m-responsive-base {
+    @apply m-4 sm:m-6;
+  }
+
+  .m-responsive-lg {
+    @apply m-6 sm:m-8;
+  }
+
+  .m-responsive-xl {
+    @apply m-8 sm:m-10;
+  }
+
+  /* Responsive height utilities */
+  .h-responsive-sm {
+    @apply h-32 sm:h-40;
+  }
+
+  .h-responsive-base {
+    @apply h-40 sm:h-48;
+  }
+
+  .h-responsive-lg {
+    @apply h-48 sm:h-56;
+  }
+
+  .h-responsive-xl {
+    @apply h-56 sm:h-64;
+  }
+
+  .h-responsive-2xl {
+    @apply h-64 sm:h-72;
+  }
+
+  .h-responsive-3xl {
+    @apply h-72 sm:h-80;
+  }
+
+  /* Responsive width utilities */
+  .w-responsive-sm {
+    @apply w-16 sm:w-20;
+  }
+
+  .w-responsive-base {
+    @apply w-20 sm:w-24;
+  }
+
+  .w-responsive-lg {
+    @apply w-24 sm:w-28;
+  }
+
+  .w-responsive-xl {
+    @apply w-28 sm:w-32;
+  }
+
+  /* Mobile-first responsive grid */
+  .grid-responsive {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+  }
+
+  .grid-responsive-2 {
+    @apply grid grid-cols-1 sm:grid-cols-2;
+  }
+
+  .grid-responsive-3 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+  }
+
+  .grid-responsive-4 {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4;
+  }
+
+  /* Responsive flex utilities */
+  .flex-responsive {
+    @apply flex flex-col sm:flex-row;
+  }
+
+  .flex-responsive-col {
+    @apply flex flex-col;
+  }
+
+  .flex-responsive-row {
+    @apply flex flex-row;
+  }
+
+  /* Responsive gap utilities */
+  .gap-responsive-xs {
+    @apply gap-1 sm:gap-2;
+  }
+
+  .gap-responsive-sm {
+    @apply gap-2 sm:gap-3;
+  }
+
+  .gap-responsive-base {
+    @apply gap-3 sm:gap-4;
+  }
+
+  .gap-responsive-lg {
+    @apply gap-4 sm:gap-6;
+  }
+
+  .gap-responsive-xl {
+    @apply gap-6 sm:gap-8;
+  }
+
+  /* Responsive border radius */
+  .rounded-responsive-sm {
+    @apply rounded-md sm:rounded-lg;
+  }
+
+  .rounded-responsive-base {
+    @apply rounded-lg sm:rounded-xl;
+  }
+
+  .rounded-responsive-lg {
+    @apply rounded-xl sm:rounded-2xl;
+  }
+
+  /* Responsive shadow utilities */
+  .shadow-responsive-sm {
+    @apply shadow-sm sm:shadow;
+  }
+
+  .shadow-responsive-base {
+    @apply shadow sm:shadow-md;
+  }
+
+  .shadow-responsive-lg {
+    @apply shadow-md sm:shadow-lg;
+  }
+
+  .shadow-responsive-xl {
+    @apply shadow-lg sm:shadow-xl;
+  }
 }
 
