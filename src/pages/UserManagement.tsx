@@ -812,7 +812,7 @@ export default function UserManagement() {
           </div>
 
           {/* Favorite Categories */}
-          <div className="card p-10">
+          <div className="card p-3">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-10">Favorite Categories</h3>
             <div className="space-y-6">
               {usageStats.favoriteCategories.map((category, index) => (
@@ -825,7 +825,7 @@ export default function UserManagement() {
                       <span className="font-medium text-gray-900 dark:text-gray-100 min-w-[140px] text-sm">{category.name}</span>
                     </div>
                     <div className="flex items-center space-x-6">
-                      <div className="w-40 bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+                      <div className="w-36 bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
                         <div
                           className="h-2.5 rounded-full transition-all duration-300"
                           style={{ 

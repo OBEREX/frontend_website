@@ -22,7 +22,6 @@ import {
   Cell 
 } from 'recharts'
 import { useTheme } from '../contexts/ThemeContext'
-import AIChatbot from '../components/AIChatbot'
 
 const scanData = [
   { day: 'Mon', scans: 1200, accuracy: 98.5 },
@@ -99,12 +98,9 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* AI Chatbot Section */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 xl:gap-10">
-        <div className="xl:col-span-2">
-          <AIChatbot />
-        </div>
-        <div className="space-y-4 sm:space-y-6">
+      {/* Welcome Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 xl:gap-10">
+        <div className="lg:col-span-2">
           {/* Welcome Card */}
           <div className="card p-4 sm:p-6">
             <div className="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4">
@@ -116,7 +112,7 @@ export default function Dashboard() {
                   Good morning, Ken
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-                  Your AI assistant is ready to help
+                  Welcome to your inventory management dashboard
                 </p>
               </div>
             </div>
@@ -127,15 +123,16 @@ export default function Dashboard() {
               </div>
               <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></div>
-                <span>AI model: GPT-4 powered</span>
+                <span>Last sync: 2 minutes ago</span>
               </div>
               <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></div>
-                <span>Last sync: 2 minutes ago</span>
+                <span>AI Assistant: Available</span>
               </div>
             </div>
           </div>
-
+        </div>
+        <div className="space-y-4 sm:space-y-6">
           {/* Quick Stats */}
           <div className="card p-4 sm:p-6">
             <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3 sm:mb-4">
@@ -143,16 +140,16 @@ export default function Dashboard() {
             </h3>
             <div className="space-y-3 sm:space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">AI Interactions</span>
-                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">24</span>
+                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Total Scans</span>
+                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">1,247</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Queries Resolved</span>
-                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">22</span>
+                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Time Saved</span>
+                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">8.5 hrs</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Accuracy Rate</span>
-                <span className="text-xs sm:text-sm font-medium text-green-600">98.5%</span>
+                <span className="text-xs sm:text-sm font-medium text-green-600">98.7%</span>
               </div>
             </div>
           </div>
