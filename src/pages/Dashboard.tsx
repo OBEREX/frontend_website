@@ -23,6 +23,27 @@ import {
 } from 'recharts'
 import { useTheme } from '../contexts/ThemeContext'
 
+// User Information
+const userName = 'Ken'
+
+// System Status
+const systemStatus = 'Online'
+const lastSyncTime = '2 minutes ago'
+const aiAssistantStatus = 'Available'
+
+// Daily Statistics
+const totalScansToday = '1,247'
+const timeSavedToday = '8.5 hrs'
+const costSavingsToday = '$1,247'
+const accuracyRateToday = '98.7%'
+
+// Change Values
+const scansChange = '+12.5%'
+const timeSavedChange = '+2.3 hrs'
+const costSavingsChange = '+$156'
+const accuracyChange = '+0.3%'
+
+// Weekly Scan Data
 const scanData = [
   { day: 'Mon', scans: 1200, accuracy: 98.5 },
   { day: 'Tue', scans: 1350, accuracy: 98.8 },
@@ -33,6 +54,7 @@ const scanData = [
   { day: 'Sun', scans: 900, accuracy: 98.2 },
 ]
 
+// Category Distribution Data
 const categoryData = [
   { name: 'Electronics', value: 35, color: '#3b82f6' },
   { name: 'Clothing', value: 25, color: '#10b981' },
@@ -41,32 +63,33 @@ const categoryData = [
   { name: 'Other', value: 5, color: '#8b5cf6' },
 ]
 
+// Statistics Cards Data
 const stats = [
   {
     name: 'Total Scans Today',
-    value: '1,247',
-    change: '+12.5%',
+    value: totalScansToday,
+    change: scansChange,
     changeType: 'positive',
     icon: Smartphone,
   },
   {
     name: 'Time Saved',
-    value: '8.5 hrs',
-    change: '+2.3 hrs',
+    value: timeSavedToday,
+    change: timeSavedChange,
     changeType: 'positive',
     icon: Clock,
   },
   {
     name: 'Cost Savings',
-    value: '$1,247',
-    change: '+$156',
+    value: costSavingsToday,
+    change: costSavingsChange,
     changeType: 'positive',
     icon: DollarSign,
   },
   {
     name: 'Accuracy Rate',
-    value: '98.7%',
-    change: '+0.3%',
+    value: accuracyRateToday,
+    change: accuracyChange,
     changeType: 'positive',
     icon: Target,
   },
@@ -109,7 +132,7 @@ export default function Dashboard() {
               </div>
               <div>
                 <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-gray-100">
-                  Good morning, Ken
+                  Good morning, {userName}
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                   Welcome to your inventory management dashboard
@@ -119,15 +142,15 @@ export default function Dashboard() {
             <div className="space-y-2 sm:space-y-3">
               <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
-                <span>System status: Online</span>
+                <span>System status: {systemStatus}</span>
               </div>
               <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></div>
-                <span>Last sync: 2 minutes ago</span>
+                <span>Last sync: {lastSyncTime}</span>
               </div>
               <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></div>
-                <span>AI Assistant: Available</span>
+                <span>AI Assistant: {aiAssistantStatus}</span>
               </div>
             </div>
           </div>
@@ -141,15 +164,15 @@ export default function Dashboard() {
             <div className="space-y-3 sm:space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Total Scans</span>
-                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">1,247</span>
+                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">{totalScansToday}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Time Saved</span>
-                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">8.5 hrs</span>
+                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">{timeSavedToday}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Accuracy Rate</span>
-                <span className="text-xs sm:text-sm font-medium text-green-600">98.7%</span>
+                <span className="text-xs sm:text-sm font-medium text-green-600">{accuracyRateToday}</span>
               </div>
             </div>
           </div>
