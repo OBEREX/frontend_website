@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import {
   Home,
-  Bot,
   BarChart3,
   TrendingUp,
   Settings,
@@ -10,7 +9,8 @@ import {
   User,
   Smartphone,
   Menu,
-  X
+  X,
+  LayoutDashboard
 } from 'lucide-react'
 // import { useTheme } from '../contexts/ThemeContext'
 
@@ -19,8 +19,8 @@ interface LayoutProps {
 }
 
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: Home },
-  { name: 'AI Assistant', href: '/ai-assistant', icon: Bot },
+  { name: 'Home', href: '/', icon: Home },
+  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Analytics & Reporting', href: '/analytics', icon: BarChart3 },
   { name: 'Business Intelligence', href: '/business-intelligence', icon: TrendingUp },
   { name: 'Integration Management', href: '/integration', icon: CreditCard },

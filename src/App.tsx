@@ -20,8 +20,8 @@ export default function App() {
           <Route path="*" element={
             <Layout>
               <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/ai-assistant" element={<AiAssistant />} />
+                <Route path="/" element={<AiAssistant />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/analytics" element={<Analytics />} />
                 <Route path="/business-intelligence" element={<BusinessIntelligence />} />
                 <Route path="/integration" element={<IntegrationManagement />} />
@@ -29,7 +29,7 @@ export default function App() {
                 <Route path="/settings" element={<Settings />} />
                 
                 {/* Redirect routes for better UX */}
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/ai-assistant" element={<AiAssistant />} />
                 <Route path="/ai" element={<AiAssistant />} />
                 <Route path="/analytics-reporting" element={<Analytics />} />
                 <Route path="/business-intel" element={<BusinessIntelligence />} />
