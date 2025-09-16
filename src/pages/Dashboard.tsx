@@ -22,9 +22,7 @@ import {
   Cell 
 } from 'recharts'
 import { useTheme } from '../contexts/ThemeContext'
-
-// User Information
-const userName = 'Ken'
+import { useUser } from '../contexts/UserContext'
 
 // System Status
 const systemStatus = 'Online'
@@ -97,6 +95,10 @@ const stats = [
 
 export default function Dashboard() {
   const { isDark } = useTheme()
+  const { user } = useUser()
+  
+  // Get user name from context or use default
+  const userName = user?.firstName || 'User'
 
   const tooltipStyle = {
     backgroundColor: isDark ? 'rgb(31, 41, 55)' : 'rgb(255, 255, 255)',

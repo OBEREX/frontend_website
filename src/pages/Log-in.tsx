@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { Eye, EyeOff, Mail, Lock, LogIn } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useUser } from '../contexts/UserContext'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const { login } = useUser()
+  const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -15,8 +18,24 @@ export default function Login() {
     // Simulate login process
     setTimeout(() => {
       setIsLoading(false)
-      // Here you would typically handle authentication
-      console.log('Login attempt:', { email, password })
+      
+      // For demo purposes, create a mock user based on email
+      // In a real app, this would come from your authentication API
+      const mockUser = {
+        firstName: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
+        lastName: 'User',
+        email: email,
+        phone: '+1 (555) 123-4567',
+        company: 'Demo Company',
+        fullName: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1) + ' User',
+        joinedDate: new Date().toISOString()
+      }
+      
+      // Login the user
+      login(mockUser)
+      
+      // Redirect to dashboard
+      navigate('/dashboard')
     }, 1500)
   }
 
