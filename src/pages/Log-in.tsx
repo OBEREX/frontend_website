@@ -1,42 +1,55 @@
-import React, { useState } from 'react'
-import { Eye, EyeOff, Mail, Lock, LogIn } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { Eye, EyeOff, Mail, Lock, LogIn, CheckCircle, AlertCircle } from 'lucide-react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useUser } from '../contexts/UserContext'
+import { authService } from '../services/authService'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [message, setMessage] = useState('')
+  const [messageType, setMessageType] = useState<'success' | 'error' | ''>('')
   const { login } = useUser()
   const navigate = useNavigate()
+  const location = useLocation()
+
+  // Handle messages from password reset flow
+  useEffect(() => {
+    if (location.state?.message) {
+      setMessage(location.state.message)
+      setMessageType(location.state.messageType || 'success')
+      // Clear the message from location state
+      navigate(location.pathname, { replace: true })
+    }
+  }, [location.state, navigate, location.pathname])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+    setMessage('')
+    setMessageType('')
     
-    // Simulate login process
-    setTimeout(() => {
-      setIsLoading(false)
+    try {
+      const result = await authService.login(email, password)
       
-      // For demo purposes, create a mock user based on email
-      // In a real app, this would come from your authentication API
-      const mockUser = {
-        firstName: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
-        lastName: 'User',
-        email: email,
-        phone: '+1 (555) 123-4567',
-        company: 'Demo Company',
-        fullName: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1) + ' User',
-        joinedDate: new Date().toISOString()
+      if (result.success && result.user) {
+        // Login the user with the authenticated data
+        login(result.user)
+        
+        // Redirect to dashboard
+        navigate('/dashboard')
+      } else {
+        setMessage(result.message)
+        setMessageType('error')
       }
-      
-      // Login the user
-      login(mockUser)
-      
-      // Redirect to dashboard
-      navigate('/dashboard')
-    }, 1500)
+    } catch (error) {
+      setMessage('An error occurred during login. Please try again.')
+      setMessageType('error')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -51,7 +64,7 @@ export default function Login() {
             Welcome back
           </h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Sign in to your Pefoma account
+            log in to your Pefoma account
           </p>
         </div>
 
@@ -115,6 +128,28 @@ export default function Login() {
               </div>
             </div>
 
+            {/* Message Display */}
+            {message && (
+              <div className={`p-4 rounded-lg flex items-start space-x-3 ${
+                messageType === 'success' 
+                  ? 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800' 
+                  : 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800'
+              }`}>
+                {messageType === 'success' ? (
+                  <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                ) : (
+                  <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                )}
+                <p className={`text-sm ${
+                  messageType === 'success' 
+                    ? 'text-green-800 dark:text-green-200' 
+                    : 'text-red-800 dark:text-red-200'
+                }`}>
+                  {message}
+                </p>
+              </div>
+            )}
+
             {/* Remember Me & Forgot Password */}
             <div className="flex items-center justify-between">
               <div className="flex items-center">
@@ -129,9 +164,9 @@ export default function Login() {
                 </label>
               </div>
               <div className="text-sm">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+                <Link to="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -150,11 +185,12 @@ export default function Login() {
                 ) : (
                   <div className="flex items-center">
                     <LogIn className="h-4 w-4 mr-2" />
-                    Sign in
+                    log in
                   </div>
                 )}
               </button>
             </div>
+
 
             {/* Sign Up Link */}
             <div className="text-center">

@@ -6,6 +6,7 @@ interface User {
   email: string
   phone: string
   company: string
+  businessType: string
   fullName: string
   joinedDate: string
 }

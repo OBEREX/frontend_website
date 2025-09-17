@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { Eye, EyeOff, Mail, Lock, User, UserPlus, Phone, Building } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, User, UserPlus, Phone, Building, AlertCircle, Briefcase } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useUser } from '../contexts/UserContext'
+import { authService } from '../services/authService'
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,8 @@ export default function SignUp() {
     email: '',
     phone: '',
     company: '',
+    businessType: '',
+    customBusinessType: '',
     password: '',
     confirmPassword: ''
   })
@@ -20,17 +23,36 @@ export default function SignUp() {
   const { login } = useUser()
   const navigate = useNavigate()
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
+    
+    // Clear custom business type when user changes from "other" to another option
+    if (name === 'businessType' && formData.businessType === 'other' && value !== 'other') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+        customBusinessType: ''
+      }))
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }))
+    }
+    
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
         [name]: ''
+      }))
+    }
+    
+    // Clear custom business type error when businessType changes
+    if (name === 'businessType' && errors.customBusinessType) {
+      setErrors(prev => ({
+        ...prev,
+        customBusinessType: ''
       }))
     }
   }
@@ -60,6 +82,14 @@ export default function SignUp() {
       newErrors.company = 'Company name is required'
     }
 
+    if (!formData.businessType.trim()) {
+      newErrors.businessType = 'Business type is required'
+    }
+
+    if (formData.businessType === 'other' && !formData.customBusinessType.trim()) {
+      newErrors.customBusinessType = 'Please specify your business type'
+    }
+
     if (!formData.password) {
       newErrors.password = 'Password is required'
     } else if (formData.password.length < 8) {
@@ -85,27 +115,31 @@ export default function SignUp() {
 
     setIsLoading(true)
     
-    // Simulate registration process
-    setTimeout(() => {
-      setIsLoading(false)
-      
-      // Create user data object
-      const userData = {
+    try {
+      const result = await authService.register({
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
         phone: formData.phone,
         company: formData.company,
-        fullName: `${formData.firstName} ${formData.lastName}`,
-        joinedDate: new Date().toISOString()
+        businessType: formData.businessType === 'other' ? formData.customBusinessType : formData.businessType,
+        password: formData.password
+      })
+      
+      if (result.success && result.user) {
+        // Login the user with the new data
+        login(result.user)
+        
+        // Redirect to dashboard
+        navigate('/dashboard')
+      } else {
+        setErrors({ general: result.message })
       }
-      
-      // Login the user with the new data
-      login(userData)
-      
-      // Redirect to dashboard
-      navigate('/dashboard')
-    }, 2000)
+    } catch (error) {
+      setErrors({ general: 'An error occurred during registration. Please try again.' })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -268,6 +302,76 @@ export default function SignUp() {
               )}
             </div>
 
+            {/* Business Type Field */}
+            <div>
+              <label htmlFor="businessType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Business Type
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Briefcase className="h-5 w-5 text-gray-400" />
+                </div>
+                <select
+                  id="businessType"
+                  name="businessType"
+                  required
+                  value={formData.businessType}
+                  onChange={handleInputChange}
+                  className={`block w-full pl-10 pr-3 py-3 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+                    errors.businessType ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                  }`}
+                >
+                  <option value="">Select your business type</option>
+                  <option value="retail">Retail & E-commerce</option>
+                  <option value="wholesale">Wholesale & Distribution</option>
+                  <option value="manufacturing">Manufacturing</option>
+                  <option value="restaurant">Restaurant & Food Service</option>
+                  <option value="healthcare">Healthcare & Pharmacy</option>
+                  <option value="automotive">Automotive</option>
+                  <option value="construction">Construction & Hardware</option>
+                  <option value="technology">Technology & Electronics</option>
+                  <option value="fashion">Fashion & Apparel</option>
+                  <option value="agriculture">Agriculture & Farming</option>
+                  <option value="logistics">Logistics & Warehousing</option>
+                  <option value="education">Education & Training</option>
+                  <option value="nonprofit">Non-profit Organization</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              {errors.businessType && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.businessType}</p>
+              )}
+            </div>
+
+            {/* Custom Business Type Field - Only show when "Other" is selected */}
+            {formData.businessType === 'other' && (
+              <div className="animate-fadeIn transition-all duration-300 ease-in-out border-l-4 border-blue-500 pl-4 ml-2">
+                <label htmlFor="customBusinessType" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Please specify your business type
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Briefcase className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    id="customBusinessType"
+                    name="customBusinessType"
+                    type="text"
+                    required
+                    value={formData.customBusinessType}
+                    onChange={handleInputChange}
+                    className={`block w-full pl-10 pr-3 py-3 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+                      errors.customBusinessType ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
+                    placeholder="e.g., Consulting, Real Estate, Entertainment"
+                  />
+                </div>
+                {errors.customBusinessType && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.customBusinessType}</p>
+                )}
+              </div>
+            )}
+
             {/* Password Field */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -346,6 +450,16 @@ export default function SignUp() {
               )}
             </div>
 
+            {/* General Error Display */}
+            {errors.general && (
+              <div className="p-4 rounded-lg flex items-start space-x-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
+                <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                <p className="text-sm text-red-800 dark:text-red-200">
+                  {errors.general}
+                </p>
+              </div>
+            )}
+
             {/* Terms and Conditions */}
             <div className="flex items-start">
               <div className="flex items-center h-5">
@@ -397,7 +511,7 @@ export default function SignUp() {
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 Already have an account?{' '}
                 <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
-                  Sign in here
+                  log in in here
                 </Link>
               </p>
             </div>
