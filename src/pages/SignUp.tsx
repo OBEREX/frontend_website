@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Eye, EyeOff, Mail, Lock, User, UserPlus, Phone, Building, AlertCircle, Briefcase } from 'lucide-react'
+import { Eye, EyeOff, Mail, Lock, User, UserPlus, Phone, Building, AlertCircle, Briefcase, MapPin } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useUser } from '../contexts/UserContext'
 import { authService } from '../services/authService'
@@ -13,6 +13,8 @@ export default function SignUp() {
     company: '',
     businessType: '',
     customBusinessType: '',
+    state: '',
+    city: '',
     password: '',
     confirmPassword: ''
   })
@@ -26,17 +28,22 @@ export default function SignUp() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     
+    // Capitalize business type if it's the custom business type field
+    const processedValue = name === 'customBusinessType' 
+      ? value.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')
+      : value
+    
     // Clear custom business type when user changes from "other" to another option
     if (name === 'businessType' && formData.businessType === 'other' && value !== 'other') {
       setFormData(prev => ({
         ...prev,
-        [name]: value,
+        [name]: processedValue,
         customBusinessType: ''
       }))
     } else {
       setFormData(prev => ({
         ...prev,
-        [name]: value
+        [name]: processedValue
       }))
     }
     
@@ -90,6 +97,14 @@ export default function SignUp() {
       newErrors.customBusinessType = 'Please specify your business type'
     }
 
+    if (!formData.state.trim()) {
+      newErrors.state = 'State is required'
+    }
+
+    if (!formData.city.trim()) {
+      newErrors.city = 'City is required'
+    }
+
     if (!formData.password) {
       newErrors.password = 'Password is required'
     } else if (formData.password.length < 8) {
@@ -123,6 +138,8 @@ export default function SignUp() {
         phone: formData.phone,
         company: formData.company,
         businessType: formData.businessType === 'other' ? formData.customBusinessType : formData.businessType,
+        state: formData.state,
+        city: formData.city,
         password: formData.password
       })
       
@@ -322,19 +339,19 @@ export default function SignUp() {
                   }`}
                 >
                   <option value="">Select your business type</option>
-                  <option value="retail">Retail & E-commerce</option>
-                  <option value="wholesale">Wholesale & Distribution</option>
-                  <option value="manufacturing">Manufacturing</option>
-                  <option value="restaurant">Restaurant & Food Service</option>
-                  <option value="healthcare">Healthcare & Pharmacy</option>
-                  <option value="automotive">Automotive</option>
-                  <option value="construction">Construction & Hardware</option>
-                  <option value="technology">Technology & Electronics</option>
-                  <option value="fashion">Fashion & Apparel</option>
-                  <option value="agriculture">Agriculture & Farming</option>
-                  <option value="logistics">Logistics & Warehousing</option>
-                  <option value="education">Education & Training</option>
-                  <option value="nonprofit">Non-profit Organization</option>
+                  <option value="Retail & E-Commerce">Retail & E-commerce</option>
+                  <option value="Wholesale & Distribution">Wholesale & Distribution</option>
+                  <option value="Manufacturing">Manufacturing</option>
+                  <option value="Restaurant & Food Service">Restaurant & Food Service</option>
+                  <option value="Healthcare & Pharmacy">Healthcare & Pharmacy</option>
+                  <option value="Automotive">Automotive</option>
+                  <option value="Construction & Hardware">Construction & Hardware</option>
+                  <option value="Technology & Electronics">Technology & Electronics</option>
+                  <option value="Fashion & Apparel">Fashion & Apparel</option>
+                  <option value="Agriculture & Farming">Agriculture & Farming</option>
+                  <option value="Logistics & Warehousing">Logistics & Warehousing</option>
+                  <option value="Education & Training">Education & Training</option>
+                  <option value="Non-Profit Organization">Non-profit Organization</option>
                   <option value="other">Other</option>
                 </select>
               </div>
@@ -371,6 +388,61 @@ export default function SignUp() {
                 )}
               </div>
             )}
+
+            {/* Location Fields */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="state" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  State/Province
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <MapPin className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    id="state"
+                    name="state"
+                    type="text"
+                    required
+                    value={formData.state}
+                    onChange={handleInputChange}
+                    className={`block w-full pl-10 pr-3 py-3 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+                      errors.state ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
+                    placeholder="California"
+                  />
+                </div>
+                {errors.state && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.state}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="city" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  City
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <MapPin className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    id="city"
+                    name="city"
+                    type="text"
+                    required
+                    value={formData.city}
+                    onChange={handleInputChange}
+                    className={`block w-full pl-10 pr-3 py-3 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+                      errors.city ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
+                    }`}
+                    placeholder="Los Angeles"
+                  />
+                </div>
+                {errors.city && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.city}</p>
+                )}
+              </div>
+            </div>
 
             {/* Password Field */}
             <div>

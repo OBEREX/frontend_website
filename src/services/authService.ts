@@ -8,6 +8,8 @@ export interface User {
   phone: string
   company: string
   businessType: string
+  state: string
+  city: string
   password: string // In real app, this would be hashed
   fullName: string
   joinedDate: string
@@ -32,7 +34,9 @@ class AuthService {
       email: 'john.doe@example.com',
       phone: '+1 (555) 123-4567',
       company: 'Acme Corporation',
-      businessType: 'retail',
+      businessType: 'Retail & E-Commerce',
+      state: 'California',
+      city: 'Los Angeles',
       password: 'password123', // In real app, this would be hashed
       fullName: 'John Doe',
       joinedDate: new Date('2024-01-15').toISOString(),
@@ -45,7 +49,9 @@ class AuthService {
       email: 'jane.smith@example.com',
       phone: '+1 (555) 987-6543',
       company: 'Tech Solutions Inc',
-      businessType: 'technology',
+      businessType: 'Technology & Electronics',
+      state: 'New York',
+      city: 'New York City',
       password: 'securepass456', // In real app, this would be hashed
       fullName: 'Jane Smith',
       joinedDate: new Date('2024-02-10').toISOString(),
@@ -58,7 +64,9 @@ class AuthService {
       email: 'mike.johnson@example.com',
       phone: '+1 (555) 456-7890',
       company: 'Digital Innovations',
-      businessType: 'manufacturing',
+      businessType: 'Manufacturing',
+      state: 'Texas',
+      city: 'Houston',
       password: 'mypassword789', // In real app, this would be hashed
       fullName: 'Mike Johnson',
       joinedDate: new Date('2024-01-20').toISOString(),

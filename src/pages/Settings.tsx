@@ -11,6 +11,7 @@ import {
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
+import { useUser } from '../contexts/UserContext'
 
 // Theme options
 const themes = [
@@ -238,8 +239,19 @@ const timezones = [
 export default function Settings() {
   // const navigate = useNavigate()
   const { theme, setTheme } = useTheme()
+  const { user, updateUser } = useUser()
   const [selectedLanguage, setSelectedLanguage] = useState('en')
   const [selectedTimezone, setSelectedTimezone] = useState('Africa/Nairobi')
+  const [profileData, setProfileData] = useState({
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    email: user?.email || '',
+    phone: user?.phone || '',
+    company: user?.company || '',
+    businessType: user?.businessType || '',
+    state: user?.state || '',
+    city: user?.city || ''
+  })
 
   const handleLanguageChange = (languageCode: string) => {
     setSelectedLanguage(languageCode)
@@ -253,6 +265,28 @@ export default function Settings() {
     localStorage.setItem('timezone', timezone)
     // Here you would typically update the app's timezone
     console.log(`Timezone changed to: ${timezone}`)
+  }
+
+  const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    
+    // Capitalize business type field
+    const processedValue = name === 'businessType' 
+      ? value.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ')
+      : value
+    
+    setProfileData(prev => ({
+      ...prev,
+      [name]: processedValue
+    }))
+  }
+
+  const handleSaveProfile = () => {
+    if (user) {
+      updateUser(profileData)
+      // You could add a success message here
+      console.log('Profile updated successfully')
+    }
   }
 
   return (
@@ -313,28 +347,91 @@ export default function Settings() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">First Name</label>
-                  <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" defaultValue="John" />
+                  <input 
+                    type="text" 
+                    name="firstName"
+                    value={profileData.firstName}
+                    onChange={handleProfileChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" 
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Last Name</label>
-                  <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" defaultValue="Doe" />
+                  <input 
+                    type="text" 
+                    name="lastName"
+                    value={profileData.lastName}
+                    onChange={handleProfileChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" 
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Email</label>
-                  <input type="email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" defaultValue="john.doe@company.com" />
+                  <input 
+                    type="email" 
+                    name="email"
+                    value={profileData.email}
+                    onChange={handleProfileChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" 
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Phone</label>
-                  <input type="tel" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" defaultValue="+254 700 000 000" />
+                  <input 
+                    type="tel" 
+                    name="phone"
+                    value={profileData.phone}
+                    onChange={handleProfileChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" 
+                  />
                 </div>
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Company</label>
-                  <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" defaultValue="Pefoma Retail Solutions" />
+                  <input 
+                    type="text" 
+                    name="company"
+                    value={profileData.company}
+                    onChange={handleProfileChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Business Type</label>
+                  <input 
+                    type="text" 
+                    name="businessType"
+                    value={profileData.businessType}
+                    onChange={handleProfileChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">State/Province</label>
+                  <input 
+                    type="text" 
+                    name="state"
+                    value={profileData.state}
+                    onChange={handleProfileChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">City</label>
+                  <input 
+                    type="text" 
+                    name="city"
+                    value={profileData.city}
+                    onChange={handleProfileChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100" 
+                  />
                 </div>
               </div>
               
               <div className="flex justify-end pt-6">
-                <button className="btn-primary flex items-center px-8 py-4">
+                <button 
+                  onClick={handleSaveProfile}
+                  className="btn-primary flex items-center px-8 py-4"
+                >
                   <Save className="h-5 w-5 mr-3" />
                   Save Changes
                 </button>

@@ -472,7 +472,12 @@ class DataService {
   }
 
   // Get scan statistics for specific time periods
-  getScanStatistics(period: 'today' | 'week' | 'month' | 'year') {
+  getScanStatistics(period: 'today' | 'week' | 'month' | 'year'): {
+    totalScans: number
+    accuracy: number
+    timeSaved: string
+    costSavings: string
+  } {
     const dashboardData = this.getDashboardData()
     const analyticsData = this.getAnalyticsData()
     

@@ -233,7 +233,7 @@ export class QueryParser {
         i.category.toLowerCase().includes(category.toLowerCase())
       )
       const totalStock = categoryItems.reduce((sum: number, item: any) => sum + item.currentStock, 0)
-      const itemList = categoryItems.map(item => `• ${item.name}: ${item.currentStock} units`).join('\n')
+      const itemList = categoryItems.map((item: any) => `• ${item.name}: ${item.currentStock} units`).join('\n')
       return `📦 ${category} category overview:\n• ${categoryItems.length} different items\n• Total stock: ${totalStock} units\n\nItems:\n${itemList}`
     }
     
