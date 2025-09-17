@@ -144,21 +144,6 @@ export default function ForgotPassword() {
                 </button>
               </div>
 
-              {/* Demo Info */}
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">Demo Mode</h4>
-                <p className="text-xs text-blue-700 dark:text-blue-300 mb-2">
-                  For testing, try these demo accounts:
-                </p>
-                <ul className="text-xs text-blue-600 dark:text-blue-400 space-y-1">
-                  <li>• john.doe@example.com</li>
-                  <li>• jane.smith@example.com</li>
-                  <li>• mike.johnson@example.com</li>
-                </ul>
-                <p className="text-xs text-blue-700 dark:text-blue-300 mt-2">
-                  The OTP will be displayed in the browser console and stored locally for easy access.
-                </p>
-              </div>
             </form>
           ) : (
             /* Email Sent Confirmation */

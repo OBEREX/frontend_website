@@ -10,7 +10,6 @@ export default function VerifyOTP() {
   const [messageType, setMessageType] = useState<'success' | 'error' | ''>('')
   const [timeLeft, setTimeLeft] = useState(600) // 10 minutes in seconds
   const [isResending, setIsResending] = useState(false)
-  const [demoOtp, setDemoOtp] = useState<string | null>(null)
   
   const navigate = useNavigate()
   const location = useLocation()
@@ -34,11 +33,6 @@ export default function VerifyOTP() {
     }
   }, [timeLeft])
 
-  // Get demo OTP for development
-  useEffect(() => {
-    const demo = authService.getDemoOTP()
-    setDemoOtp(demo)
-  }, [])
 
   // Format time display
   const formatTime = (seconds: number) => {
@@ -150,9 +144,6 @@ export default function VerifyOTP() {
         setOtp(['', '', '', '', '', ''])
         inputRefs.current[0]?.focus()
         
-        // Update demo OTP
-        const demo = authService.getDemoOTP()
-        setDemoOtp(demo)
       } else {
         setMessage(result.message)
         setMessageType('error')
@@ -165,14 +156,6 @@ export default function VerifyOTP() {
     }
   }
 
-  // Auto-fill demo OTP
-  const fillDemoOTP = () => {
-    if (demoOtp) {
-      const otpArray = demoOtp.split('')
-      setOtp(otpArray)
-      setTimeout(() => handleSubmit(otpArray), 100)
-    }
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
@@ -302,22 +285,6 @@ export default function VerifyOTP() {
               </button>
             </div>
 
-            {/* Demo Helper */}
-            {demoOtp && (
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-                <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">Demo Mode</h4>
-                <p className="text-xs text-blue-700 dark:text-blue-300 mb-2">
-                  Your verification code: <span className="font-mono font-bold">{demoOtp}</span>
-                </p>
-                <button
-                  type="button"
-                  onClick={fillDemoOTP}
-                  className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 font-medium"
-                >
-                  Auto-fill code
-                </button>
-              </div>
-            )}
           </form>
 
           {/* Back to Previous Step */}

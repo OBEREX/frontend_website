@@ -191,18 +191,6 @@ export default function Login() {
               </button>
             </div>
 
-            {/* Demo Info */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-              <h4 className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-2">Demo Accounts</h4>
-              <p className="text-xs text-blue-700 dark:text-blue-300 mb-2">
-                Try logging in with these demo accounts:
-              </p>
-              <ul className="text-xs text-blue-600 dark:text-blue-400 space-y-1">
-                <li>• john.doe@example.com (password: password123)</li>
-                <li>• jane.smith@example.com (password: securepass456)</li>
-                <li>• mike.johnson@example.com (password: mypassword789)</li>
-              </ul>
-            </div>
 
             {/* Sign Up Link */}
             <div className="text-center">
