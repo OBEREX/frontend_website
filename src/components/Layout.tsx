@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import {
   Home,
-  Bot,
   BarChart3,
   TrendingUp,
   Settings,
@@ -10,17 +9,20 @@ import {
   User,
   Smartphone,
   Menu,
-  X
+  X,
+  LayoutDashboard,
+  LogOut,
+  UserCircle
 } from 'lucide-react'
-// import { useTheme } from '../contexts/ThemeContext'
+import { useUser } from '../contexts/UserContext'
 
 interface LayoutProps {
   children: React.ReactNode
 }
 
 const navigation = [
-  { name: 'Dashboard', href: '/', icon: Home },
-  { name: 'AI Assistant', href: '/ai-assistant', icon: Bot },
+  { name: 'Home', href: '/', icon: Home },
+  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Analytics & Reporting', href: '/analytics', icon: BarChart3 },
   { name: 'Business Intelligence', href: '/business-intelligence', icon: TrendingUp },
   { name: 'Integration Management', href: '/integration', icon: CreditCard },
@@ -30,11 +32,17 @@ const navigation = [
 
 export default function Layout({ children }: LayoutProps) {
   const location = useLocation()
-  // const { theme } = useTheme()
+  const navigate = useNavigate()
+  const { user, logout } = useUser()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const closeSidebar = () => {
     setSidebarOpen(false)
+  }
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
   }
 
   return (
@@ -92,19 +100,49 @@ export default function Layout({ children }: LayoutProps) {
           </div>
         </nav>
 
-        {/* Quick Stats - Hidden on mobile to save space */}
-        <div className="hidden lg:block absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-700">
-          <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">Quick Stats</div>
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-600 dark:text-gray-400">Today's Scans</span>
-              <span className="font-medium text-gray-900 dark:text-gray-100">1,247</span>
+        {/* User Profile & Logout */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 dark:border-gray-700">
+          {user && (
+            <div className="mb-4">
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="h-8 w-8 bg-primary-100 dark:bg-primary-900/30 rounded-full flex items-center justify-center">
+                  <UserCircle className="h-5 w-5 text-primary-600 dark:text-primary-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                    {user.fullName}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                    {user.email}
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-600 dark:text-gray-400">Time Saved</span>
-              <span className="font-medium text-green-600 dark:text-green-400">8.5 hrs</span>
+          )}
+          
+          {/* Quick Stats - Hidden on mobile to save space */}
+          <div className="hidden lg:block">
+            <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">Quick Stats</div>
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-600 dark:text-gray-400">Today's Scans</span>
+                <span className="font-medium text-gray-900 dark:text-gray-100">1,247</span>
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-600 dark:text-gray-400">Time Saved</span>
+                <span className="font-medium text-green-600 dark:text-green-400">8.5 hrs</span>
+              </div>
             </div>
           </div>
+          
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 rounded-lg transition-colors"
+          >
+            <LogOut className="mr-3 h-5 w-5" />
+            Sign out
+          </button>
         </div>
       </div>
 

@@ -7,7 +7,7 @@ export default function AiAssistant() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">AI Assistant</h1>
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100">Home</h1>
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2 sm:mt-3">
             Your intelligent inventory management companion
           </p>
