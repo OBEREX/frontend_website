@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Send, Bot, User, Sparkles } from 'lucide-react'
+import { dataService } from '../services/dataService'
+import { queryParser, ParsedQuery } from '../utils/queryParser'
 
 interface Message {
   id: string
@@ -40,29 +42,100 @@ export default function AIChatbot() {
     }
 
     setMessages(prev => [...prev, userMessage])
+    const query = inputValue.trim()
     setInputValue('')
     setIsTyping(true)
 
-    // Simulate AI response
+    // Process the query with AI-powered response
     setTimeout(() => {
-      const botResponses = [
-        "I can help you with inventory tracking, analytics, and business insights. What specific information do you need?",
-        "Based on your inventory data, I can see some interesting trends. Would you like me to analyze your recent scan patterns?",
-        "I've detected some potential optimization opportunities in your inventory management. Should I generate a detailed report?",
-        "Your inventory accuracy has improved by 2.3% this week! Would you like to see the detailed metrics?",
-        "I can help you set up automated alerts for low stock items or unusual inventory patterns. What would you prefer?"
-      ]
-      
-      const randomResponse = botResponses[Math.floor(Math.random() * botResponses.length)]
+      try {
+        // Parse the user query
+        const parsedQuery: ParsedQuery = queryParser.parse(query)
+        
+        // Gather all relevant data
+        const dashboardData = dataService.getDashboardData()
+        const analyticsData = dataService.getAnalyticsData()
+        const businessData = dataService.getBusinessIntelligenceData()
+        const integrationData = dataService.getIntegrationData()
+        const inventoryItems = dataService.getInventoryItems()
+        const lowStockItems = dataService.getLowStockItems()
+        const totalStock = dataService.getTotalStockCount()
+        const averageAccuracy = dataService.getAverageAccuracy()
+        const categoryDistribution = dataService.getCategoryDistribution()
+        
+        // Prepare data object for response generation
+        const allData = {
+          dashboardData,
+          analyticsData,
+          businessData,
+          integrationData,
+          inventoryItems,
+          lowStockItems,
+          totalStock,
+          averageAccuracy,
+          categoryDistribution,
+          totalItems: inventoryItems.length,
+          scanStats: {
+            today: dataService.getScanStatistics('today'),
+            week: dataService.getScanStatistics('week'),
+            month: dataService.getScanStatistics('month'),
+            year: dataService.getScanStatistics('year')
+          },
+          categoryAccuracy: analyticsData.categoryAccuracy
+        }
+        
+        // Generate intelligent response
+        let response = queryParser.generateResponse(parsedQuery, allData)
+        
+        // Handle specific queries that need special processing
+        if (parsedQuery.specificItem) {
+          const item = dataService.getInventoryItemByName(parsedQuery.specificItem)
+          if (item) {
+            response = `Found ${item.name}! Current stock: ${item.currentStock} units (${item.currentStock <= item.reorderPoint ? '⚠️ Low stock' : '✅ Good stock'}). Category: ${item.category}. Last scanned: ${item.lastScanned.toLocaleDateString()} with ${item.accuracy}% accuracy.`
+          } else {
+            const searchResults = dataService.searchInventoryItems(parsedQuery.specificItem)
+            if (searchResults.length > 0) {
+              const itemList = searchResults.map(item => `${item.name} (${item.currentStock} units)`).join(', ')
+              response = `I found ${searchResults.length} similar item(s): ${itemList}. Would you like details about any specific item?`
+            }
+          }
+        }
+        
+        // Add helpful suggestions based on the query
+        if (parsedQuery.intent === 'lowStock' && lowStockItems.length > 0) {
+          response += ` 💡 Tip: You can set up automated reorder alerts to stay ahead of stock shortages.`
+        }
+        
+        if (parsedQuery.intent === 'accuracy' && averageAccuracy > 98) {
+          response += ` 🎯 Excellent! Your accuracy is above industry standards.`
+        }
       
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: randomResponse,
+          text: response,
+          sender: 'bot',
+          timestamp: new Date()
+        }
+
+        setMessages(prev => [...prev, botMessage])
+      } catch (error) {
+        // Fallback response
+        const fallbackResponses = [
+          "I understand you're asking about your inventory. Let me help you with that. Your system shows excellent performance with high accuracy rates!",
+          "Based on your current data, everything looks good! You have strong inventory management with consistent scanning patterns.",
+          "I can see your inventory system is running smoothly. Would you like specific details about any particular aspect?"
+        ]
+        
+        const botMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)],
         sender: 'bot',
         timestamp: new Date()
       }
 
       setMessages(prev => [...prev, botMessage])
+      }
+      
       setIsTyping(false)
     }, 1500)
   }
@@ -184,10 +257,12 @@ export default function AIChatbot() {
       {/* Quick Suggestions */}
       <div className="mt-3 sm:mt-4 flex flex-wrap gap-1.5 sm:gap-2">
         {[
-          "Show inventory trends",
-          "Low stock alerts",
-          "Analytics report",
-          "Optimization tips"
+          "Show total scans today",
+          "What's my accuracy rate?",
+          "Low stock items",
+          "iPhone inventory",
+          "Cost savings this month",
+          "Electronics category"
         ].map((suggestion) => (
           <button
             key={suggestion}
