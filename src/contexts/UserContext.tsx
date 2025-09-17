@@ -7,6 +7,8 @@ interface User {
   phone: string
   company: string
   businessType: string
+  state: string
+  city: string
   fullName: string
   joinedDate: string
 }
