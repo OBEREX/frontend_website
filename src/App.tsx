@@ -12,6 +12,9 @@ import UserManagement from './pages/UserManagement'
 import Settings from './pages/Settings'
 import Login from './pages/Log-in'
 import SignUp from './pages/SignUp'
+import ForgotPassword from './pages/ForgotPassword'
+import VerifyOTP from './pages/VerifyOTP'
+import ResetPassword from './pages/ResetPassword'
 import { ThemeProvider } from './contexts/ThemeContext'
 import { UserProvider } from './contexts/UserContext'
 
@@ -29,6 +32,21 @@ export default function App() {
             <Route path="/signup" element={
               <PublicRoute>
                 <SignUp />
+              </PublicRoute>
+            } />
+            <Route path="/forgot-password" element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
+            } />
+            <Route path="/verify-otp" element={
+              <PublicRoute>
+                <VerifyOTP />
+              </PublicRoute>
+            } />
+            <Route path="/reset-password" element={
+              <PublicRoute>
+                <ResetPassword />
               </PublicRoute>
             } />
             <Route path="*" element={
