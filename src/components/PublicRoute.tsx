@@ -1,16 +1,33 @@
-import { Navigate } from 'react-router-dom'
-import { useUser } from '../contexts/UserContext'
+// src/components/PublicRoute.tsx
+
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import { useUser } from '../contexts/UserContext';
 
 interface PublicRouteProps {
-  children: React.ReactNode
+  children: React.ReactNode;
+  redirectTo?: string;
 }
 
-export default function PublicRoute({ children }: PublicRouteProps) {
-  const { isAuthenticated } = useUser()
-  
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />
+export default function PublicRoute({ children, redirectTo = '/dashboard' }: PublicRouteProps) {
+  const { isAuthenticated, isLoading } = useUser();
+
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    );
   }
-  
-  return <>{children}</>
+
+  // Redirect to dashboard if already authenticated
+  if (isAuthenticated) {
+    return <Navigate to={redirectTo} replace />;
+  }
+
+  return <>{children}</>;
 }
