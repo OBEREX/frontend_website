@@ -1,3 +1,11 @@
+import { useEffect, useState } from 'react'
+import dashboardService, {
+  DashboardOverview,
+  ScanActivityData,
+  CategoryDistribution,
+  SystemStatus
+} from '../services/dasboardService'
+
 import { 
   Smartphone, 
   Clock, 
@@ -24,81 +32,62 @@ import {
 import { useTheme } from '../contexts/ThemeContext'
 import { useUser } from '../contexts/UserContext'
 
-// System Status
-const systemStatus = 'Online'
-const lastSyncTime = '2 minutes ago'
-const aiAssistantStatus = 'Available'
-
-// Daily Statistics
-const totalScansToday = '1,247'
-const timeSavedToday = '8.5 hrs'
-const costSavingsToday = '$1,247'
-const accuracyRateToday = '98.7%'
-
-// Change Values
-const scansChange = '+12.5%'
-const timeSavedChange = '+2.3 hrs'
-const costSavingsChange = '+$156'
-const accuracyChange = '+0.3%'
-
-// Weekly Scan Data
-const scanData = [
-  { day: 'Mon', scans: 1200, accuracy: 98.5 },
-  { day: 'Tue', scans: 1350, accuracy: 98.8 },
-  { day: 'Wed', scans: 1100, accuracy: 97.9 },
-  { day: 'Thu', scans: 1600, accuracy: 99.1 },
-  { day: 'Fri', scans: 1800, accuracy: 99.3 },
-  { day: 'Sat', scans: 1400, accuracy: 98.7 },
-  { day: 'Sun', scans: 900, accuracy: 98.2 },
-]
-
-// Category Distribution Data
-const categoryData = [
-  { name: 'Electronics', value: 35, color: '#3b82f6' },
-  { name: 'Clothing', value: 25, color: '#10b981' },
-  { name: 'Food & Beverage', value: 20, color: '#f59e0b' },
-  { name: 'Home & Garden', value: 15, color: '#ef4444' },
-  { name: 'Other', value: 5, color: '#8b5cf6' },
-]
-
-// Statistics Cards Data
-const stats = [
-  {
-    name: 'Total Scans Today',
-    value: totalScansToday,
-    change: scansChange,
-    changeType: 'positive',
-    icon: Smartphone,
-  },
-  {
-    name: 'Time Saved',
-    value: timeSavedToday,
-    change: timeSavedChange,
-    changeType: 'positive',
-    icon: Clock,
-  },
-  {
-    name: 'Cost Savings',
-    value: costSavingsToday,
-    change: costSavingsChange,
-    changeType: 'positive',
-    icon: DollarSign,
-  },
-  {
-    name: 'Accuracy Rate',
-    value: accuracyRateToday,
-    change: accuracyChange,
-    changeType: 'positive',
-    icon: Target,
-  },
-]
-
 export default function Dashboard() {
   const { isDark } = useTheme()
   const { user } = useUser()
   
+  // State for API data
+  const [overview, setOverview] = useState<DashboardOverview | null>(null)
+  const [scanActivity, setScanActivity] = useState<ScanActivityData[]>([])
+  const [categories, setCategories] = useState<CategoryDistribution[]>([])
+  const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  
   // Get user name from context or use default
   const userName = user?.firstName || 'User'
+
+  // Fetch all dashboard data on mount
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        
+        // Fetch all data in parallel
+        const [overviewRes, activityRes, categoryRes, statusRes] = await Promise.all([
+          dashboardService.getOverview(),
+          dashboardService.getScanActivity('7d'),
+          dashboardService.getCategoryDistribution(),
+          dashboardService.getSystemStatus()
+        ])
+
+        if (overviewRes.success && overviewRes.data) {
+          setOverview(overviewRes.data)
+        }
+        
+        if (activityRes.success && activityRes.data) {
+          setScanActivity(activityRes.data)
+        }
+        
+        if (categoryRes.success && categoryRes.data) {
+          setCategories(categoryRes.data)
+        }
+        
+        if (statusRes.success) {
+          setSystemStatus(statusRes)
+        }
+        
+      } catch (err) {
+        console.error('Dashboard data fetch error:', err)
+        setError('Failed to load dashboard data. Please try again.')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchDashboardData()
+  }, [])
 
   const tooltipStyle = {
     backgroundColor: isDark ? 'rgb(31, 41, 55)' : 'rgb(255, 255, 255)',
@@ -110,6 +99,72 @@ export default function Dashboard() {
 
   const axisStroke = isDark ? '#9CA3AF' : '#6B7280'
   const gridStroke = isDark ? '#374151' : '#E5E7EB'
+
+  // Statistics Cards Data - NOW USING API DATA
+  const stats = [
+    {
+      name: 'Total Scans Today',
+      value: overview?.total_scans_today.toLocaleString() || '0',
+      change: overview?.scans_change || '0%',
+      changeType: 'positive',
+      icon: Smartphone,
+    },
+    {
+      name: 'Time Saved',
+      value: overview?.time_saved_today || '0 hrs',
+      change: overview?.time_saved_change || '0%',
+      changeType: 'positive',
+      icon: Clock,
+    },
+    {
+      name: 'Cost Savings',
+      value: overview?.cost_savings_today || '$0',
+      change: overview?.cost_savings_change || '0%',
+      changeType: 'positive',
+      icon: DollarSign,
+    },
+    {
+      name: 'Accuracy Rate',
+      value: overview?.accuracy_rate_today || '0%',
+      change: overview?.accuracy_change || '0%',
+      changeType: 'positive',
+      icon: Target,
+    },
+  ]
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading dashboard...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Show error state with retry button
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <div className="mb-4">
+            <div className="w-16 h-16 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto">
+              <span className="text-2xl">⚠️</span>
+            </div>
+          </div>
+          <p className="text-red-600 dark:text-red-400 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="btn-primary px-6 py-2"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-4 sm:space-y-6 lg:space-y-8 xl:space-y-10">
@@ -143,16 +198,22 @@ export default function Dashboard() {
             </div>
             <div className="space-y-2 sm:space-y-3">
               <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-green-500 rounded-full"></div>
-                <span>System status: {systemStatus}</span>
+                <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
+                  systemStatus?.color === 'green' ? 'bg-green-500' :
+                  systemStatus?.color === 'yellow' ? 'bg-yellow-500' :
+                  systemStatus?.color === 'red' ? 'bg-red-500' : 'bg-gray-500'
+                }`}></div>
+                <span>System status: {systemStatus?.status || 'Unknown'}</span>
               </div>
               <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-500 rounded-full"></div>
-                <span>Last sync: {lastSyncTime}</span>
+                <span>Last sync: {systemStatus?.last_sync || 'Never'}</span>
               </div>
               <div className="flex items-center space-x-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full"></div>
-                <span>AI Assistant: {aiAssistantStatus}</span>
+                <div className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
+                  systemStatus?.ai_assistant_status === 'Online' ? 'bg-purple-500' : 'bg-gray-500'
+                }`}></div>
+                <span>AI Assistant: {systemStatus?.ai_assistant_status || 'Unknown'}</span>
               </div>
             </div>
           </div>
@@ -166,15 +227,21 @@ export default function Dashboard() {
             <div className="space-y-3 sm:space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Total Scans</span>
-                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">{totalScansToday}</span>
+                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">
+                  {overview?.total_scans_today.toLocaleString() || '0'}
+                </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Time Saved</span>
-                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">{timeSavedToday}</span>
+                <span className="text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100">
+                  {overview?.time_saved_today || '0 hrs'}
+                </span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Accuracy Rate</span>
-                <span className="text-xs sm:text-sm font-medium text-green-600">{accuracyRateToday}</span>
+                <span className="text-xs sm:text-sm font-medium text-green-600">
+                  {overview?.accuracy_rate_today || '0%'}
+                </span>
               </div>
             </div>
           </div>
@@ -195,7 +262,7 @@ export default function Dashboard() {
                   }`}>
                     {stat.change}
                   </span>
-                  <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 ml-1 sm:ml-2">vs last month</span>
+                  <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 ml-1 sm:ml-2">vs yesterday</span>
                 </div>
               </div>
               <div className="h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 bg-primary-100 dark:bg-primary-900/30 rounded-lg flex items-center justify-center">
@@ -213,7 +280,7 @@ export default function Dashboard() {
           <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 lg:mb-8">Weekly Scan Trends</h3>
           <div className="h-60 sm:h-72 lg:h-80">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={scanData}>
+              <LineChart data={scanActivity}>
                 <CartesianGrid strokeDasharray="3 3" stroke={gridStroke} />
                 <XAxis 
                   dataKey="day" 
@@ -262,7 +329,7 @@ export default function Dashboard() {
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
-                  data={categoryData}
+                  data={categories}
                   cx="50%"
                   cy="50%"
                   innerRadius={40}
@@ -270,19 +337,19 @@ export default function Dashboard() {
                   paddingAngle={5}
                   dataKey="value"
                 >
-                  {categoryData.map((entry, index) => (
+                  {categories.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
                 <Tooltip 
                   contentStyle={tooltipStyle}
-                  formatter={(value: any) => [`${value}%`, 'Percentage']}
+                  formatter={(value: any) => [`${value.toLocaleString()} items`, 'Count']}
                 />
               </PieChart>
             </ResponsiveContainer>
           </div>
           <div className="mt-4 sm:mt-6 lg:mt-8 grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-4">
-            {categoryData.map((category) => (
+            {categories.map((category) => (
               <div key={category.name} className="flex items-center space-x-2 sm:space-x-3">
                 <div 
                   className="w-3 h-3 sm:w-4 sm:h-4 rounded-full" 
@@ -302,25 +369,25 @@ export default function Dashboard() {
         <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4 sm:mb-6 lg:mb-8">Quick Actions</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4 xl:gap-6">
           <Link to="/analytics">
-            <button className="flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
+            <button className="w-full flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors">
               <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
               <span className="text-sm sm:text-base font-medium">View Analytics</span>
             </button>
           </Link>
           <Link to="/business-intelligence">
-            <button className="flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/50 transition-colors">
+            <button className="w-full flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg hover:bg-green-100 dark:hover:bg-green-900/50 transition-colors">
               <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
               <span className="text-sm sm:text-base font-medium">Business Intelligence</span>
             </button>
           </Link>
           <Link to="/user-management">
-            <button className="flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors">
+            <button className="w-full flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors">
               <Users className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
               <span className="text-sm sm:text-base font-medium">User Management</span>
             </button>
           </Link>
           <Link to="/settings">
-            <button className="flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors">
+            <button className="w-full flex items-center justify-center p-4 sm:p-5 lg:p-6 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors">
               <Zap className="h-5 w-5 sm:h-6 sm:w-6 mr-2 sm:mr-3" />
               <span className="text-sm sm:text-base font-medium">Settings</span>
             </button>
@@ -330,4 +397,3 @@ export default function Dashboard() {
     </div>
   )
 }
-

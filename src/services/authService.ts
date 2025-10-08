@@ -2,6 +2,7 @@
 
 import httpClient from './httpClient';
 import { API_CONFIG, STORAGE_KEYS } from './apiConfig';
+import { OTP_TYPES, OTPType } from '../constants/otpTypes';
 
 // Types matching your Django backend
 export interface User {
@@ -59,6 +60,11 @@ export interface OTPVerificationResponse {
   errors?: Record<string, string[]>;
 }
 
+export interface LoginResponse extends AuthResponse {
+  requiresVerification?: boolean;  // New field
+}
+
+
 class AuthService {
   // Register new user
   async register(userData: RegisterData): Promise<AuthResponse> {
@@ -83,7 +89,7 @@ class AuthService {
       if (response.success && response.user) {
         // Transform backend response to frontend format
         const user: User = this.transformUserData(response.user);
-        this.storeUserData(user);
+        
         
         return {
           success: true,
@@ -106,28 +112,45 @@ class AuthService {
   }
 
   // Login user
-  async login(email: string, password: string): Promise<AuthResponse> {
+  async login(email: string, password: string, rememberMe: boolean = false): Promise<LoginResponse> {
     try {
       const response = await httpClient.post(
         API_CONFIG.ENDPOINTS.AUTH.LOGIN,
-        { email, password },
-        false // Don't include auth header for login
+        {
+          email,
+          password,
+          remember_me: rememberMe,
+        },
+        false
       );
 
-      if (response.success && response.session) {
-        // Store tokens
-        this.storeTokens(response.session);
-        
-        // Get user profile data
-        const profileResponse = await this.getUserProfile();
-        if (profileResponse.success && profileResponse.user) {
-          return {
-            success: true,
-            message: 'Login successful',
-            user: profileResponse.user,
-            session: response.session,
-          };
-        }
+      if (response.success && response.user && response.session) {
+        // Successful login
+        const user: User = this.transformUserData(response.user);
+        const tokens = {
+          accessToken: response.session.access_token,
+          refreshToken: response.session.refresh_token,
+          expiresIn: response.session.expires_in,
+        };
+
+        this.storeAuthData(user, tokens);
+
+        return {
+          success: true,
+          message: response.message || 'Login successful',
+          user,
+          session: response.session,
+        };
+      }
+
+      // Check for EMAIL_NOT_CONFIRMED error
+      if (response.error === 'EMAIL_NOT_CONFIRMED') {
+        return {
+          success: false,
+          message: response.message || 'Please verify your email before signing in',
+          errors: response.errors,
+          requiresVerification: true,  // Flag to trigger OTP flow
+        };
       }
 
       return {
@@ -136,12 +159,46 @@ class AuthService {
         errors: response.errors,
       };
     } catch (error) {
+      // Check if error response contains EMAIL_NOT_CONFIRMED
+      if (error instanceof Error && error.message.includes('EMAIL_NOT_CONFIRMED')) {
+        return {
+          success: false,
+          message: 'Please verify your email before signing in',
+          requiresVerification: true,
+        };
+      }
+
       return {
         success: false,
-        message: error instanceof Error ? error.message : 'Login failed',
+        message: error instanceof Error ? error.message : 'Login failed. Please try again.',
       };
     }
   }
+
+  //Method to resend registration verification OTP
+  async resendRegistrationVerificationOTP(email: string): Promise<{ success: boolean; message: string }> {
+    try {
+      const response = await httpClient.post(
+        API_CONFIG.ENDPOINTS.AUTH.RESEND_OTP,
+        {
+          email,
+          type: 'registration',  // Using 'registration' type
+        },
+        false
+      );
+
+      return {
+        success: response.success,
+        message: response.message || (response.success ? 'Verification code sent' : 'Failed to send code'),
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error instanceof Error ? error.message : 'Failed to send verification code',
+      };
+    }
+  }
+
 
   // Get user profile
   async getUserProfile(): Promise<{ success: boolean; user?: User; message?: string }> {
@@ -170,7 +227,6 @@ class AuthService {
     }
   }
 
-  // Send password reset OTP
   async sendPasswordResetOTP(email: string): Promise<{ success: boolean; message: string }> {
     try {
       const response = await httpClient.post(
@@ -181,7 +237,7 @@ class AuthService {
 
       return {
         success: response.success,
-        message: response.message || (response.success ? 'Reset code sent' : 'Failed to send reset code'),
+        message: response.message || (response.success ? 'Reset code sent to your email' : 'Failed to send reset code'),
       };
     } catch (error) {
       return {
@@ -191,7 +247,7 @@ class AuthService {
     }
   }
 
-  // Verify password reset OTP
+  // Verify password reset OTP - UPDATED
   async verifyPasswordResetOTP(email: string, token: string): Promise<OTPVerificationResponse> {
     try {
       const response = await httpClient.post(
@@ -199,7 +255,7 @@ class AuthService {
         {
           token,
           email,
-          type: 'password_reset',
+          type: OTP_TYPES.PASSWORD_RESET, // Using constant
         },
         false
       );
@@ -207,7 +263,7 @@ class AuthService {
       return {
         success: response.success,
         message: response.message || (response.success ? 'Code verified' : 'Invalid code'),
-        token: response.token, // Reset token for password reset
+        token: response.token,
         errors: response.errors,
       };
     } catch (error) {
@@ -218,12 +274,18 @@ class AuthService {
     }
   }
 
-  // Resend OTP
-  async resendOTP(email: string, type: string = 'password_reset'): Promise<{ success: boolean; message: string }> {
+  // Resend OTP - UPDATED with type parameter
+  async resendOTP(
+    email: string, 
+    type: OTPType = OTP_TYPES.PASSWORD_RESET
+  ): Promise<{ success: boolean; message: string }> {
     try {
       const response = await httpClient.post(
         API_CONFIG.ENDPOINTS.AUTH.RESEND_OTP,
-        { email, type },
+        { 
+          email, 
+          type  // Send the type parameter
+        },
         false
       );
 
@@ -235,6 +297,43 @@ class AuthService {
       return {
         success: false,
         message: error instanceof Error ? error.message : 'Failed to resend code',
+      };
+    }
+  }
+
+  // NEW: Resend registration OTP
+  async resendRegistrationOTP(email: string): Promise<{ success: boolean; message: string }> {
+    return this.resendOTP(email, OTP_TYPES.REGISTRATION);
+  }
+
+  // NEW: Resend email verification OTP
+  async resendEmailVerificationOTP(email: string): Promise<{ success: boolean; message: string }> {
+    return this.resendOTP(email, OTP_TYPES.EMAIL_VERIFICATION);
+  }
+
+  // NEW: Verify registration OTP
+  async verifyRegistrationOTP(email: string, token: string): Promise<OTPVerificationResponse> {
+    try {
+      const response = await httpClient.post(
+        API_CONFIG.ENDPOINTS.AUTH.VERIFY_OTP,
+        {
+          token,
+          email,
+          type: OTP_TYPES.REGISTRATION,
+        },
+        false
+      );
+
+      return {
+        success: response.success,
+        message: response.message || (response.success ? 'Registration verified' : 'Invalid code'),
+        token: response.token,
+        errors: response.errors,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        message: error instanceof Error ? error.message : 'Verification failed',
       };
     }
   }

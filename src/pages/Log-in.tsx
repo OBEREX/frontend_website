@@ -3,11 +3,13 @@ import { Eye, EyeOff, Mail, Lock, LogIn, CheckCircle, AlertCircle } from 'lucide
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useUser } from '../contexts/UserContext'
 import { authService } from '../services/authService'
+import { OTP_TYPES } from '../constants/otpTypes'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
+  const [rememberMe, setRememberMe] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [messageType, setMessageType] = useState<'success' | 'error' | ''>('')
@@ -32,19 +34,56 @@ export default function Login() {
     setMessageType('')
     
     try {
-      const result = await authService.login(email, password)
+      const result = await authService.login(email, password, rememberMe)
       
       if (result.success && result.user) {
         // Login the user with the authenticated data
         login(result.user)
         
-        // Redirect to dashboard
-        navigate('/dashboard')
+        // Show success message briefly before redirect
+        setMessage('Login successful! Redirecting...')
+        setMessageType('success')
+        
+        // Redirect to dashboard after brief delay
+        setTimeout(() => {
+          navigate('/dashboard')
+        }, 500)
+        
+      } else if (result.requiresVerification) {
+        // ⭐ EMAIL NOT VERIFIED - Send OTP and redirect
+        setMessage(result.message || 'Email not verified. Sending verification code...')
+        setMessageType('error')
+
+        // Automatically send verification OTP
+        const otpResult = await authService.resendRegistrationVerificationOTP(email)
+        
+        if (otpResult.success) {
+          setMessage('Verification code sent! Redirecting...')
+          setMessageType('success')
+          
+          // Redirect to OTP verification page
+          setTimeout(() => {
+            navigate('/verify-otp', {
+              state: {
+                email: email,  // ⭐ FIX: Use 'email' not 'formData.email'
+                type: OTP_TYPES.REGISTRATION,
+                message: 'Please verify your email to continue. We\'ve sent a verification code to your email.',
+              },
+            })
+          }, 1500)
+        } else {
+          // Failed to send OTP, show error
+          setMessage('Failed to send verification code. Please try again or contact support.')
+          setMessageType('error')
+        }
+        
       } else {
-        setMessage(result.message)
+        // Other errors (invalid credentials, etc.)
+        setMessage(result.message || 'Invalid email or password')
         setMessageType('error')
       }
     } catch (error) {
+      console.error('Login error:', error)
       setMessage('An error occurred during login. Please try again.')
       setMessageType('error')
     } finally {
@@ -64,7 +103,7 @@ export default function Login() {
             Welcome back
           </h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            log in to your Pefoma account
+            Log in to your Pefoma account
           </p>
         </div>
 
@@ -90,6 +129,7 @@ export default function Login() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   placeholder="Enter your email"
+                  disabled={isLoading}
                 />
               </div>
             </div>
@@ -113,11 +153,13 @@ export default function Login() {
                   onChange={(e) => setPassword(e.target.value)}
                   className="block w-full pl-10 pr-12 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   placeholder="Enter your password"
+                  disabled={isLoading}
                 />
                 <button
                   type="button"
                   className="absolute inset-y-0 right-0 pr-3 flex items-center"
                   onClick={() => setShowPassword(!showPassword)}
+                  disabled={isLoading}
                 >
                   {showPassword ? (
                     <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
@@ -157,14 +199,21 @@ export default function Login() {
                   id="remember-me"
                   name="remember-me"
                   type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                  disabled={isLoading}
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
                   Remember me
                 </label>
               </div>
               <div className="text-sm">
-                <Link to="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+                <Link 
+                  to="/forgot-password" 
+                  className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+                  tabIndex={isLoading ? -1 : 0}
+                >
                   Forgot your password?
                 </Link>
               </div>
@@ -185,18 +234,21 @@ export default function Login() {
                 ) : (
                   <div className="flex items-center">
                     <LogIn className="h-4 w-4 mr-2" />
-                    log in
+                    Log in
                   </div>
                 )}
               </button>
             </div>
 
-
             {/* Sign Up Link */}
             <div className="text-center">
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 Don't have an account?{' '}
-                <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+                <Link 
+                  to="/signup" 
+                  className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
+                  tabIndex={isLoading ? -1 : 0}
+                >
                   Sign up here
                 </Link>
               </p>

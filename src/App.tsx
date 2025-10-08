@@ -40,7 +40,7 @@ export default function App() {
               </PublicRoute>
             } />
             <Route path="/verify-otp" element={
-              <PublicRoute>
+              <PublicRoute allowAuthenticated={true}>
                 <VerifyOTP />
               </PublicRoute>
             } />

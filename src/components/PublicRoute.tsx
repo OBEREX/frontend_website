@@ -7,9 +7,10 @@ import { useUser } from '../contexts/UserContext';
 interface PublicRouteProps {
   children: React.ReactNode;
   redirectTo?: string;
+  allowAuthenticated?: boolean;
 }
 
-export default function PublicRoute({ children, redirectTo = '/dashboard' }: PublicRouteProps) {
+export default function PublicRoute({ children, redirectTo = '/dashboard', allowAuthenticated = false }: PublicRouteProps) {
   const { isAuthenticated, isLoading } = useUser();
 
   // Show loading spinner while checking authentication
@@ -26,6 +27,10 @@ export default function PublicRoute({ children, redirectTo = '/dashboard' }: Pub
 
   // Redirect to dashboard if already authenticated
   if (isAuthenticated) {
+    return <Navigate to={redirectTo} replace />;
+  }
+
+  if (isAuthenticated && !allowAuthenticated) {
     return <Navigate to={redirectTo} replace />;
   }
 

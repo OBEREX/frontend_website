@@ -143,12 +143,14 @@ export default function SignUp() {
         password: formData.password
       })
       
-      if (result.success && result.user) {
-        // Login the user with the new data
-        login(result.user)
-        
-        // Redirect to dashboard
-        navigate('/dashboard')
+      if (result.success) {
+        console.log('SUCCESS - Redirecting to OTP page')
+        navigate('/verify-otp', { 
+          state: { 
+            email: formData.email,
+            type: 'email_verification'
+          } 
+        })
       } else {
         setErrors({ general: result.message })
       }

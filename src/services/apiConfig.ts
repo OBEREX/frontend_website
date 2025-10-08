@@ -19,6 +19,12 @@ export const API_CONFIG = {
       CHANGE_PASSWORD: '/users/change-password/',
       SETTINGS: '/users/settings/',
     },
+    DASHBOARD: {
+      OVERVIEW: '/api/v1/dashboard/overview/',
+      SCAN_ACTIVITY: '/api/v1/dashboard/scan-activity/',
+      CATEGORY_DISTRIBUTION: '/api/v1/dashboard/category-distribution/',
+      SYSTEM_STATUS: '/api/v1/dashboard/system-status/',
+    },
     HEALTH: '/health/',
   },
   HEADERS: {

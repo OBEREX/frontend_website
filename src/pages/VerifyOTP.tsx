@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { ArrowLeft, Shield, AlertCircle, CheckCircle, RotateCcw } from 'lucide-react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { authService } from '../services/authService'
+import { OTP_TYPES } from '../constants/otpTypes' // Import constants
+
 
 export default function VerifyOTP() {
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
@@ -14,16 +16,22 @@ export default function VerifyOTP() {
   const navigate = useNavigate()
   const location = useLocation()
   const email = location.state?.email || ''
-  
+  const verificationType = location.state?.type || OTP_TYPES.PASSWORD_RESET // Default to password reset
+
   // Refs for OTP inputs
   const inputRefs = useRef<(HTMLInputElement | null)[]>([])
 
   // Redirect if no email provided
   useEffect(() => {
-    if (!email) {
+  if (!email) {
+    if (verificationType === 'email_verification') {
+      navigate('/signup')
+    } else {
       navigate('/forgot-password')
     }
-  }, [email, navigate])
+  }
+}, [email, navigate, verificationType])
+
 
   // Timer countdown
   useEffect(() => {
@@ -89,53 +97,90 @@ export default function VerifyOTP() {
   }
 
   // Submit OTP verification
-  const handleSubmit = async (otpArray = otp) => {
-    const otpString = otpArray.join('')
-    
-    if (otpString.length !== 6) {
-      setMessage('Please enter the complete 6-digit verification code.')
-      setMessageType('error')
-      return
-    }
-
-    setIsLoading(true)
-    setMessage('')
-    setMessageType('')
-
-    try {
-      const result = await authService.verifyPasswordResetOTP(email, otpString)
-      
-      setMessage(result.message)
-      setMessageType(result.success ? 'success' : 'error')
-      
-      if (result.success && result.token) {
-        // Navigate to reset password page with token
-        setTimeout(() => {
-          navigate('/reset-password', { state: { token: result.token, email } })
-        }, 1500)
-      } else {
-        // Clear OTP on error
-        setOtp(['', '', '', '', '', ''])
-        inputRefs.current[0]?.focus()
-      }
-    } catch (error) {
-      setMessage('An error occurred. Please try again.')
-      setMessageType('error')
-      setOtp(['', '', '', '', '', ''])
-      inputRefs.current[0]?.focus()
-    } finally {
-      setIsLoading(false)
-    }
+const handleSubmit = async (otpArray = otp) => {
+  const otpString = otpArray.join('')
+  
+  if (otpString.length !== 6) {
+    setMessage('Please enter the complete 6-digit verification code.')
+    setMessageType('error')
+    return
   }
 
+  setIsLoading(true)
+  setMessage('')
+  setMessageType('')
+
+  try {
+    let result;
+      
+      // Call appropriate verification method based on type
+      switch (verificationType) {
+        case OTP_TYPES.REGISTRATION:
+          result = await authService.verifyRegistrationOTP(email, code);
+          break;
+        case OTP_TYPES.PASSWORD_RESET:
+          result = await authService.verifyPasswordResetOTP(email, code);
+          break;
+        case OTP_TYPES.EMAIL_VERIFICATION:
+          // You can add this method to authService if needed
+          result = await authService.verifyPasswordResetOTP(email, code); // Fallback
+          break;
+        default:
+          result = await authService.verifyPasswordResetOTP(email, code);
+      }
+    setMessage(result.message)
+    setMessageType(result.success ? 'success' : 'error')
+    
+    if (result.success) {
+        if (verificationType === OTP_TYPES.PASSWORD_RESET && result.token) {
+          // Navigate to reset password page with token
+          setTimeout(() => {
+            navigate('/reset-password', { state: { token: result.token, email } })
+          }, 1500)
+        } else if (verificationType === OTP_TYPES.REGISTRATION) {
+          // Navigate to login after successful registration verification
+          setTimeout(() => {
+            navigate('/login', { state: { message: 'Email verified! You can now log in.' } })
+          }, 1500)
+        }
+      } else {
+      // Clear OTP on error
+      setOtp(['', '', '', '', '', ''])
+      inputRefs.current[0]?.focus()
+    }
+  } catch (error) {
+    setMessage('An error occurred. Please try again.')
+    setMessageType('error')
+    setOtp(['', '', '', '', '', ''])
+    inputRefs.current[0]?.focus()
+  } finally {
+    setIsLoading(false)
+  }
+}
+
   // Resend OTP
-  const handleResendOTP = async () => {
+const handleResendOTP = async () => {
     setIsResending(true)
     setMessage('')
     setMessageType('')
 
     try {
-      const result = await authService.sendPasswordResetOTP(email)
+      let result;
+      
+      // Call appropriate resend method based on type
+      switch (verificationType) {
+        case OTP_TYPES.REGISTRATION:
+          result = await authService.resendRegistrationOTP(email);
+          break;
+        case OTP_TYPES.PASSWORD_RESET:
+          result = await authService.sendPasswordResetOTP(email);
+          break;
+        case OTP_TYPES.EMAIL_VERIFICATION:
+          result = await authService.resendEmailVerificationOTP(email);
+          break;
+        default:
+          result = await authService.sendPasswordResetOTP(email);
+      }
       
       if (result.success) {
         setMessage('New verification code sent to your email.')
@@ -143,7 +188,6 @@ export default function VerifyOTP() {
         setTimeLeft(600) // Reset timer
         setOtp(['', '', '', '', '', ''])
         inputRefs.current[0]?.focus()
-        
       } else {
         setMessage(result.message)
         setMessageType('error')
@@ -166,7 +210,7 @@ export default function VerifyOTP() {
             <Shield className="h-6 w-6 text-white" />
           </div>
           <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            Verify Your Email
+            {verificationType === 'email_verification' ? 'Verify Your Email' : 'Reset Your Password'}
           </h2>
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
             Enter the 6-digit verification code sent to
@@ -290,23 +334,23 @@ export default function VerifyOTP() {
           {/* Back to Previous Step */}
           <div className="mt-6 text-center">
             <Link
-              to="/forgot-password"
+              to={verificationType === 'email_verification' ? '/signup' : '/forgot-password'}
               className="inline-flex items-center text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
             >
               <ArrowLeft className="h-4 w-4 mr-1" />
-              Back to email entry
+              {verificationType === 'email_verification' ? 'Back to signup' : 'Back to email entry'}
             </Link>
           </div>
-        </div>
 
-        {/* Footer */}
-        <div className="text-center">
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            Check your spam folder if you don't see the email. Need help?{' '}
-            <a href="#" className="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
-              Contact support
-            </a>
-          </p>
+          {/* Footer */}
+          <div className="text-center">
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              Check your spam folder if you don't see the email. Need help?{' '}
+              <a href="#" className="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+                Contact support
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>
