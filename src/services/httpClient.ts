@@ -174,11 +174,12 @@ class HttpClient {
 
     if (!response.ok) {
       // Handle different error response formats
-      if (typeof data === 'object' && data.errors) {
+      if (typeof data === 'object') {
         return {
           success: false,
           message: data.message || 'Request failed',
-          errors: data.errors,
+          error: data.error,           // ✅ KEEP THIS
+          errors: data.errors,         // ✅ KEEP THIS TOO
         };
       }
       

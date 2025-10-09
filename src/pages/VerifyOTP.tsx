@@ -116,17 +116,17 @@ const handleSubmit = async (otpArray = otp) => {
       // Call appropriate verification method based on type
       switch (verificationType) {
         case OTP_TYPES.REGISTRATION:
-          result = await authService.verifyRegistrationOTP(email, code);
+          result = await authService.verifyRegistrationOTP(email, otpString);
           break;
         case OTP_TYPES.PASSWORD_RESET:
-          result = await authService.verifyPasswordResetOTP(email, code);
+          result = await authService.verifyPasswordResetOTP(email, otpString);
           break;
         case OTP_TYPES.EMAIL_VERIFICATION:
           // You can add this method to authService if needed
-          result = await authService.verifyPasswordResetOTP(email, code); // Fallback
+          result = await authService.verifyPasswordResetOTP(email, otpString); // Fallback
           break;
         default:
-          result = await authService.verifyPasswordResetOTP(email, code);
+          result = await authService.verifyPasswordResetOTP(email, otpString);
       }
     setMessage(result.message)
     setMessageType(result.success ? 'success' : 'error')

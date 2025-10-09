@@ -111,69 +111,83 @@ class AuthService {
     }
   }
 
-  // Login user
-  async login(email: string, password: string, rememberMe: boolean = false): Promise<LoginResponse> {
-    try {
-      const response = await httpClient.post(
-        API_CONFIG.ENDPOINTS.AUTH.LOGIN,
-        {
-          email,
-          password,
-          remember_me: rememberMe,
-        },
-        false
-      );
+  
 
-      if (response.success && response.user && response.session) {
-        // Successful login
-        const user: User = this.transformUserData(response.user);
-        const tokens = {
-          accessToken: response.session.access_token,
-          refreshToken: response.session.refresh_token,
-          expiresIn: response.session.expires_in,
-        };
+async login(email: string, password: string, rememberMe: boolean = false): Promise<LoginResponse> {
+  try {
+    const response = await httpClient.post(
+      API_CONFIG.ENDPOINTS.AUTH.LOGIN,
+      {
+        email,
+        password,
+        remember_me: rememberMe,
+      },
+      false
+    );
+    console.log('Login API raw response:', response);
 
-        this.storeAuthData(user, tokens);
-
-        return {
-          success: true,
-          message: response.message || 'Login successful',
-          user,
-          session: response.session,
-        };
-      }
-
-      // Check for EMAIL_NOT_CONFIRMED error
-      if (response.error === 'EMAIL_NOT_CONFIRMED') {
-        return {
-          success: false,
-          message: response.message || 'Please verify your email before signing in',
-          errors: response.errors,
-          requiresVerification: true,  // Flag to trigger OTP flow
-        };
-      }
-
+    // ✅ Check for EMAIL_NOT_CONFIRMED error FIRST (before checking success)
+    if (response.error === 'EMAIL_NOT_CONFIRMED') {
+      console.log('Email not confirmed, setting requiresVerification flag');
       return {
         success: false,
-        message: response.message || 'Login failed',
+        message: response.message || 'Please verify your email before signing in',
+        requiresVerification: true,  // ⭐ This triggers OTP flow
         errors: response.errors,
       };
-    } catch (error) {
-      // Check if error response contains EMAIL_NOT_CONFIRMED
-      if (error instanceof Error && error.message.includes('EMAIL_NOT_CONFIRMED')) {
-        return {
-          success: false,
-          message: 'Please verify your email before signing in',
-          requiresVerification: true,
-        };
-      }
+    }
+
+    // Then check for successful login
+    if (response.success && response.user && response.session) {
+      console.log('Login successful');
+      const user: User = this.transformUserData(response.user);
+      const tokens = {
+        accessToken: response.session.access_token,
+        refreshToken: response.session.refresh_token,
+        expiresIn: response.session.expires_in,
+      };
+
+      this.storeAuthData(user, tokens);
 
       return {
-        success: false,
-        message: error instanceof Error ? error.message : 'Login failed. Please try again.',
+        success: true,
+        message: response.message || 'Login successful',
+        user,
+        session: response.session,
       };
     }
+
+    // Handle other errors (invalid credentials, etc.)
+    console.log('Login failed:', response.message);
+    return {
+      success: false,
+      message: response.message || 'Login failed',
+      errors: response.errors,
+    };
+  } catch (error) {
+    console.error('Login error:', error);
+    
+    // Check if error response contains EMAIL_NOT_CONFIRMED
+    if (error instanceof Error && error.message.includes('EMAIL_NOT_CONFIRMED')) {
+      return {
+        success: false,
+        message: 'Please verify your email before signing in',
+        requiresVerification: true,
+      };
+    }
+
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : 'Login failed. Please try again.',
+    };
   }
+}
+
+
+private storeAuthData(user: User, tokens: any): void {
+  this.storeTokens(tokens);
+  this.storeUserData(user);
+}
 
   //Method to resend registration verification OTP
   async resendRegistrationVerificationOTP(email: string): Promise<{ success: boolean; message: string }> {
